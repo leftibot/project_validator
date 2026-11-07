@@ -1,0 +1,3064 @@
+{
+  "answers": {
+    "committed-artifacts": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "committed": [],
+            "language": "Haskell",
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "compiler-warnings": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "compilers": [
+              {
+                "compiler": null,
+                "found": {
+                  "-Wall": [
+                    "app.cabal"
+                  ],
+                  "-Wcompat": [
+                    "app.cabal"
+                  ],
+                  "-Widentities": [
+                    "app.cabal"
+                  ],
+                  "-Wredundant-constraints": [
+                    "app.cabal"
+                  ]
+                },
+                "missing": []
+              }
+            ],
+            "language": "Haskell",
+            "practice": "compiler-warnings",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "branch": {
+              "answer": "yes",
+              "known": [
+                "cabal test --enable-coverage"
+              ],
+              "tools": [
+                "HPC"
+              ]
+            },
+            "language": "Haskell",
+            "line": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "path": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "region": {
+              "answer": "yes",
+              "known": [
+                "cabal test --enable-coverage"
+              ],
+              "tools": [
+                "HPC"
+              ]
+            },
+            "statement": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-audit": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {},
+            "known": {
+              "cabal-audit": {
+                "can": {
+                  "runs": "cabal-audit"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "runs",
+            "runs": {
+              "cabal-audit": {
+                "levels": [
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-management": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "declared": [
+              {
+                "manager": "Cabal",
+                "manifest": "app.cabal"
+              }
+            ],
+            "language": "Haskell",
+            "lock_required": true,
+            "locked": [
+              "cabal.project.freeze"
+            ],
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "formatting": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {},
+            "known": {
+              "fourmolu": {
+                "can": {
+                  "apply": "fourmolu --mode inplace .",
+                  "check": "fourmolu --mode check ."
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "ormolu": {
+                "can": {
+                  "apply": "ormolu --mode inplace",
+                  "check": "ormolu --mode check $(git ls-files '*.hs')"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "stylish-haskell": {
+                "can": {
+                  "apply": "stylish-haskell --inplace --recursive ."
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "check",
+            "runs": {
+              "ormolu": {
+                "levels": [
+                  "check"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "function-limits": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Haskell",
+            "level": "limits",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "hardening": [
+      {
+        "language": "Haskell",
+        "units": []
+      }
+    ],
+    "license": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "files": {
+              "LICENSE": [
+                "MIT"
+              ]
+            },
+            "language": "Haskell",
+            "mismatches": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "platforms": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "axis": "GHC version",
+            "language": "Haskell",
+            "notes": [],
+            "platforms": [
+              {
+                "GHC version": "9.10",
+                "configurations": [],
+                "os": "linux"
+              },
+              {
+                "GHC version": "9.8",
+                "configurations": [],
+                "os": "linux"
+              },
+              {
+                "GHC version": "9.10",
+                "configurations": [],
+                "os": "macos"
+              },
+              {
+                "GHC version": "9.8",
+                "configurations": [],
+                "os": "macos"
+              },
+              {
+                "GHC version": "9.10",
+                "configurations": [],
+                "os": "windows"
+              },
+              {
+                "GHC version": "9.8",
+                "configurations": [],
+                "os": "windows"
+              }
+            ],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "security-scanning": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Haskell",
+            "level": "scans",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "static-analysis": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {},
+            "known": {
+              "hlint": {
+                "can": {
+                  "checks": "hlint ."
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "stan": {
+                "can": {
+                  "checks": "stan"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "weeder": {
+                "can": {
+                  "checks": "weeder"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "checks",
+            "runs": {
+              "hlint": {
+                "levels": [
+                  "checks"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "tests": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "cabal test": [
+                "app.cabal"
+              ]
+            },
+            "known": {
+              "cabal test": {
+                "can": {
+                  "runs": "cabal test (or stack test)"
+                },
+                "needs_definition": true,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "runs",
+            "runs": {
+              "cabal test": {
+                "levels": [
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "type-checking": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Haskell",
+            "level": "checks",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "vcs-ignore": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Haskell",
+            "outputs": {
+              "Cabal's build directory": {
+                ".gitignore": "dist-newstyle/"
+              }
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "warnings-as-errors": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "compilers": [
+              {
+                "compiler": null,
+                "found": {
+                  "-Werror": [
+                    "app.cabal (when flag(pedantic))"
+                  ]
+                },
+                "missing": []
+              }
+            ],
+            "language": "Haskell",
+            "practice": "warnings-as-errors",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ]
+  },
+  "facts": [
+    {
+      "build_system": "Cabal",
+      "kind": "BuildFile",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": "app.cabal"
+    },
+    {
+      "build_system": "Cabal",
+      "kind": "BuildFile",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": "cabal.project"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Haskell",
+      "origin": "app/Main.hs",
+      "role": "product"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Haskell",
+      "origin": "src/App.hs",
+      "role": "product"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Haskell",
+      "origin": "test/Spec.hs",
+      "role": "test"
+    },
+    {
+      "files": 1,
+      "kind": "UnrecognisedSuffix",
+      "origin": ".",
+      "suffix": ".freeze"
+    },
+    {
+      "build_systems": [
+        "Cabal"
+      ],
+      "kind": "Unit",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".",
+      "role": "product"
+    },
+    {
+      "kind": "CiConfiguration",
+      "origin": ".github/workflows/ci-lint.yml",
+      "provider": "GitHub Actions"
+    },
+    {
+      "kind": "CiConfiguration",
+      "origin": ".github/workflows/ci.yml",
+      "provider": "GitHub Actions"
+    },
+    {
+      "kind": "CiConfiguration",
+      "origin": ".github/workflows/copy-paste-detection.yml",
+      "provider": "GitHub Actions"
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci-lint.yml:ci-lint",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {},
+      "name": "ci-lint",
+      "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint",
+      "os": "linux",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci-lint.yml:ci-lint",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "argv": [
+        "pipx",
+        "run",
+        "zizmor",
+        ".github"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci-lint.yml:ci-lint",
+      "kind": "Command",
+      "line": "pipx run zizmor .github",
+      "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint.steps[1].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "zizmor",
+        ".github"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci-lint.yml:ci-lint",
+      "kind": "Command",
+      "line": "pipx run zizmor .github",
+      "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint.steps[1].run",
+      "via": [
+        ".github/workflows/ci-lint.yml:jobs.ci-lint.steps[1].run"
+      ]
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci-lint.yml:ci-lint",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint.steps[2]",
+      "uses": "rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca"
+    },
+    {
+      "argv": [
+        "gitleaks",
+        "git",
+        "--redact",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci-lint.yml:ci-lint",
+      "kind": "Command",
+      "line": "gitleaks git --redact .",
+      "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint.steps[3].run",
+      "via": []
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci.yml:test[0]",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {
+        "ghc": "9.8",
+        "os": "ubuntu-latest"
+      },
+      "name": "test (ubuntu-latest, 9.8)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "linux",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "ghc-version": "9.8"
+      },
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[1]",
+      "uses": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+    },
+    {
+      "argv": [
+        "cabal",
+        "test",
+        "--enable-coverage",
+        "--flags=pedantic"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "cabal test --enable-coverage --flags=pedantic",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal",
+        "install",
+        "hpc-codecov"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "hpc-codecov",
+        "cabal:spec"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal-audit"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "cabal-audit",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "uses": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+    },
+    {
+      "argv": [
+        "ormolu",
+        "--mode",
+        "check"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "path": "src/"
+      },
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "uses": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+    },
+    {
+      "argv": [
+        "hlint",
+        "src/"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "via": []
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci.yml:test[1]",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {
+        "ghc": "9.10",
+        "os": "ubuntu-latest"
+      },
+      "name": "test (ubuntu-latest, 9.10)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "linux",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "ghc-version": "9.10"
+      },
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[1]",
+      "uses": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+    },
+    {
+      "argv": [
+        "cabal",
+        "test",
+        "--enable-coverage",
+        "--flags=pedantic"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "cabal test --enable-coverage --flags=pedantic",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal",
+        "install",
+        "hpc-codecov"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "hpc-codecov",
+        "cabal:spec"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal-audit"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "cabal-audit",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "uses": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+    },
+    {
+      "argv": [
+        "ormolu",
+        "--mode",
+        "check"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "path": "src/"
+      },
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "uses": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+    },
+    {
+      "argv": [
+        "hlint",
+        "src/"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "via": []
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci.yml:test[2]",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {
+        "ghc": "9.8",
+        "os": "macos-latest"
+      },
+      "name": "test (macos-latest, 9.8)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "macos",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "ghc-version": "9.8"
+      },
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[1]",
+      "uses": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+    },
+    {
+      "argv": [
+        "cabal",
+        "test",
+        "--enable-coverage",
+        "--flags=pedantic"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "cabal test --enable-coverage --flags=pedantic",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal",
+        "install",
+        "hpc-codecov"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "hpc-codecov",
+        "cabal:spec"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal-audit"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "cabal-audit",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "uses": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+    },
+    {
+      "argv": [
+        "ormolu",
+        "--mode",
+        "check"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "path": "src/"
+      },
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "uses": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+    },
+    {
+      "argv": [
+        "hlint",
+        "src/"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "via": []
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci.yml:test[3]",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {
+        "ghc": "9.10",
+        "os": "macos-latest"
+      },
+      "name": "test (macos-latest, 9.10)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "macos",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "ghc-version": "9.10"
+      },
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[1]",
+      "uses": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+    },
+    {
+      "argv": [
+        "cabal",
+        "test",
+        "--enable-coverage",
+        "--flags=pedantic"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "cabal test --enable-coverage --flags=pedantic",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal",
+        "install",
+        "hpc-codecov"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "hpc-codecov",
+        "cabal:spec"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal-audit"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "cabal-audit",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "uses": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+    },
+    {
+      "argv": [
+        "ormolu",
+        "--mode",
+        "check"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "path": "src/"
+      },
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "uses": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+    },
+    {
+      "argv": [
+        "hlint",
+        "src/"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "via": []
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci.yml:test[4]",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {
+        "ghc": "9.8",
+        "os": "windows-latest"
+      },
+      "name": "test (windows-latest, 9.8)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "windows",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "ghc-version": "9.8"
+      },
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[1]",
+      "uses": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+    },
+    {
+      "argv": [
+        "cabal",
+        "test",
+        "--enable-coverage",
+        "--flags=pedantic"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "cabal test --enable-coverage --flags=pedantic",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal",
+        "install",
+        "hpc-codecov"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "hpc-codecov",
+        "cabal:spec"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal-audit"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "cabal-audit",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "uses": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+    },
+    {
+      "argv": [
+        "ormolu",
+        "--mode",
+        "check"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "path": "src/"
+      },
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "uses": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+    },
+    {
+      "argv": [
+        "hlint",
+        "src/"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "via": []
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci.yml:test[5]",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {
+        "ghc": "9.10",
+        "os": "windows-latest"
+      },
+      "name": "test (windows-latest, 9.10)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "windows",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "ghc-version": "9.10"
+      },
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[1]",
+      "uses": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+    },
+    {
+      "argv": [
+        "cabal",
+        "test",
+        "--enable-coverage",
+        "--flags=pedantic"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "cabal test --enable-coverage --flags=pedantic",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal",
+        "install",
+        "hpc-codecov"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "hpc-codecov",
+        "cabal:spec"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "cabal install hpc-codecov && hpc-codecov cabal:spec",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cabal-audit"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "cabal-audit",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "uses": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+    },
+    {
+      "argv": [
+        "ormolu",
+        "--mode",
+        "check"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "via": []
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "path": "src/"
+      },
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "uses": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+    },
+    {
+      "argv": [
+        "hlint",
+        "src/"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "uses: haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "via": []
+    },
+    {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/copy-paste-detection.yml:copy-paste-detection",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {},
+      "name": "copy-paste-detection",
+      "origin": ".github/workflows/copy-paste-detection.yml:jobs.copy-paste-detection",
+      "os": "linux",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/copy-paste-detection.yml:copy-paste-detection",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/copy-paste-detection.yml:jobs.copy-paste-detection.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "jscpd@4",
+        "--threshold",
+        "0",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/copy-paste-detection.yml:copy-paste-detection",
+      "kind": "Command",
+      "line": "npx --yes jscpd@4 --threshold 0 .",
+      "origin": ".github/workflows/copy-paste-detection.yml:jobs.copy-paste-detection.steps[1].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "jscpd@4",
+        "--threshold",
+        "0",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/copy-paste-detection.yml:copy-paste-detection",
+      "kind": "Command",
+      "line": "npx --yes jscpd@4 --threshold 0 .",
+      "origin": ".github/workflows/copy-paste-detection.yml:jobs.copy-paste-detection.steps[1].run",
+      "via": [
+        ".github/workflows/copy-paste-detection.yml:jobs.copy-paste-detection.steps[1].run"
+      ]
+    },
+    {
+      "compilers": [
+        "gcc"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [],
+      "heuristic": false,
+      "job": ".github/workflows/ci-lint.yml:ci-lint",
+      "kind": "Job",
+      "name": ".github/workflows/ci-lint.yml: ci-lint",
+      "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint",
+      "os": "linux",
+      "toolchains": []
+    },
+    {
+      "compilers": [
+        "gcc"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [
+        "Haskell"
+      ],
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Job",
+      "name": ".github/workflows/ci.yml: test (ubuntu-latest, 9.8)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "linux",
+      "toolchains": [
+        {
+          "language": "GHC",
+          "version": "9.8"
+        }
+      ]
+    },
+    {
+      "compilers": [
+        "gcc"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [
+        "Haskell"
+      ],
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Job",
+      "name": ".github/workflows/ci.yml: test (ubuntu-latest, 9.10)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "linux",
+      "toolchains": [
+        {
+          "language": "GHC",
+          "version": "9.10"
+        }
+      ]
+    },
+    {
+      "compilers": [
+        "appleclang"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [
+        "Haskell"
+      ],
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Job",
+      "name": ".github/workflows/ci.yml: test (macos-latest, 9.8)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "macos",
+      "toolchains": [
+        {
+          "language": "GHC",
+          "version": "9.8"
+        }
+      ]
+    },
+    {
+      "compilers": [
+        "appleclang"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [
+        "Haskell"
+      ],
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Job",
+      "name": ".github/workflows/ci.yml: test (macos-latest, 9.10)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "macos",
+      "toolchains": [
+        {
+          "language": "GHC",
+          "version": "9.10"
+        }
+      ]
+    },
+    {
+      "compilers": [
+        "msvc"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [
+        "Haskell"
+      ],
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Job",
+      "name": ".github/workflows/ci.yml: test (windows-latest, 9.8)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "windows",
+      "toolchains": [
+        {
+          "language": "GHC",
+          "version": "9.8"
+        }
+      ]
+    },
+    {
+      "compilers": [
+        "msvc"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [
+        "Haskell"
+      ],
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Job",
+      "name": ".github/workflows/ci.yml: test (windows-latest, 9.10)",
+      "origin": ".github/workflows/ci.yml:jobs.test",
+      "os": "windows",
+      "toolchains": [
+        {
+          "language": "GHC",
+          "version": "9.10"
+        }
+      ]
+    },
+    {
+      "compilers": [
+        "gcc"
+      ],
+      "configurations": [],
+      "default_compiler": true,
+      "ecosystems": [],
+      "heuristic": false,
+      "job": ".github/workflows/copy-paste-detection.yml:copy-paste-detection",
+      "kind": "Job",
+      "name": ".github/workflows/copy-paste-detection.yml: copy-paste-detection",
+      "origin": ".github/workflows/copy-paste-detection.yml:jobs.copy-paste-detection",
+      "os": "linux",
+      "toolchains": []
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": ".gitignore",
+      "reader": ".gitignore entries"
+    },
+    {
+      "kind": "IgnoreEntry",
+      "origin": ".gitignore",
+      "pattern": "dist-newstyle/",
+      "syntax": "glob",
+      "written": "dist-newstyle/"
+    },
+    {
+      "kind": "IgnoreEntry",
+      "origin": ".gitignore",
+      "pattern": "*.hi",
+      "syntax": "glob",
+      "written": "*.hi"
+    },
+    {
+      "kind": "IgnoreEntry",
+      "origin": ".gitignore",
+      "pattern": "*.o",
+      "syntax": "glob",
+      "written": "*.o"
+    },
+    {
+      "kind": "IgnoreEntry",
+      "origin": ".gitignore",
+      "pattern": "*.tix",
+      "syntax": "glob",
+      "written": "*.tix"
+    },
+    {
+      "kind": "IgnoreEntry",
+      "origin": ".gitignore",
+      "pattern": ".stack-work/",
+      "syntax": "glob",
+      "written": ".stack-work/"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": ".hlint.yaml",
+      "reader": "hlint"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "LICENSE",
+      "reader": "license files"
+    },
+    {
+      "kind": "LicenseFile",
+      "licenses": [
+        "MIT"
+      ],
+      "origin": "LICENSE"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "GHC options"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wall",
+      "origin": "app.cabal",
+      "target": "library"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wcompat",
+      "origin": "app.cabal",
+      "target": "library"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Widentities",
+      "origin": "app.cabal",
+      "target": "library"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wredundant-constraints",
+      "origin": "app.cabal",
+      "target": "library"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ],
+        "requires": [
+          "flag(pedantic)"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Werror",
+      "origin": "app.cabal",
+      "target": "library"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wall",
+      "origin": "app.cabal",
+      "target": "executable app"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wcompat",
+      "origin": "app.cabal",
+      "target": "executable app"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Widentities",
+      "origin": "app.cabal",
+      "target": "executable app"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wredundant-constraints",
+      "origin": "app.cabal",
+      "target": "executable app"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ],
+        "requires": [
+          "flag(pedantic)"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Werror",
+      "origin": "app.cabal",
+      "target": "executable app"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wall",
+      "origin": "app.cabal",
+      "target": "test-suite spec"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wcompat",
+      "origin": "app.cabal",
+      "target": "test-suite spec"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Widentities",
+      "origin": "app.cabal",
+      "target": "test-suite spec"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Wredundant-constraints",
+      "origin": "app.cabal",
+      "target": "test-suite spec"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ],
+        "requires": [
+          "flag(pedantic)"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-Werror",
+      "origin": "app.cabal",
+      "target": "test-suite spec"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "Haskell test suites"
+    },
+    {
+      "heuristic": false,
+      "key": "test-suite",
+      "kind": "Setting",
+      "origin": "app.cabal",
+      "tool": "Haskell test suites",
+      "value": "spec"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "Cabal packages"
+    },
+    {
+      "kind": "Declared",
+      "manager": "Cabal",
+      "origin": "app.cabal"
+    },
+    {
+      "kind": "Application",
+      "manager": "Cabal",
+      "origin": "app.cabal"
+    },
+    {
+      "kind": "Library",
+      "manager": "Cabal",
+      "origin": "app.cabal"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "Cabal license"
+    },
+    {
+      "expression": "MIT",
+      "kind": "DeclaredLicense",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": "app.cabal"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "cabal.project",
+      "reader": "GHC options"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "cabal.project.freeze",
+      "reader": "Cabal lockfile"
+    },
+    {
+      "kind": "Locked",
+      "manager": "Cabal",
+      "origin": "cabal.project.freeze"
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal test",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "provides": {
+        "audit": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal-audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "provides": {
+        "format": [
+          "check"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "ormolu",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "provides": {
+        "analysis": [
+          "checks"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "hlint",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal test",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "provides": {
+        "audit": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal-audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "provides": {
+        "format": [
+          "check"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "ormolu",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "provides": {
+        "analysis": [
+          "checks"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "hlint",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal test",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "provides": {
+        "audit": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal-audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "provides": {
+        "format": [
+          "check"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "ormolu",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "provides": {
+        "analysis": [
+          "checks"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "hlint",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal test",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "provides": {
+        "audit": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal-audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "provides": {
+        "format": [
+          "check"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "ormolu",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "provides": {
+        "analysis": [
+          "checks"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "hlint",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal test",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "provides": {
+        "audit": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal-audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "provides": {
+        "format": [
+          "check"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "ormolu",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "provides": {
+        "analysis": [
+          "checks"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "hlint",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal test",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "coverage": [
+          "branch",
+          "region"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "HPC",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "provides": {
+        "audit": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cabal-audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5]",
+      "provides": {
+        "format": [
+          "check"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "ormolu",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[6]",
+      "provides": {
+        "analysis": [
+          "checks"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "hlint",
+      "via": []
+    }
+  ],
+  "map": {
+    "build_systems": [
+      "Cabal"
+    ],
+    "ci": {
+      "files": [
+        ".github/workflows/ci-lint.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/copy-paste-detection.yml"
+      ],
+      "jobs": [
+        {
+          "compilers": [
+            "gcc"
+          ],
+          "configurations": [],
+          "ecosystems": [],
+          "name": ".github/workflows/ci-lint.yml: ci-lint",
+          "os": "linux",
+          "toolchains": []
+        },
+        {
+          "compilers": [
+            "gcc"
+          ],
+          "configurations": [],
+          "ecosystems": [
+            "Haskell"
+          ],
+          "name": ".github/workflows/ci.yml: test (ubuntu-latest, 9.8)",
+          "os": "linux",
+          "toolchains": [
+            "GHC 9.8"
+          ]
+        },
+        {
+          "compilers": [
+            "gcc"
+          ],
+          "configurations": [],
+          "ecosystems": [
+            "Haskell"
+          ],
+          "name": ".github/workflows/ci.yml: test (ubuntu-latest, 9.10)",
+          "os": "linux",
+          "toolchains": [
+            "GHC 9.10"
+          ]
+        },
+        {
+          "compilers": [
+            "appleclang"
+          ],
+          "configurations": [],
+          "ecosystems": [
+            "Haskell"
+          ],
+          "name": ".github/workflows/ci.yml: test (macos-latest, 9.8)",
+          "os": "macos",
+          "toolchains": [
+            "GHC 9.8"
+          ]
+        },
+        {
+          "compilers": [
+            "appleclang"
+          ],
+          "configurations": [],
+          "ecosystems": [
+            "Haskell"
+          ],
+          "name": ".github/workflows/ci.yml: test (macos-latest, 9.10)",
+          "os": "macos",
+          "toolchains": [
+            "GHC 9.10"
+          ]
+        },
+        {
+          "compilers": [
+            "msvc"
+          ],
+          "configurations": [],
+          "ecosystems": [
+            "Haskell"
+          ],
+          "name": ".github/workflows/ci.yml: test (windows-latest, 9.8)",
+          "os": "windows",
+          "toolchains": [
+            "GHC 9.8"
+          ]
+        },
+        {
+          "compilers": [
+            "msvc"
+          ],
+          "configurations": [],
+          "ecosystems": [
+            "Haskell"
+          ],
+          "name": ".github/workflows/ci.yml: test (windows-latest, 9.10)",
+          "os": "windows",
+          "toolchains": [
+            "GHC 9.10"
+          ]
+        },
+        {
+          "compilers": [
+            "gcc"
+          ],
+          "configurations": [],
+          "ecosystems": [],
+          "name": ".github/workflows/copy-paste-detection.yml: copy-paste-detection",
+          "os": "linux",
+          "toolchains": []
+        }
+      ],
+      "providers": [
+        "GitHub Actions"
+      ]
+    },
+    "ecosystems": {
+      "Haskell": [
+        "build file app.cabal",
+        "build file cabal.project",
+        ".hs files"
+      ]
+    },
+    "languages": [
+      "Haskell"
+    ],
+    "units": [
+      {
+        "build_systems": [
+          "Cabal"
+        ],
+        "directory": ".",
+        "languages": [
+          "Haskell"
+        ],
+        "role": "product"
+      }
+    ],
+    "unrecognised_suffixes": [
+      {
+        "files": 1,
+        "suffix": ".freeze"
+      }
+    ]
+  },
+  "results": {
+    "action-pinning": {
+      "details": [],
+      "message": "all 7 actions are pinned to a commit",
+      "status": "PASS"
+    },
+    "ci-build-types": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "ci-lint": {
+      "details": [],
+      "message": "CI lints its configuration (GitHub Actions: actionlint, zizmor)",
+      "status": "PASS"
+    },
+    "ci-present": {
+      "details": [
+        ".github/workflows/ci-lint.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/copy-paste-detection.yml"
+      ],
+      "message": "CI configuration found for GitHub Actions",
+      "status": "PASS"
+    },
+    "code-formatting": {
+      "details": [],
+      "message": "CI enforces the ormolu style",
+      "status": "PASS"
+    },
+    "committed-artifacts": {
+      "details": [],
+      "message": "no build outputs are committed",
+      "status": "PASS"
+    },
+    "compiler-warnings": {
+      "details": [],
+      "message": "strict GHC warning flags are enabled: -Wall -Wcompat -Widentities -Wredundant-constraints",
+      "status": "PASS"
+    },
+    "copy-paste-detection": {
+      "details": [],
+      "message": "CI runs copy-paste detection with jscpd",
+      "status": "PASS"
+    },
+    "coverage": {
+      "details": [],
+      "message": "branch coverage is reported with HPC",
+      "status": "PASS"
+    },
+    "cxx-extensions": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "data-wellformed": {
+      "details": [],
+      "message": "5 data files parse (YAML: 5)",
+      "status": "PASS"
+    },
+    "dependency-audit": {
+      "details": [],
+      "message": "CI audits the dependencies with cabal-audit",
+      "status": "PASS"
+    },
+    "dependency-management": {
+      "details": [],
+      "message": "dependencies are declared in app.cabal (Cabal) and locked in cabal.project.freeze",
+      "status": "PASS"
+    },
+    "dependency-updates": {
+      "details": [
+        ".github/dependabot.yml"
+      ],
+      "message": "automated dependency updates are configured with Dependabot",
+      "status": "PASS"
+    },
+    "function-limits": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "hardening": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "large-files": {
+      "details": [],
+      "message": "no committed file is larger than 5 MiB",
+      "status": "PASS"
+    },
+    "license": {
+      "details": [
+        "LICENSE"
+      ],
+      "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "platform-matrix": {
+      "details": [
+        ".github/workflows/ci-lint.yml: ci-lint: linux / no GHC version",
+        ".github/workflows/ci.yml: test (ubuntu-latest, 9.8): linux / 9.8",
+        ".github/workflows/ci.yml: test (ubuntu-latest, 9.10): linux / 9.10",
+        ".github/workflows/ci.yml: test (macos-latest, 9.8): macos / 9.8",
+        ".github/workflows/ci.yml: test (macos-latest, 9.10): macos / 9.10",
+        ".github/workflows/ci.yml: test (windows-latest, 9.8): windows / 9.8",
+        ".github/workflows/ci.yml: test (windows-latest, 9.10): windows / 9.10",
+        ".github/workflows/copy-paste-detection.yml: copy-paste-detection: linux / no GHC version"
+      ],
+      "message": "CI covers 3 OS(es) (linux, macos, windows), 2 GHC version(s) (9.10, 9.8), 6 combination(s)",
+      "status": "PASS"
+    },
+    "secret-scanning": {
+      "details": [],
+      "message": "secrets are scanned for with gitleaks",
+      "status": "PASS"
+    },
+    "security-policy": {
+      "details": [],
+      "message": "SECURITY.md says how to report a vulnerability",
+      "status": "PASS"
+    },
+    "security-scanning": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "static-analysis": {
+      "details": [],
+      "message": "hlint runs",
+      "status": "PASS"
+    },
+    "status-badges": {
+      "details": [],
+      "message": "README.md shows CI (GitHub Actions) and quality (Codecov) badges",
+      "status": "PASS"
+    },
+    "tests-run": {
+      "details": [],
+      "message": "tests found in 1 file(s)",
+      "status": "PASS"
+    },
+    "type-checking": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "vcs-ignore": {
+      "details": [],
+      "message": ".gitignore ignores dist-newstyle/",
+      "status": "PASS"
+    },
+    "warnings-as-errors": {
+      "details": [],
+      "message": "warnings are treated as errors with -Werror",
+      "status": "PASS"
+    }
+  }
+}

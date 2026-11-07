@@ -1,0 +1,19 @@
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        ghc: ["9.8", "9.10"]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2 # v2
+        with:
+          ghc-version: ${{ matrix.ghc }}
+      - run: cabal test --enable-coverage --flags=pedantic
+      - run: cabal install hpc-codecov && hpc-codecov cabal:spec
+      - run: cabal-audit
+      - uses: haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29 # v17
+      - uses: haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8 # v2
+        with:
+          path: src/
