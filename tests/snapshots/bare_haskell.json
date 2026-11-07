@@ -1,0 +1,729 @@
+{
+  "answers": {
+    "committed-artifacts": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "committed": [
+              "src/App.hi"
+            ],
+            "language": "Haskell",
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "compiler-warnings": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": null,
+                "found": {},
+                "missing": [
+                  "-Wall",
+                  "-Wcompat",
+                  "-Widentities",
+                  "-Wredundant-constraints"
+                ]
+              }
+            ],
+            "language": "Haskell",
+            "practice": "compiler-warnings",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "branch": {
+              "answer": "no",
+              "known": [
+                "cabal test --enable-coverage"
+              ],
+              "tools": []
+            },
+            "language": "Haskell",
+            "line": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "path": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "region": {
+              "answer": "no",
+              "known": [
+                "cabal test --enable-coverage"
+              ],
+              "tools": []
+            },
+            "statement": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-audit": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "cabal-audit": {
+                "can": {
+                  "runs": "cabal-audit"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-management": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "declared": [
+              {
+                "manager": "Cabal",
+                "manifest": "app.cabal"
+              }
+            ],
+            "language": "Haskell",
+            "lock_required": true,
+            "locked": [],
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "formatting": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "fourmolu": {
+                "can": {
+                  "apply": "fourmolu --mode inplace .",
+                  "check": "fourmolu --mode check ."
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "ormolu": {
+                "can": {
+                  "apply": "ormolu --mode inplace",
+                  "check": "ormolu --mode check $(git ls-files '*.hs')"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "stylish-haskell": {
+                "can": {
+                  "apply": "stylish-haskell --inplace --recursive ."
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "check",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "function-limits": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Haskell",
+            "level": "limits",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "hardening": [
+      {
+        "language": "Haskell",
+        "units": []
+      }
+    ],
+    "license": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "files": {},
+            "language": "Haskell",
+            "mismatches": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "platforms": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "axis": "GHC version",
+            "language": "Haskell",
+            "notes": [],
+            "platforms": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "security-scanning": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Haskell",
+            "level": "scans",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "static-analysis": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "hlint": {
+                "can": {
+                  "checks": "hlint ."
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "stan": {
+                "can": {
+                  "checks": "stan"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "weeder": {
+                "can": {
+                  "checks": "weeder"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "checks",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "tests": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {
+              "cabal test": [
+                "app.cabal"
+              ]
+            },
+            "known": {
+              "cabal test": {
+                "can": {
+                  "runs": "cabal test (or stack test)"
+                },
+                "needs_definition": true,
+                "required": false
+              }
+            },
+            "language": "Haskell",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "type-checking": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Haskell",
+            "level": "checks",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "vcs-ignore": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Haskell",
+            "outputs": {
+              "Cabal's build directory": {}
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "warnings-as-errors": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": null,
+                "found": {},
+                "missing": [
+                  "-Werror"
+                ]
+              }
+            ],
+            "language": "Haskell",
+            "practice": "warnings-as-errors",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ]
+  },
+  "facts": [
+    {
+      "build_system": "Cabal",
+      "kind": "BuildFile",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": "app.cabal"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Haskell",
+      "origin": "app/Main.hs",
+      "role": "product"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Haskell",
+      "origin": "src/App.hs",
+      "role": "product"
+    },
+    {
+      "files": 1,
+      "kind": "UnrecognisedSuffix",
+      "origin": ".",
+      "suffix": ".hi"
+    },
+    {
+      "build_systems": [
+        "Cabal"
+      ],
+      "kind": "Unit",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": ".",
+      "role": "product"
+    },
+    {
+      "kind": "CommittedOutput",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": "src/App.hi",
+      "output": "Cabal's build directory"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "GHC options"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-O2",
+      "origin": "app.cabal",
+      "target": "library"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-O2",
+      "origin": "app.cabal",
+      "target": "executable app"
+    },
+    {
+      "applies": {
+        "compilers": [
+          "ghc"
+        ],
+        "languages": [
+          "Haskell"
+        ]
+      },
+      "build_system": "Cabal",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-O2",
+      "origin": "app.cabal",
+      "target": "test-suite spec"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "Haskell test suites"
+    },
+    {
+      "heuristic": false,
+      "key": "test-suite",
+      "kind": "Setting",
+      "origin": "app.cabal",
+      "tool": "Haskell test suites",
+      "value": "spec"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "Cabal packages"
+    },
+    {
+      "kind": "Declared",
+      "manager": "Cabal",
+      "origin": "app.cabal"
+    },
+    {
+      "kind": "Application",
+      "manager": "Cabal",
+      "origin": "app.cabal"
+    },
+    {
+      "kind": "Library",
+      "manager": "Cabal",
+      "origin": "app.cabal"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "app.cabal",
+      "reader": "Cabal license"
+    },
+    {
+      "expression": "MIT",
+      "kind": "DeclaredLicense",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": "app.cabal"
+    }
+  ],
+  "map": {
+    "build_systems": [
+      "Cabal"
+    ],
+    "ci": {
+      "files": [],
+      "jobs": [],
+      "providers": []
+    },
+    "ecosystems": {
+      "Haskell": [
+        "build file app.cabal",
+        ".hs files"
+      ]
+    },
+    "languages": [
+      "Haskell"
+    ],
+    "units": [
+      {
+        "build_systems": [
+          "Cabal"
+        ],
+        "directory": ".",
+        "languages": [
+          "Haskell"
+        ],
+        "role": "product"
+      }
+    ],
+    "unrecognised_suffixes": [
+      {
+        "files": 1,
+        "suffix": ".hi"
+      }
+    ]
+  },
+  "results": {
+    "action-pinning": {
+      "details": [],
+      "message": "no CI configuration with reusable steps",
+      "status": "SKIP"
+    },
+    "ci-build-types": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "ci-lint": {
+      "details": [],
+      "message": "no CI configuration",
+      "status": "SKIP"
+    },
+    "ci-present": {
+      "details": [],
+      "message": "no CI configuration found (looked for GitHub Actions, GitLab CI, Azure Pipelines, AppVeyor, CircleCI, Travis CI, Jenkins, Buildkite, Drone, Cirrus CI, Bitbucket Pipelines, Woodpecker, pre-commit.ci)",
+      "status": "FAIL"
+    },
+    "code-formatting": {
+      "details": [
+        "consider a CI job that runs ormolu --mode check $(git ls-files '*.hs') (or fourmolu --mode check .)"
+      ],
+      "message": "CI never runs ormolu, fourmolu or stylish-haskell; its formatting is not enforced",
+      "status": "FAIL"
+    },
+    "committed-artifacts": {
+      "details": [
+        "src/App.hi",
+        "remove them from version control (git rm -r --cached <path>) and ignore them"
+      ],
+      "message": "1 build output is committed",
+      "status": "FAIL"
+    },
+    "compiler-warnings": {
+      "details": [],
+      "message": "no GHC warning flags found; enable at least -Wall -Wcompat -Widentities -Wredundant-constraints",
+      "status": "FAIL"
+    },
+    "copy-paste-detection": {
+      "details": [
+        "consider adding jscpd (npx jscpd .), which reads most languages, or PMD CPD, Duplo or Simian"
+      ],
+      "message": "no copy-paste detection found in CI configuration",
+      "status": "WARN"
+    },
+    "coverage": {
+      "details": [
+        "known to report branch coverage: cabal test --enable-coverage"
+      ],
+      "message": "no branch coverage reporting found in what CI runs",
+      "status": "FAIL"
+    },
+    "cxx-extensions": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "data-wellformed": {
+      "details": [],
+      "message": "no JSON, TOML, YAML or XML files to parse",
+      "status": "PASS"
+    },
+    "dependency-audit": {
+      "details": [
+        "consider running in CI: cabal-audit"
+      ],
+      "message": "no dependency vulnerability audit found in CI configuration",
+      "status": "WARN"
+    },
+    "dependency-management": {
+      "details": [
+        "commit cabal.project.freeze (cabal freeze) or stack.yaml.lock, so the executable is always built with the dependencies it was tested with"
+      ],
+      "message": "dependencies are declared in app.cabal (Cabal) but not locked",
+      "status": "WARN"
+    },
+    "dependency-updates": {
+      "details": [
+        "consider adding .github/dependabot.yml or a Renovate configuration (renovate.json)"
+      ],
+      "message": "no automated dependency updates configured",
+      "status": "WARN"
+    },
+    "function-limits": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "hardening": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "large-files": {
+      "details": [],
+      "message": "no committed file is larger than 5 MiB",
+      "status": "PASS"
+    },
+    "license": {
+      "details": [
+        "add a LICENSE file with the text of a license (see https://choosealicense.com)"
+      ],
+      "message": "no license file",
+      "status": "FAIL"
+    },
+    "platform-matrix": {
+      "details": [],
+      "message": "no CI configuration found",
+      "status": "FAIL"
+    },
+    "secret-scanning": {
+      "details": [
+        "consider running gitleaks, TruffleHog (trufflesecurity/trufflehog) or detect-secrets in CI or as a pre-commit hook; GitHub's secret scanning and push protection are repository settings, which cannot be seen from here"
+      ],
+      "message": "no secret scanning found in CI configuration",
+      "status": "WARN"
+    },
+    "security-policy": {
+      "details": [
+        "add a SECURITY.md that says how to report a vulnerability privately: an email address, or GitHub's private vulnerability reporting (Settings > Code security, then link to /security/advisories/new)"
+      ],
+      "message": "no security policy",
+      "status": "WARN"
+    },
+    "security-scanning": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "static-analysis": {
+      "details": [
+        "consider running hlint ., weeder or stan in CI"
+      ],
+      "message": "no static analyzer runs",
+      "status": "FAIL"
+    },
+    "status-badges": {
+      "details": [
+        "add a CI status badge, e.g. ![ci](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)",
+        "add a quality badge: coverage (Codecov, Coveralls) or analysis (SonarCloud, Codacy, OpenSSF Scorecard)"
+      ],
+      "message": "no README",
+      "status": "FAIL"
+    },
+    "tests-run": {
+      "details": [],
+      "message": "tests found in 1 file(s), but no CI configuration runs cabal test (or stack test)",
+      "status": "WARN"
+    },
+    "type-checking": {
+      "details": [],
+      "message": "not applicable to Haskell",
+      "status": "SKIP"
+    },
+    "vcs-ignore": {
+      "details": [
+        "consider adding a .gitignore (or your version control system's equivalent) that ignores build outputs"
+      ],
+      "message": "no version control ignore file found (.gitignore, .hgignore, .bzrignore, .fossil-settings/ignore-glob); build outputs can be committed by accident",
+      "status": "FAIL"
+    },
+    "warnings-as-errors": {
+      "details": [
+        "add -Werror, at least behind a flag CI turns on (if flag(pedantic) ghc-options: -Werror), or build with --ghc-options=-Werror or stack build --pedantic in CI"
+      ],
+      "message": "warnings are not treated as errors in CI configuration or ghc-options (.cabal, package.yaml, cabal.project, stack.yaml)",
+      "status": "FAIL"
+    }
+  }
+}

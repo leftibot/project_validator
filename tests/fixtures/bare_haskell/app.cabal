@@ -1,0 +1,31 @@
+cabal-version: 3.0
+name:          app
+version:       0.1.0
+license:       MIT
+license-file:  LICENSE
+
+common warnings
+  ghc-options: -O2
+
+
+library
+  import:           warnings
+  exposed-modules:  App
+  hs-source-dirs:   src
+  build-depends:    base >=4.18 && <5
+  default-language: GHC2021
+
+executable app
+  import:           warnings
+  main-is:          Main.hs
+  hs-source-dirs:   app
+  build-depends:    base, app
+  default-language: GHC2021
+
+test-suite spec
+  import:           warnings
+  type:             exitcode-stdio-1.0
+  main-is:          Spec.hs
+  hs-source-dirs:   test
+  build-depends:    base, app
+  default-language: GHC2021
