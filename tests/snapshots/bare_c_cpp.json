@@ -456,6 +456,14 @@
       "output": "the build directory and module files"
     },
     {
+      "kind": "CommittedOutput",
+      "languages": [
+        "Haskell"
+      ],
+      "origin": "main.o",
+      "output": "Cabal's build directory"
+    },
+    {
       "kind": "ConfigurationFile",
       "origin": "CMakeLists.txt",
       "reader": "CMake"

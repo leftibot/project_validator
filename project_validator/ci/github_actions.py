@@ -103,6 +103,18 @@ def _job_label(name: str, combination: Combination) -> str:
     return f"{name} ({_combination_label(combination)})"
 
 
+_EXPORT = re.compile(
+    r"""^\s*(?:echo|printf)\s+(?:-\w+\s+)?["']?(?P<name>[A-Za-z_]\w*)=(?P<value>[^"'\n]*?)["']?"""
+    r"""\s*>>\s*["']?\$\{?GITHUB_ENV\}?["']?\s*$""",
+    re.MULTILINE,
+)
+
+
+def _exported(script: str) -> dict[str, str]:
+    """The variables a step's script sets for the later steps: `echo "NAME=value" >> "$GITHUB_ENV"`."""
+    return {match["name"]: match["value"] for match in _EXPORT.finditer(script)}
+
+
 def _job_facts(
     path: str, job_id: str, job: Mapping[str, object], workflow_env: object, caller: str = "", load: Load | None = None
 ) -> Iterator[Fact]:
@@ -197,6 +209,9 @@ class _Combination:
                 yield from self.step_facts(
                     Origin(path=self.origin.path, at=(*self.origin.at, "steps", number)), step, known
                 )
+                # What a step writes to $GITHUB_ENV is in the environment of the job's later steps.
+                if isinstance(run := step.get("run"), str) and (exported := _exported(self.substitute(run))):
+                    known = replace(known, env={**known.env, **exported})
 
     def step_facts(
         self, origin: Origin, step: Mapping[str, object], known: Known, via: tuple[Origin, ...] = ()
