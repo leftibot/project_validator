@@ -1,5 +1,31 @@
 {
   "answers": {
+    "action-pinning": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "Haskell",
+            "references": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "ci-lint": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "Haskell",
+            "providers": {},
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "committed-artifacts": [
       {
         "language": "Haskell",
@@ -219,6 +245,20 @@
             "language": "Haskell",
             "notes": [],
             "platforms": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "secret-scanning": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "no",
+            "configured": [],
+            "language": "Haskell",
+            "scanners": [],
             "unit": "."
           }
         ]

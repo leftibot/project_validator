@@ -1,8 +1,9 @@
 """Haskell: built with Cabal (package descriptions `*.cabal`, project files `cabal.project`), Stack (`stack.yaml`) or
 hpack (`package.yaml`, which generates the `.cabal` file), judged by the GHC versions CI runs.
 
-The profile's modules: `cabal` reads the Cabal file format, `options` GHC's options and the practices over them,
-`tools` the test runners, coverage, formatters, linters, dependency managers and build outputs.
+The profile's modules: `cabal` reads the Cabal file format, `options` GHC's options wherever a project sets them,
+`practices` the strict warning set and warnings as errors over them, `tools` the test runners, coverage, formatters,
+linters, dependency managers and build outputs.
 """
 
 import re
@@ -12,7 +13,7 @@ from pathlib import Path, PurePosixPath
 from project_validator import yaml_support
 from project_validator.ecosystems.haskell.cabal import CabalSyntaxError, parse, top_level
 from project_validator.ecosystems.haskell.options import HASKELL_LANGUAGE
-from project_validator.ecosystems.model import BuildSystem, Ecosystem, ToolchainPatterns
+from project_validator.ecosystems.model import BuildSystem, Ecosystem, toolchain_patterns
 from project_validator.facts.axes import versions_axis
 
 
@@ -84,19 +85,21 @@ HASKELL = Ecosystem(
     source_suffixes={".hs": "Haskell", ".lhs": "Haskell", ".hs-boot": "Haskell", ".hsc": "Haskell"},
     # Alex and Happy grammars generate Haskell; `.y` is yacc's too.
     ambiguous_suffixes={".x": None, ".y": None, ".chs": "Haskell"},
-    toolchain=ToolchainPatterns(
-        language="GHC",
-        versions=(
-            # haskell-actions/setup (`ghc-version: 9.6`), a matrix (`"ghc": "9.8.2"`), haskell-ci (`ghc-9.8.2`).
-            re.compile(rf"\bghc-version\W+{_GHC_VERSION}"),
-            re.compile(rf"[\"']ghc[\"']\s*:\s*[\"']?{_GHC_VERSION}"),
-            re.compile(rf"\bghcup\s+install\s+ghc\s+(?:--set\s+)?{_GHC_VERSION}"),
-            re.compile(r"\bghc-(\d+\.\d+(?:\.\d+)*)\b"),
-            re.compile(r"\bhaskell:(\d+(?:\.\d+)*)"),
+    toolchain=toolchain_patterns(
+        "GHC",
+        version=_GHC_VERSION,
+        inputs=("ghc-version",),  # haskell-actions/setup
+        images=("haskell",),
+        image_version=r"(\d+(?:\.\d+)*)",
+        more=(
+            # A matrix (`"ghc": "9.8.2"`), ghcup, haskell-ci (`ghc-9.8.2`).
+            rf"[\"']ghc[\"']\s*:\s*[\"']?{_GHC_VERSION}",
+            rf"\bghcup\s+install\s+ghc\s+(?:--set\s+)?{_GHC_VERSION}",
+            r"\bghc-(\d+\.\d+(?:\.\d+)*)\b",
         ),
+        commands=r"\bcabal\s+(?:v2-)?(?:build|test|run|install)\b|\bstack\s+(?:build|test)\b|\bghc\b",
         # A Stackage snapshot pins a GHC: it names a toolchain, not a version.
         labelled=((re.compile(r"--resolver[=\s]+((?:lts|nightly)[-\w.]*)"), "Stackage {}"),),
-        usage=re.compile(r"\bcabal\s+(?:v2-)?(?:build|test|run|install)\b|\bstack\s+(?:build|test)\b|\bghc\b"),
     ),
     ci_usage=re.compile(r"\bhaskell-actions/setup\b|\bhaskell/actions/setup\b|\bhaskell-ci\b"),
 )

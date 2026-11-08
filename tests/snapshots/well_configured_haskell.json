@@ -1,5 +1,75 @@
 {
   "answers": {
+    "action-pinning": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Haskell",
+            "references": [
+              {
+                "path": ".github/workflows/ci-lint.yml",
+                "pinning": null,
+                "reference": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+              },
+              {
+                "path": ".github/workflows/ci-lint.yml",
+                "pinning": null,
+                "reference": "rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca"
+              },
+              {
+                "path": ".github/workflows/ci.yml",
+                "pinning": null,
+                "reference": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+              },
+              {
+                "path": ".github/workflows/ci.yml",
+                "pinning": null,
+                "reference": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+              },
+              {
+                "path": ".github/workflows/ci.yml",
+                "pinning": null,
+                "reference": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+              },
+              {
+                "path": ".github/workflows/ci.yml",
+                "pinning": null,
+                "reference": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+              },
+              {
+                "path": ".github/workflows/copy-paste-detection.yml",
+                "pinning": null,
+                "reference": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+              }
+            ],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "ci-lint": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Haskell",
+            "providers": {
+              "GitHub Actions": {
+                "lintable": true,
+                "linters": [
+                  "actionlint",
+                  "zizmor"
+                ]
+              }
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "committed-artifacts": [
       {
         "language": "Haskell",
@@ -279,6 +349,22 @@
                 "configurations": [],
                 "os": "windows"
               }
+            ],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "secret-scanning": [
+      {
+        "language": "Haskell",
+        "units": [
+          {
+            "answer": "yes",
+            "configured": [],
+            "language": "Haskell",
+            "scanners": [
+              "gitleaks"
             ],
             "unit": "."
           }
@@ -594,6 +680,16 @@
       "line": "gitleaks git --redact .",
       "origin": ".github/workflows/ci-lint.yml:jobs.ci-lint.steps[3].run",
       "via": []
+    },
+    {
+      "kind": "StepReference",
+      "origin": ".github/workflows/ci-lint.yml",
+      "reference": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "kind": "StepReference",
+      "origin": ".github/workflows/ci-lint.yml",
+      "reference": "rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca"
     },
     {
       "builds": true,
@@ -1430,6 +1526,26 @@
       "via": []
     },
     {
+      "kind": "StepReference",
+      "origin": ".github/workflows/ci.yml",
+      "reference": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "kind": "StepReference",
+      "origin": ".github/workflows/ci.yml",
+      "reference": "haskell-actions/setup@96f3dafd067155f32643c2a0757ab71d2910e2c2"
+    },
+    {
+      "kind": "StepReference",
+      "origin": ".github/workflows/ci.yml",
+      "reference": "haskell-actions/run-ormolu@15b0083a0ef416915994c2f3d2e7b6bd5e2b9a29"
+    },
+    {
+      "kind": "StepReference",
+      "origin": ".github/workflows/ci.yml",
+      "reference": "haskell-actions/hlint-run@eaf6e4dd2a5bfa2a4ac3d7cbd1a3e5e5d3b2b6a8"
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1485,6 +1601,11 @@
       "via": [
         ".github/workflows/copy-paste-detection.yml:jobs.copy-paste-detection.steps[1].run"
       ]
+    },
+    {
+      "kind": "StepReference",
+      "origin": ".github/workflows/copy-paste-detection.yml",
+      "reference": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
     },
     {
       "compilers": [

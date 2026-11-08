@@ -1,7 +1,7 @@
 """GHC's options, wherever a project sets them: each component's `ghc-options` in a package description (`*.cabal`,
-hpack's `package.yaml`), a project file's `package` and `program-options` stanzas (`cabal.project`), Stack's
-`ghc-options` (`stack.yaml`), and CI's command lines (`--ghc-options=-Werror`, `stack build --pedantic`). The strict
-warning set and warnings as errors are practices over them."""
+hpack's `package.yaml`), a project file's `package` and `program-options` stanzas (`cabal.project`), and Stack's
+`ghc-options` (`stack.yaml`), as `CompilerOption` facts for GHC and Haskell. The practices over them are in
+`practices`."""
 
 import shlex
 from collections.abc import Iterator, Mapping
@@ -12,12 +12,7 @@ from project_validator.ecosystems.haskell.cabal import CabalSyntaxError, parse, 
 from project_validator.facts import Fact, Origin
 from project_validator.facts.build import CompilerOption, disjuncts
 from project_validator.facts.conditions import both, extend, negated, only, requiring
-from project_validator.facts.flags import flag_requirement
-from project_validator.facts.practices import WARNINGS as WARNINGS_PRACTICE
-from project_validator.facts.practices import WARNINGS_AS_ERRORS as WARNINGS_AS_ERRORS_PRACTICE
-from project_validator.facts.practices import Practice, Requirement, always
 from project_validator.facts.settings import SettingsReader, unreadable
-from project_validator.tools.toolchains import Flag
 
 HASKELL_LANGUAGE = frozenset({"Haskell"})
 READER = "GHC options"
@@ -114,48 +109,3 @@ def _read(path: str, text: str) -> Iterator[Fact]:
 
 
 GHC_OPTIONS = SettingsReader(name=READER, files=("*.cabal", "cabal.project", "stack.yaml", "package.yaml"), read=_read)
-
-
-_EVERYTHING = "-Weverything"
-GHC_WARNINGS = (
-    Flag("-Wall", f"-Wall|{_EVERYTHING}"),
-    Flag("-Wcompat", f"-Wcompat|{_EVERYTHING}"),
-    Flag("-Widentities", f"-Widentities|-fwarn-identities|{_EVERYTHING}"),
-    Flag("-Wredundant-constraints", f"-Wredundant-constraints|{_EVERYTHING}"),
-)
-GHC_WARNINGS_AS_ERRORS = Flag("-Werror", "-Werror")
-# Stack's `--pedantic` turns on -Wall and -Werror.
-_PEDANTIC = (r"\bstack\b[^\n]*\s--pedantic\b",)
-
-
-def _requirement(flag: Flag) -> Requirement:
-    pedantic = flag.name in ("-Wall", "-Werror")
-    return flag_requirement(
-        flag,
-        HASKELL_LANGUAGE,
-        configured=_PEDANTIC if pedantic else (),
-        configured_hints=("--pedantic",) if pedantic else (),
-    )
-
-
-WARNINGS = Practice(
-    name=WARNINGS_PRACTICE,
-    languages=HASKELL_LANGUAGE,
-    kind="GHC warning flags",
-    requirements=always(*(_requirement(flag) for flag in GHC_WARNINGS)),
-    reads=(READER,),
-    separator=" ",
-    hint="add -Wall -Wcompat -Widentities -Wredundant-constraints to ghc-options (a common stanza imports them "
-    "into every component)",
-)
-WARNINGS_AS_ERRORS = Practice(
-    name=WARNINGS_AS_ERRORS_PRACTICE,
-    languages=HASKELL_LANGUAGE,
-    kind="warnings as errors",
-    requirements=always(_requirement(GHC_WARNINGS_AS_ERRORS)),
-    any_one=True,
-    reads=(READER,),
-    searched="CI configuration or ghc-options (.cabal, package.yaml, cabal.project, stack.yaml)",
-    hint="add -Werror, at least behind a flag CI turns on (if flag(pedantic) ghc-options: -Werror), or build with "
-    "--ghc-options=-Werror or stack build --pedantic in CI",
-)
