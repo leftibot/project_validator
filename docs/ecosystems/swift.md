@@ -34,6 +34,10 @@ SwiftLint runs and concurrency is checked completely: Swift 6 language mode, `-s
 
 Releases keep the language's runtime safety checks: no build uses `-Ounchecked` or unchecked exclusivity.
 
+## `mutation-testing`
+
+Muter (`muter`, settings in `muter.conf.yml`).
+
 ## `code-formatting`
 
 `swift format lint --strict` (or `swift-format lint -s`; plain `lint` only warns) or `swiftformat --lint`.

@@ -9,8 +9,11 @@ from project_validator.ecosystems.dotnet.mutation import STRYKER_NET
 from project_validator.ecosystems.go import GO_MUTESTING, GREMLINS
 from project_validator.ecosystems.javascript.mutation import STRYKER_JS
 from project_validator.ecosystems.jvm.mutation import PIT
+from project_validator.ecosystems.php.mutation import INFECTION
 from project_validator.ecosystems.python.mutation import COSMIC_RAY, MUTATEST, MUTMUT
+from project_validator.ecosystems.ruby.mutation import MUTANT
 from project_validator.ecosystems.rust.mutation import CARGO_MUTANTS
+from project_validator.ecosystems.swift import MUTER
 from project_validator.facts import Facts, Origin
 from project_validator.facts.build import Applies, CompilerOption
 from project_validator.facts.mutation import INCREMENTAL, MUTATION, RUNS, incremental_when, mutated, mutation_tool
@@ -239,3 +242,45 @@ class DotnetMutationTests(unittest.TestCase):
     def test_defined_by_stryker_config_json(self) -> None:
         facts = settings_facts_of({"stryker-config.json": "{}"})
         self.assertEqual(STRYKER_NET.defined(MUTATION, facts), ("stryker-config.json",))
+
+
+class PhpMutationTests(unittest.TestCase):
+    def test_infection_is_a_run(self) -> None:
+        for line in ("vendor/bin/infection", "infection --threads=4"):
+            self.assertEqual(provided(INFECTION.claims(command(line), Facts())), RUN_ONLY, line)
+        self.assertIsNone(INFECTION.claims(command("composer test"), Facts()))
+
+    def test_git_diff_options_are_incremental(self) -> None:
+        for line in ("infection --git-diff-filter=AM", "vendor/bin/infection --git-diff-lines"):
+            self.assertEqual(provided(INFECTION.claims(command(line), Facts())), RUN_INCREMENTALLY, line)
+
+    def test_defined_by_infection_json5(self) -> None:
+        for name in ("infection.json5", "infection.json", "infection.json5.dist", "infection.json.dist"):
+            self.assertEqual(INFECTION.defined(MUTATION, settings_facts_of({name: "{}"})), (name,), name)
+
+
+class RubyMutationTests(unittest.TestCase):
+    def test_mutant_run_is_a_run(self) -> None:
+        for line in ("mutant run", "mutant run -- 'App*'"):
+            self.assertEqual(provided(MUTANT.claims(command(line), Facts())), RUN_ONLY, line)
+        runs = ci_tool_runs(github_job("ubuntu-latest", "bundle exec mutant run"))
+        self.assertIn("mutant", {run.tool for run in runs})
+        self.assertIsNone(MUTANT.claims(command("mutant environment show"), Facts()))
+
+    def test_since_is_incremental(self) -> None:
+        self.assertEqual(provided(MUTANT.claims(command("mutant run --since origin/main"), Facts())), RUN_INCREMENTALLY)
+
+    def test_defined_by_mutant_yml(self) -> None:
+        for name in (".mutant.yml", "mutant.yml", "config/mutant.yml"):
+            self.assertEqual(MUTANT.defined(MUTATION, settings_facts_of({name: "integration: rspec\n"})), (name,), name)
+
+
+class SwiftMutationTests(unittest.TestCase):
+    def test_muter_is_a_run(self) -> None:
+        self.assertEqual(provided(MUTER.claims(command("muter"), Facts())), RUN_ONLY)
+        self.assertEqual(provided(MUTER.claims(command("muter run --skip-coverage"), Facts())), RUN_ONLY)
+        self.assertIsNone(MUTER.claims(command("swift test"), Facts()))
+
+    def test_defined_by_muter_conf_yml(self) -> None:
+        facts = settings_facts_of({"muter.conf.yml": "executable: /usr/bin/swift\n"})
+        self.assertEqual(MUTER.defined(MUTATION, facts), ("muter.conf.yml",))

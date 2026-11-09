@@ -7,8 +7,11 @@ from project_validator.ecosystems.dotnet import DOTNET
 from project_validator.ecosystems.go import GO
 from project_validator.ecosystems.javascript import JAVASCRIPT_AND_TYPESCRIPT
 from project_validator.ecosystems.jvm import JVM
+from project_validator.ecosystems.php import PHP
 from project_validator.ecosystems.python import PYTHON
+from project_validator.ecosystems.ruby import RUBY
 from project_validator.ecosystems.rust import RUST
+from project_validator.ecosystems.swift import SWIFT
 from tests.support import (
     FIXTURES,
     UNSTRUCTURED_CI_FILES,
@@ -17,8 +20,11 @@ from tests.support import (
     WELL_CONFIGURED_GO,
     WELL_CONFIGURED_JAVASCRIPT,
     WELL_CONFIGURED_JVM,
+    WELL_CONFIGURED_PHP,
     WELL_CONFIGURED_PYTHON,
+    WELL_CONFIGURED_RUBY,
     WELL_CONFIGURED_RUST,
+    WELL_CONFIGURED_SWIFT,
     ci_running,
     fixture_files,
     github_job,
@@ -64,6 +70,9 @@ class MutationTestingTests(unittest.TestCase):
                 WELL_CONFIGURED_DOTNET,
                 "Stryker.NET (stryker-config.json) runs; on the pull request's changes only (bonus)",
             ),
+            (PHP, WELL_CONFIGURED_PHP, "Infection (infection.json5) runs; on the pull request's changes only (bonus)"),
+            (RUBY, WELL_CONFIGURED_RUBY, "mutant (.mutant.yml) runs; on the pull request's changes only (bonus)"),
+            (SWIFT, WELL_CONFIGURED_SWIFT, "Muter (muter.conf.yml) runs"),
         )
         for ecosystem, files, message in cases:
             with self.subTest(ecosystem=ecosystem.label):

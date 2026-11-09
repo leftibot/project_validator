@@ -17,3 +17,4 @@ jobs:
       - run: swift test --enable-code-coverage ${{ matrix.sanitizer }}
       - run: swift test -c release ${{ matrix.sanitizer }}
       - run: osv-scanner scan --lockfile Package.resolved
+      - run: muter

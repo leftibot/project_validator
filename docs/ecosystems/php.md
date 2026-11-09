@@ -31,6 +31,12 @@ PHPUnit's `failOnWarning`, `failOnNotice` and `failOnDeprecation` (or `failOnAll
 PHPStan or Psalm, also through the Composer scripts CI runs. Strict mode is a bonus: PHPStan `level` 8 or higher
 (in its configuration or `--level`), or Psalm `errorLevel` 1 or 2.
 
+## `mutation-testing`
+
+Infection (`infection` or `vendor/bin/infection`, also through a Composer script; settings in `infection.json5`,
+`infection.json`, or either with a `.dist` suffix). `--git-diff-filter` or `--git-diff-lines` counts as running on the
+changes only.
+
 ## `code-formatting`
 
 `php-cs-fixer check` (or `fix --dry-run`), phpcs or `pint --test`, in CI or the Composer scripts it runs; phpcbf

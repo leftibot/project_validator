@@ -1,0 +1,2 @@
+executable: /usr/bin/swift
+arguments: [test]

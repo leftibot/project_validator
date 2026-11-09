@@ -26,6 +26,11 @@ Ruby's warnings are on while testing (`ruby -w`, `RUBYOPT=-w`, `$VERBOSE = true`
 Sorbet (`srb tc`) or Steep (`steep check`). Strict mode is a bonus: Sorbet's `# typed: strict` sigils, or
 `D::Ruby.strict` in a Steepfile.
 
+## `mutation-testing`
+
+mutant (`mutant run`, also as `bundle exec mutant run`; settings in `.mutant.yml`, `mutant.yml` or
+`config/mutant.yml`). `mutant run --since <revision>` counts as running on the changes only.
+
 ## `code-formatting`
 
 RuboCop (without `-a` or `-A`), Standard (without `--fix`) or `stree check`, run directly, through
