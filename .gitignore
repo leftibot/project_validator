@@ -18,3 +18,9 @@ venv/
 .coverage.*
 coverage.xml
 htmlcov/
+
+# Fuzzing
+crash-*
+leak-*
+timeout-*
+oom-*

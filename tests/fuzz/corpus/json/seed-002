@@ -1,0 +1,714 @@
+{
+  "answers": {
+    "action-pinning": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "C++",
+            "references": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "ci-lint": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "C++",
+            "providers": {},
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "committed-artifacts": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "committed": [
+              "main.o"
+            ],
+            "language": "C++",
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "compiler-warnings": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": "gcc",
+                "found": {},
+                "missing": [
+                  "-Wall",
+                  "-Wextra",
+                  "-Wpedantic",
+                  "-Wshadow",
+                  "-Wconversion"
+                ]
+              }
+            ],
+            "language": "C++",
+            "practice": "compiler-warnings",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "branch": {
+              "answer": "no",
+              "known": [
+                "gcovr --xml",
+                "lcov --rc branch_coverage=1",
+                "gcov --branch-counts",
+                "llvm-cov report"
+              ],
+              "tools": []
+            },
+            "language": "C++",
+            "line": {
+              "answer": "no",
+              "known": [
+                "gcovr",
+                "lcov",
+                "gcov",
+                "llvm-cov report"
+              ],
+              "tools": []
+            },
+            "path": {
+              "answer": "no",
+              "known": [
+                "lcov --mcdc-coverage",
+                "gcov --conditions",
+                "llvm-cov show -show-mcdc",
+                "gcc -fcondition-coverage",
+                "gcc -fpath-coverage",
+                "clang -fcoverage-mcdc"
+              ],
+              "tools": []
+            },
+            "region": {
+              "answer": "no",
+              "known": [
+                "llvm-cov report"
+              ],
+              "tools": []
+            },
+            "statement": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-audit": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "C++",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-management": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "yes",
+            "declared": [],
+            "language": "C++",
+            "lock_required": false,
+            "locked": [],
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "formatting": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "clang-format": {
+                "can": {
+                  "apply": "clang-format -i",
+                  "check": "clang-format --dry-run -Werror"
+                },
+                "needs_definition": true,
+                "required": false
+              }
+            },
+            "language": "C++",
+            "level": "check",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "function-limits": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "clang-tidy's readability-function-size": {
+                "can": {
+                  "limits": "clang-tidy with readability-function-size and a LineThreshold in .clang-tidy"
+                },
+                "needs_definition": true,
+                "required": false
+              },
+              "lizard": {
+                "can": {
+                  "limits": "lizard --length 30"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C++",
+            "level": "limits",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "hardening": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": "gcc",
+                "found": {},
+                "missing": [
+                  "_FORTIFY_SOURCE",
+                  "-fstack-protector-strong",
+                  "-fcf-protection",
+                  "-fstack-clash-protection",
+                  "_GLIBCXX_ASSERTIONS or _LIBCPP_HARDENING_MODE"
+                ]
+              }
+            ],
+            "language": "C++",
+            "practice": "hardening",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "license": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "files": {},
+            "language": "C++",
+            "mismatches": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "platforms": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "axis": "compiler",
+            "language": "C++",
+            "notes": [],
+            "platforms": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "secret-scanning": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "configured": [],
+            "language": "C++",
+            "scanners": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "security-scanning": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "CodeQL": {
+                "can": {
+                  "scans": "CodeQL (github/codeql-action)"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "GitLab SAST": {
+                "can": {
+                  "scans": "GitLab SAST (Security/SAST.gitlab-ci.yml)"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "semgrep": {
+                "can": {
+                  "scans": "semgrep ci"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C++",
+            "level": "scans",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "static-analysis": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "clang-tidy": {
+                "can": {
+                  "checks": "clang-tidy (CMAKE_CXX_CLANG_TIDY, checks chosen in a .clang-tidy)"
+                },
+                "needs_definition": true,
+                "required": true
+              },
+              "cppcheck": {
+                "can": {
+                  "checks": "cppcheck (CMAKE_CXX_CPPCHECK)"
+                },
+                "needs_definition": false,
+                "required": true
+              }
+            },
+            "language": "C++",
+            "level": "checks",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "tests": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "ctest": {
+                "can": {
+                  "runs": "ctest"
+                },
+                "needs_definition": true,
+                "required": false
+              },
+              "meson test": {
+                "can": {
+                  "runs": "meson test"
+                },
+                "needs_definition": true,
+                "required": false
+              }
+            },
+            "language": "C++",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "type-checking": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "C++",
+            "level": "checks",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "vcs-ignore": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "C++",
+            "outputs": {
+              "the build directory": {}
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "warnings-as-errors": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": "gcc",
+                "found": {},
+                "missing": [
+                  "-Werror"
+                ]
+              }
+            ],
+            "language": "C++",
+            "practice": "warnings-as-errors",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ]
+  },
+  "facts": [
+    {
+      "build_system": "CMake",
+      "kind": "BuildFile",
+      "languages": [
+        "C++"
+      ],
+      "origin": "CMakeLists.txt"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "C++",
+      "origin": "third_party/json/json.hpp",
+      "role": "vendored"
+    },
+    {
+      "build_systems": [
+        "CMake"
+      ],
+      "kind": "Unit",
+      "languages": [
+        "C++"
+      ],
+      "origin": ".",
+      "role": "product"
+    },
+    {
+      "kind": "CommittedOutput",
+      "languages": [
+        "C",
+        "C++"
+      ],
+      "origin": "main.o",
+      "output": "the build directory"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "CMakeLists.txt",
+      "reader": "CMake"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "CMakeLists.txt",
+      "reader": "Fortran programs"
+    }
+  ],
+  "map": {
+    "build_systems": [
+      "CMake"
+    ],
+    "ci": {
+      "files": [],
+      "jobs": [],
+      "providers": []
+    },
+    "ecosystems": {
+      "C/C++": [
+        "build file CMakeLists.txt"
+      ]
+    },
+    "languages": [
+      "C++"
+    ],
+    "units": [
+      {
+        "build_systems": [
+          "CMake"
+        ],
+        "directory": ".",
+        "languages": [
+          "C++"
+        ],
+        "role": "product"
+      }
+    ],
+    "unrecognised_suffixes": [],
+    "vendored": [
+      "third_party/json/json.hpp"
+    ]
+  },
+  "results": {
+    "action-pinning": {
+      "details": [],
+      "message": "no CI configuration with reusable steps",
+      "status": "SKIP"
+    },
+    "ci-build-types": {
+      "details": [],
+      "message": "no CI configuration found",
+      "status": "FAIL"
+    },
+    "ci-lint": {
+      "details": [],
+      "message": "no CI configuration",
+      "status": "SKIP"
+    },
+    "ci-present": {
+      "details": [],
+      "message": "no CI configuration found (looked for GitHub Actions, GitLab CI, Azure Pipelines, AppVeyor, CircleCI, Travis CI, Jenkins, Buildkite, Drone, Cirrus CI, Bitbucket Pipelines, Woodpecker, pre-commit.ci)",
+      "status": "FAIL"
+    },
+    "code-formatting": {
+      "details": [
+        "consider a CI job that runs clang-format --dry-run -Werror"
+      ],
+      "message": "no clang-format configuration found; formatting is not defined",
+      "status": "FAIL"
+    },
+    "committed-artifacts": {
+      "details": [
+        "main.o",
+        "remove them from version control (git rm -r --cached <path>) and ignore them"
+      ],
+      "message": "1 build output is committed",
+      "status": "FAIL"
+    },
+    "compiler-warnings": {
+      "details": [],
+      "message": "no compiler warning flags found; enable at least -Wall -Wextra -Wpedantic -Wshadow -Wconversion",
+      "status": "FAIL"
+    },
+    "copy-paste-detection": {
+      "details": [
+        "consider adding jscpd (npx jscpd .), which reads most languages, or PMD CPD, Duplo or Simian"
+      ],
+      "message": "no copy-paste detection found in CI configuration",
+      "status": "WARN"
+    },
+    "coverage": {
+      "details": [
+        "known to report branch coverage: gcovr --xml, lcov --rc branch_coverage=1, gcov --branch-counts, llvm-cov report"
+      ],
+      "message": "no branch coverage reporting found in what CI runs",
+      "status": "FAIL"
+    },
+    "cxx-extensions": {
+      "details": [
+        "set(CMAKE_CXX_EXTENSIONS OFF) (Meson: default_options: ['cpp_std=c++20'])"
+      ],
+      "message": "C++ compiler extensions are never disabled",
+      "status": "FAIL"
+    },
+    "data-wellformed": {
+      "details": [],
+      "message": "no JSON, TOML, YAML or XML files to parse",
+      "status": "PASS"
+    },
+    "dependency-audit": {
+      "details": [],
+      "message": "not applicable to C++",
+      "status": "SKIP"
+    },
+    "dependency-management": {
+      "details": [
+        "if the project has dependencies, consider a dependency manager: CPM, FetchContent, Meson wraps, vcpkg or Conan",
+        "fetch third-party code with the ecosystem's package manager instead of committing a copy of it"
+      ],
+      "message": "third-party code is committed (third_party/); no dependencies are declared",
+      "status": "WARN"
+    },
+    "dependency-updates": {
+      "details": [
+        "consider adding .github/dependabot.yml or a Renovate configuration (renovate.json)"
+      ],
+      "message": "no automated dependency updates configured",
+      "status": "WARN"
+    },
+    "function-limits": {
+      "details": [
+        "consider running in CI: clang-tidy with readability-function-size and a LineThreshold in .clang-tidy or lizard --length 30"
+      ],
+      "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "hardening": {
+      "details": [
+        "enable -fhardened (GCC 14+) or _FORTIFY_SOURCE, -fstack-protector-strong, -fcf-protection, -fstack-clash-protection, _GLIBCXX_ASSERTIONS or _LIBCPP_HARDENING_MODE; for MSVC /sdl, /guard:cf, /DYNAMICBASE, /CETCOMPAT"
+      ],
+      "message": "no hardening options found; enable _FORTIFY_SOURCE, -fstack-protector-strong, -fcf-protection, -fstack-clash-protection, _GLIBCXX_ASSERTIONS or _LIBCPP_HARDENING_MODE",
+      "status": "FAIL"
+    },
+    "large-files": {
+      "details": [],
+      "message": "no committed file is larger than 5 MiB",
+      "status": "PASS"
+    },
+    "license": {
+      "details": [
+        "add a LICENSE file with the text of a license (see https://choosealicense.com)"
+      ],
+      "message": "no license file",
+      "status": "FAIL"
+    },
+    "platform-matrix": {
+      "details": [],
+      "message": "no CI configuration found",
+      "status": "FAIL"
+    },
+    "secret-scanning": {
+      "details": [
+        "consider running gitleaks, TruffleHog (trufflesecurity/trufflehog) or detect-secrets in CI or as a pre-commit hook; GitHub's secret scanning and push protection are repository settings, which cannot be seen from here"
+      ],
+      "message": "no secret scanning found in CI configuration",
+      "status": "WARN"
+    },
+    "security-policy": {
+      "details": [
+        "add a SECURITY.md that says how to report a vulnerability privately: an email address, or GitHub's private vulnerability reporting (Settings > Code security, then link to /security/advisories/new)"
+      ],
+      "message": "no security policy",
+      "status": "WARN"
+    },
+    "security-scanning": {
+      "details": [
+        "consider running in CI: CodeQL (github/codeql-action), GitLab SAST (Security/SAST.gitlab-ci.yml) or semgrep ci"
+      ],
+      "message": "no code security scanning found in CI configuration",
+      "status": "WARN"
+    },
+    "static-analysis": {
+      "details": [
+        "consider running clang-tidy (CMAKE_CXX_CLANG_TIDY, checks chosen in a .clang-tidy) and cppcheck (CMAKE_CXX_CPPCHECK) in CI"
+      ],
+      "message": "no static analyzer runs",
+      "status": "FAIL"
+    },
+    "status-badges": {
+      "details": [
+        "add a CI status badge, e.g. ![ci](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)",
+        "add a quality badge: coverage (Codecov, Coveralls) or analysis (SonarCloud, Codacy, OpenSSF Scorecard)"
+      ],
+      "message": "no README",
+      "status": "FAIL"
+    },
+    "tests-run": {
+      "details": [],
+      "message": "no tests found (tests registered with CTest (enable_testing(), then add_test or a *_discover_tests call) or tests registered with Meson's test() in meson.build)",
+      "status": "FAIL"
+    },
+    "type-checking": {
+      "details": [],
+      "message": "not applicable to C++",
+      "status": "SKIP"
+    },
+    "vcs-ignore": {
+      "details": [
+        "consider adding a .gitignore (or your version control system's equivalent) that ignores build outputs"
+      ],
+      "message": "no version control ignore file found (.gitignore, .hgignore, .bzrignore, .fossil-settings/ignore-glob); build outputs can be committed by accident",
+      "status": "FAIL"
+    },
+    "warnings-as-errors": {
+      "details": [
+        "add -Werror (GCC/Clang), /WX (MSVC) or set CMAKE_COMPILE_WARNING_AS_ERROR (Meson: werror=true), at least as an option"
+      ],
+      "message": "warnings are not treated as errors in CI configuration or the build files (CMake files, presets, meson.build)",
+      "status": "FAIL"
+    }
+  }
+}

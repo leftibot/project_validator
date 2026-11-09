@@ -2,7 +2,7 @@
 
 import sys
 
-import atheris  # type: ignore[import-untyped]
+import atheris
 
 with atheris.instrument_imports():
     import app  # type: ignore[import-not-found]

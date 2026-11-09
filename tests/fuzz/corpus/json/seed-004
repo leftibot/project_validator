@@ -1,0 +1,772 @@
+{
+  "answers": {
+    "action-pinning": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "C#",
+            "references": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "ci-lint": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "C#",
+            "providers": {},
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "committed-artifacts": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "committed": [
+              "src/App/obj/"
+            ],
+            "language": "C#",
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "compiler-warnings": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": null,
+                "found": {},
+                "missing": [
+                  "AnalysisMode Recommended or All",
+                  "EnforceCodeStyleInBuild",
+                  "Nullable enable"
+                ]
+              }
+            ],
+            "language": "C#",
+            "practice": "compiler-warnings",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "branch": {
+              "answer": "no",
+              "known": [
+                "dotnet test --collect \"XPlat Code Coverage\"",
+                "dotnet-coverage collect"
+              ],
+              "tools": []
+            },
+            "language": "C#",
+            "line": {
+              "answer": "no",
+              "known": [
+                "dotnet test --collect \"XPlat Code Coverage\"",
+                "dotnet-coverage collect"
+              ],
+              "tools": []
+            },
+            "path": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "region": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "statement": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "unit": "src/App",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-audit": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "GitLab Dependency Scanning": {
+                "can": {
+                  "runs": "GitLab Dependency Scanning (Security/Dependency-Scanning.gitlab-ci.yml)"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "NuGet audit of every package": {
+                "can": {
+                  "runs": "a restore with <NuGetAuditMode>all</NuGetAuditMode>"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "dotnet list package --vulnerable": {
+                "can": {
+                  "runs": "dotnet list package --vulnerable --include-transitive"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "osv-scanner": {
+                "can": {
+                  "runs": "osv-scanner"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "snyk": {
+                "can": {
+                  "runs": "snyk test"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "trivy": {
+                "can": {
+                  "runs": "trivy fs"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "runs",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-management": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "declared": [
+              {
+                "manager": "NuGet",
+                "manifest": "src/App/App.csproj"
+              }
+            ],
+            "language": "C#",
+            "lock_required": true,
+            "locked": [],
+            "unit": "src/App",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "formatting": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "CSharpier": {
+                "can": {
+                  "apply": "csharpier format .",
+                  "check": "csharpier check ."
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "dotnet format": {
+                "can": {
+                  "apply": "dotnet format",
+                  "check": "dotnet format --verify-no-changes"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "check",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "function-limits": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "lizard": {
+                "can": {
+                  "limits": "lizard --length 30"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "limits",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "hardening": [
+      {
+        "language": "C#",
+        "units": []
+      }
+    ],
+    "license": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "files": {},
+            "language": "C#",
+            "mismatches": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "platforms": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "axis": ".NET SDK version",
+            "language": "C#",
+            "notes": [],
+            "platforms": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "secret-scanning": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "configured": [],
+            "language": "C#",
+            "scanners": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "security-scanning": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              ".NET security analyzers": {
+                "can": {
+                  "scans": "<AnalysisModeSecurity>Recommended</AnalysisModeSecurity> (or Security Code Scan)"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "CodeQL": {
+                "can": {
+                  "scans": "CodeQL (github/codeql-action)"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "GitLab SAST": {
+                "can": {
+                  "scans": "GitLab SAST (Security/SAST.gitlab-ci.yml)"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "semgrep": {
+                "can": {
+                  "scans": "semgrep ci"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "scans",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "static-analysis": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "Meziantou.Analyzer": {
+                "can": {
+                  "checks": "Meziantou.Analyzer"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "Roslynator": {
+                "can": {
+                  "checks": "Roslynator"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "SonarAnalyzer": {
+                "can": {
+                  "checks": "SonarAnalyzer"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "StyleCop.Analyzers": {
+                "can": {
+                  "checks": "StyleCop.Analyzers"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "checks",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "tests": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "dotnet test": {
+                "can": {
+                  "runs": "dotnet test"
+                },
+                "needs_definition": true,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "runs",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "type-checking": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "C#",
+            "level": "checks",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "vcs-ignore": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "C#",
+            "outputs": {
+              "bin/ and obj/": {}
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "warnings-as-errors": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": null,
+                "found": {},
+                "missing": [
+                  "TreatWarningsAsErrors"
+                ]
+              }
+            ],
+            "language": "C#",
+            "practice": "warnings-as-errors",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ]
+  },
+  "facts": [
+    {
+      "build_system": "MSBuild",
+      "kind": "BuildFile",
+      "languages": [],
+      "origin": "src/App/App.csproj"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "C#",
+      "origin": "src/App/Calculator.cs",
+      "role": "product"
+    },
+    {
+      "build_systems": [
+        "MSBuild"
+      ],
+      "kind": "Unit",
+      "languages": [
+        "C#"
+      ],
+      "origin": "src/App",
+      "role": "product"
+    },
+    {
+      "kind": "CommittedOutput",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": "src/App/obj/",
+      "output": "bin/ and obj/"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "src/App/App.csproj",
+      "reader": "NuGet package references"
+    },
+    {
+      "kind": "Declared",
+      "manager": "NuGet",
+      "origin": "src/App/App.csproj"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "src/App/App.csproj",
+      "reader": "PackageLicenseExpression"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "src/App/App.csproj",
+      "reader": "MSBuild warning settings"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "src/App/App.csproj",
+      "reader": "MSBuild"
+    },
+    {
+      "heuristic": false,
+      "key": "TargetFramework",
+      "kind": "Setting",
+      "origin": "src/App/App.csproj:TargetFramework",
+      "tool": "MSBuild",
+      "value": "net10.0"
+    },
+    {
+      "heuristic": false,
+      "key": "PackageReference",
+      "kind": "Setting",
+      "origin": "src/App/App.csproj:PackageReference",
+      "tool": "MSBuild",
+      "value": "Newtonsoft.Json"
+    },
+    {
+      "heuristic": false,
+      "key": "Sdk",
+      "kind": "Setting",
+      "origin": "src/App/App.csproj:Sdk",
+      "tool": "MSBuild",
+      "value": "Microsoft.NET.Sdk"
+    }
+  ],
+  "map": {
+    "build_systems": [
+      "MSBuild"
+    ],
+    "ci": {
+      "files": [],
+      "jobs": [],
+      "providers": []
+    },
+    "ecosystems": {
+      ".NET": [
+        ".cs files"
+      ]
+    },
+    "languages": [
+      "C#"
+    ],
+    "units": [
+      {
+        "build_systems": [
+          "MSBuild"
+        ],
+        "directory": "src/App",
+        "languages": [
+          "C#"
+        ],
+        "role": "product"
+      }
+    ],
+    "unrecognised_suffixes": []
+  },
+  "results": {
+    "action-pinning": {
+      "details": [],
+      "message": "no CI configuration with reusable steps",
+      "status": "SKIP"
+    },
+    "ci-build-types": {
+      "details": [],
+      "message": "not applicable to C#",
+      "status": "SKIP"
+    },
+    "ci-lint": {
+      "details": [],
+      "message": "no CI configuration",
+      "status": "SKIP"
+    },
+    "ci-present": {
+      "details": [],
+      "message": "no CI configuration found (looked for GitHub Actions, GitLab CI, Azure Pipelines, AppVeyor, CircleCI, Travis CI, Jenkins, Buildkite, Drone, Cirrus CI, Bitbucket Pipelines, Woodpecker, pre-commit.ci)",
+      "status": "FAIL"
+    },
+    "code-formatting": {
+      "details": [
+        "consider a CI job that runs dotnet format --verify-no-changes (or csharpier check .)"
+      ],
+      "message": "CI never runs dotnet format or CSharpier; its formatting is not enforced",
+      "status": "FAIL"
+    },
+    "committed-artifacts": {
+      "details": [
+        "src/App/obj/",
+        "remove them from version control (git rm -r --cached <path>) and ignore them"
+      ],
+      "message": "1 build output is committed",
+      "status": "FAIL"
+    },
+    "compiler-warnings": {
+      "details": [],
+      "message": "no .NET analyzer settings found; enable at least AnalysisMode Recommended or All, EnforceCodeStyleInBuild, Nullable enable",
+      "status": "FAIL"
+    },
+    "copy-paste-detection": {
+      "details": [
+        "consider adding jscpd (npx jscpd .), which reads most languages, or PMD CPD, Duplo or Simian"
+      ],
+      "message": "no copy-paste detection found in CI configuration",
+      "status": "WARN"
+    },
+    "coverage": {
+      "details": [
+        "known to report branch coverage: dotnet test --collect \"XPlat Code Coverage\", dotnet-coverage collect"
+      ],
+      "message": "no branch coverage reporting found in what CI runs",
+      "status": "FAIL"
+    },
+    "cxx-extensions": {
+      "details": [],
+      "message": "not applicable to C#",
+      "status": "SKIP"
+    },
+    "data-wellformed": {
+      "details": [],
+      "message": "no JSON, TOML, YAML or XML files to parse",
+      "status": "PASS"
+    },
+    "dependency-audit": {
+      "details": [
+        "consider running in CI: a restore with <NuGetAuditMode>all</NuGetAuditMode>, dotnet list package --vulnerable --include-transitive, GitLab Dependency Scanning (Security/Dependency-Scanning.gitlab-ci.yml), osv-scanner, trivy fs or snyk test"
+      ],
+      "message": "no dependency vulnerability audit found in CI configuration",
+      "status": "WARN"
+    },
+    "dependency-management": {
+      "details": [
+        "set <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>, commit the packages.lock.json files, and restore them in CI with --locked-mode"
+      ],
+      "message": "dependencies are declared in src/App/App.csproj (NuGet) but not locked",
+      "status": "WARN"
+    },
+    "dependency-updates": {
+      "details": [
+        "consider adding .github/dependabot.yml or a Renovate configuration (renovate.json)"
+      ],
+      "message": "no automated dependency updates configured",
+      "status": "WARN"
+    },
+    "function-limits": {
+      "details": [
+        "consider running in CI: lizard --length 30"
+      ],
+      "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "hardening": {
+      "details": [],
+      "message": "not applicable to C#",
+      "status": "SKIP"
+    },
+    "large-files": {
+      "details": [],
+      "message": "no committed file is larger than 5 MiB",
+      "status": "PASS"
+    },
+    "license": {
+      "details": [
+        "add a LICENSE file with the text of a license (see https://choosealicense.com)"
+      ],
+      "message": "no license file",
+      "status": "FAIL"
+    },
+    "platform-matrix": {
+      "details": [],
+      "message": "no CI configuration found",
+      "status": "FAIL"
+    },
+    "secret-scanning": {
+      "details": [
+        "consider running gitleaks, TruffleHog (trufflesecurity/trufflehog) or detect-secrets in CI or as a pre-commit hook; GitHub's secret scanning and push protection are repository settings, which cannot be seen from here"
+      ],
+      "message": "no secret scanning found in CI configuration",
+      "status": "WARN"
+    },
+    "security-policy": {
+      "details": [
+        "add a SECURITY.md that says how to report a vulnerability privately: an email address, or GitHub's private vulnerability reporting (Settings > Code security, then link to /security/advisories/new)"
+      ],
+      "message": "no security policy",
+      "status": "WARN"
+    },
+    "security-scanning": {
+      "details": [
+        "consider running in CI: <AnalysisModeSecurity>Recommended</AnalysisModeSecurity> (or Security Code Scan), CodeQL (github/codeql-action), GitLab SAST (Security/SAST.gitlab-ci.yml) or semgrep ci"
+      ],
+      "message": "no code security scanning found in CI configuration",
+      "status": "WARN"
+    },
+    "static-analysis": {
+      "details": [
+        "consider running Roslynator, SonarAnalyzer, StyleCop.Analyzers or Meziantou.Analyzer in CI"
+      ],
+      "message": "no static analyzer runs",
+      "status": "FAIL"
+    },
+    "status-badges": {
+      "details": [
+        "add a CI status badge, e.g. ![ci](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)",
+        "add a quality badge: coverage (Codecov, Coveralls) or analysis (SonarCloud, Codacy, OpenSSF Scorecard)"
+      ],
+      "message": "no README",
+      "status": "FAIL"
+    },
+    "tests-run": {
+      "details": [],
+      "message": "no tests found ([Fact], [Test] or [TestMethod] methods in a test project (one referencing Microsoft.NET.Test.Sdk))",
+      "status": "FAIL"
+    },
+    "type-checking": {
+      "details": [],
+      "message": "not applicable to C#",
+      "status": "SKIP"
+    },
+    "vcs-ignore": {
+      "details": [
+        "consider adding a .gitignore (or your version control system's equivalent) that ignores build outputs"
+      ],
+      "message": "no version control ignore file found (.gitignore, .hgignore, .bzrignore, .fossil-settings/ignore-glob); build outputs can be committed by accident",
+      "status": "FAIL"
+    },
+    "warnings-as-errors": {
+      "details": [
+        "set <TreatWarningsAsErrors>true</TreatWarningsAsErrors> in Directory.Build.props"
+      ],
+      "message": "warnings are not treated as errors in the MSBuild settings or CI configuration",
+      "status": "FAIL"
+    }
+  }
+}

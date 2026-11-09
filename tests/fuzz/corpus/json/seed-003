@@ -1,0 +1,756 @@
+{
+  "answers": {
+    "action-pinning": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "Fortran",
+            "references": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "ci-lint": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "Fortran",
+            "providers": {},
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "committed-artifacts": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "committed": [
+              "app.mod"
+            ],
+            "language": "Fortran",
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "compiler-warnings": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": "gcc",
+                "found": {},
+                "missing": [
+                  "-Wall",
+                  "-Wextra",
+                  "-Wpedantic",
+                  "-Wimplicit-interface"
+                ]
+              }
+            ],
+            "language": "Fortran",
+            "practice": "compiler-warnings",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "coverage": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "branch": {
+              "answer": "no",
+              "known": [
+                "gcovr --xml",
+                "lcov --rc branch_coverage=1",
+                "gcov --branch-counts"
+              ],
+              "tools": []
+            },
+            "language": "Fortran",
+            "line": {
+              "answer": "no",
+              "known": [
+                "gcovr",
+                "lcov",
+                "gcov"
+              ],
+              "tools": []
+            },
+            "path": {
+              "answer": "no",
+              "known": [
+                "lcov --mcdc-coverage",
+                "gcov --conditions"
+              ],
+              "tools": []
+            },
+            "region": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "statement": {
+              "answer": "impossible",
+              "known": [],
+              "tools": []
+            },
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-audit": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Fortran",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "dependency-management": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "yes",
+            "declared": [
+              {
+                "manager": "fpm",
+                "manifest": "fpm.toml"
+              }
+            ],
+            "language": "Fortran",
+            "lock_required": false,
+            "locked": [],
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "formatting": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "fprettify": {
+                "can": {
+                  "apply": "fprettify --recursive .",
+                  "check": "fprettify --diff --recursive ."
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Fortran",
+            "level": "check",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "function-limits": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "lizard": {
+                "can": {
+                  "limits": "lizard --length 30"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Fortran",
+            "level": "limits",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "hardening": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": "gcc",
+                "found": {},
+                "missing": [
+                  "-fstack-protector-strong",
+                  "-fcf-protection",
+                  "-fstack-clash-protection"
+                ]
+              }
+            ],
+            "language": "Fortran",
+            "practice": "hardening",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "license": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "files": {},
+            "language": "Fortran",
+            "mismatches": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "platforms": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "axis": "compiler",
+            "language": "Fortran",
+            "notes": [],
+            "platforms": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "secret-scanning": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "configured": [],
+            "language": "Fortran",
+            "scanners": [],
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "security-scanning": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Fortran",
+            "level": "scans",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "static-analysis": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "fortitude": {
+                "can": {
+                  "checks": "fortitude check"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Fortran",
+            "level": "checks",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "tests": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "ctest": {
+                "can": {
+                  "runs": "ctest"
+                },
+                "needs_definition": true,
+                "required": false
+              },
+              "fpm test": {
+                "can": {
+                  "runs": "fpm test"
+                },
+                "needs_definition": true,
+                "required": false
+              },
+              "meson test": {
+                "can": {
+                  "runs": "meson test"
+                },
+                "needs_definition": true,
+                "required": false
+              }
+            },
+            "language": "Fortran",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "type-checking": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "impossible",
+            "defined": {},
+            "known": {},
+            "language": "Fortran",
+            "level": "checks",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
+    "vcs-ignore": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Fortran",
+            "outputs": {
+              "the build directory and module files": {}
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
+    "warnings-as-errors": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "no",
+            "compilers": [
+              {
+                "compiler": "gcc",
+                "found": {},
+                "missing": [
+                  "-Werror"
+                ]
+              }
+            ],
+            "language": "Fortran",
+            "practice": "warnings-as-errors",
+            "unit": ".",
+            "unknowns": []
+          }
+        ]
+      }
+    ]
+  },
+  "facts": [
+    {
+      "build_system": "fpm",
+      "kind": "BuildFile",
+      "languages": [
+        "Fortran"
+      ],
+      "origin": "fpm.toml"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Fortran",
+      "origin": "app/main.f90",
+      "role": "product"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Fortran",
+      "origin": "src/app.f90",
+      "role": "product"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Fortran",
+      "origin": "third_party/minpack/enorm.f",
+      "role": "vendored"
+    },
+    {
+      "files": 1,
+      "kind": "UnrecognisedSuffix",
+      "origin": ".",
+      "suffix": ".mod"
+    },
+    {
+      "build_systems": [
+        "fpm"
+      ],
+      "kind": "Unit",
+      "languages": [
+        "Fortran"
+      ],
+      "origin": ".",
+      "role": "product"
+    },
+    {
+      "kind": "CommittedOutput",
+      "languages": [
+        "Fortran"
+      ],
+      "origin": "app.mod",
+      "output": "the build directory and module files"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fpm.toml",
+      "reader": "fpm"
+    },
+    {
+      "heuristic": false,
+      "key": "name",
+      "kind": "Setting",
+      "origin": "fpm.toml:name",
+      "tool": "fpm",
+      "value": "app"
+    },
+    {
+      "heuristic": false,
+      "key": "version",
+      "kind": "Setting",
+      "origin": "fpm.toml:version",
+      "tool": "fpm",
+      "value": "0.1.0"
+    },
+    {
+      "heuristic": false,
+      "key": "dependencies.stdlib.git",
+      "kind": "Setting",
+      "origin": "fpm.toml:dependencies.stdlib.git",
+      "tool": "fpm",
+      "value": "https://github.com/fortran-lang/stdlib"
+    },
+    {
+      "heuristic": false,
+      "key": "dependencies.stdlib.branch",
+      "kind": "Setting",
+      "origin": "fpm.toml:dependencies.stdlib.branch",
+      "tool": "fpm",
+      "value": "stdlib-fpm"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fpm.toml",
+      "reader": "fpm dependencies"
+    },
+    {
+      "kind": "Declared",
+      "manager": "fpm",
+      "origin": "fpm.toml"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fpm.toml",
+      "reader": "Fortran programs"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fpm.toml",
+      "reader": "fortitude"
+    },
+    {
+      "heuristic": false,
+      "key": "program",
+      "kind": "Setting",
+      "origin": "app/main.f90",
+      "tool": "Fortran programs",
+      "value": true
+    }
+  ],
+  "map": {
+    "build_systems": [
+      "fpm"
+    ],
+    "ci": {
+      "files": [],
+      "jobs": [],
+      "providers": []
+    },
+    "ecosystems": {
+      "Fortran": [
+        "build file fpm.toml",
+        ".f90 files"
+      ]
+    },
+    "languages": [
+      "Fortran"
+    ],
+    "units": [
+      {
+        "build_systems": [
+          "fpm"
+        ],
+        "directory": ".",
+        "languages": [
+          "Fortran"
+        ],
+        "role": "product"
+      }
+    ],
+    "unrecognised_suffixes": [
+      {
+        "files": 1,
+        "suffix": ".mod"
+      }
+    ],
+    "vendored": [
+      "third_party/minpack/enorm.f"
+    ]
+  },
+  "results": {
+    "action-pinning": {
+      "details": [],
+      "message": "no CI configuration with reusable steps",
+      "status": "SKIP"
+    },
+    "ci-build-types": {
+      "details": [],
+      "message": "no CI configuration found",
+      "status": "FAIL"
+    },
+    "ci-lint": {
+      "details": [],
+      "message": "no CI configuration",
+      "status": "SKIP"
+    },
+    "ci-present": {
+      "details": [],
+      "message": "no CI configuration found (looked for GitHub Actions, GitLab CI, Azure Pipelines, AppVeyor, CircleCI, Travis CI, Jenkins, Buildkite, Drone, Cirrus CI, Bitbucket Pipelines, Woodpecker, pre-commit.ci)",
+      "status": "FAIL"
+    },
+    "code-formatting": {
+      "details": [
+        "consider a CI job that runs fprettify --diff --recursive ."
+      ],
+      "message": "CI never runs fprettify; its formatting is not enforced",
+      "status": "FAIL"
+    },
+    "committed-artifacts": {
+      "details": [
+        "app.mod",
+        "remove them from version control (git rm -r --cached <path>) and ignore them"
+      ],
+      "message": "1 build output is committed",
+      "status": "FAIL"
+    },
+    "compiler-warnings": {
+      "details": [],
+      "message": "no Fortran compiler warning flags found; enable at least -Wall -Wextra -Wpedantic -Wimplicit-interface",
+      "status": "FAIL"
+    },
+    "copy-paste-detection": {
+      "details": [
+        "consider adding jscpd (npx jscpd .), which reads most languages, or PMD CPD, Duplo or Simian"
+      ],
+      "message": "no copy-paste detection found in CI configuration",
+      "status": "WARN"
+    },
+    "coverage": {
+      "details": [
+        "known to report branch coverage: gcovr --xml, lcov --rc branch_coverage=1, gcov --branch-counts"
+      ],
+      "message": "no branch coverage reporting found in what CI runs",
+      "status": "FAIL"
+    },
+    "cxx-extensions": {
+      "details": [
+        "compile to a standard: -std=f2018 (ifx: -stand f18; Meson: default_options: ['fortran_std=f2018'])"
+      ],
+      "message": "Fortran is never compiled to a standard; the compilers' extensions are allowed",
+      "status": "FAIL"
+    },
+    "data-wellformed": {
+      "details": [],
+      "message": "1 data file parses (TOML: 1)",
+      "status": "PASS"
+    },
+    "dependency-audit": {
+      "details": [],
+      "message": "not applicable to Fortran",
+      "status": "SKIP"
+    },
+    "dependency-management": {
+      "details": [
+        "fetch third-party code with the ecosystem's package manager instead of committing a copy of it"
+      ],
+      "message": "third-party code is committed (third_party/); dependencies are declared in fpm.toml (fpm)",
+      "status": "WARN"
+    },
+    "dependency-updates": {
+      "details": [
+        "consider adding .github/dependabot.yml or a Renovate configuration (renovate.json)"
+      ],
+      "message": "no automated dependency updates configured",
+      "status": "WARN"
+    },
+    "function-limits": {
+      "details": [
+        "consider running in CI: lizard --length 30"
+      ],
+      "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "hardening": {
+      "details": [
+        "enable -fhardened (GCC 14+) or -fstack-protector-strong, -fcf-protection, -fstack-clash-protection"
+      ],
+      "message": "no hardening options found; enable -fstack-protector-strong, -fcf-protection, -fstack-clash-protection",
+      "status": "FAIL"
+    },
+    "large-files": {
+      "details": [],
+      "message": "no committed file is larger than 5 MiB",
+      "status": "PASS"
+    },
+    "license": {
+      "details": [
+        "add a LICENSE file with the text of a license (see https://choosealicense.com)"
+      ],
+      "message": "no license file",
+      "status": "FAIL"
+    },
+    "platform-matrix": {
+      "details": [],
+      "message": "no CI configuration found",
+      "status": "FAIL"
+    },
+    "secret-scanning": {
+      "details": [
+        "consider running gitleaks, TruffleHog (trufflesecurity/trufflehog) or detect-secrets in CI or as a pre-commit hook; GitHub's secret scanning and push protection are repository settings, which cannot be seen from here"
+      ],
+      "message": "no secret scanning found in CI configuration",
+      "status": "WARN"
+    },
+    "security-policy": {
+      "details": [
+        "add a SECURITY.md that says how to report a vulnerability privately: an email address, or GitHub's private vulnerability reporting (Settings > Code security, then link to /security/advisories/new)"
+      ],
+      "message": "no security policy",
+      "status": "WARN"
+    },
+    "security-scanning": {
+      "details": [],
+      "message": "not applicable to Fortran",
+      "status": "SKIP"
+    },
+    "static-analysis": {
+      "details": [
+        "consider running fortitude check in CI"
+      ],
+      "message": "no static analyzer runs",
+      "status": "FAIL"
+    },
+    "status-badges": {
+      "details": [
+        "add a CI status badge, e.g. ![ci](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)",
+        "add a quality badge: coverage (Codecov, Coveralls) or analysis (SonarCloud, Codacy, OpenSSF Scorecard)"
+      ],
+      "message": "no README",
+      "status": "FAIL"
+    },
+    "tests-run": {
+      "details": [],
+      "message": "no tests found (tests registered with CTest (enable_testing(), then add_test or a *_discover_tests call), tests registered with Meson's test() in meson.build or Fortran test programs in test/)",
+      "status": "FAIL"
+    },
+    "type-checking": {
+      "details": [],
+      "message": "not applicable to Fortran",
+      "status": "SKIP"
+    },
+    "vcs-ignore": {
+      "details": [
+        "consider adding a .gitignore (or your version control system's equivalent) that ignores build outputs"
+      ],
+      "message": "no version control ignore file found (.gitignore, .hgignore, .bzrignore, .fossil-settings/ignore-glob); build outputs can be committed by accident",
+      "status": "FAIL"
+    },
+    "warnings-as-errors": {
+      "details": [
+        "add -Werror (gfortran, flang), -warn errors (ifx) or set CMAKE_COMPILE_WARNING_AS_ERROR (Meson: werror=true), at least as an option"
+      ],
+      "message": "warnings are not treated as errors in CI configuration or the build files (CMake files, presets, meson.build, fpm flags)",
+      "status": "FAIL"
+    }
+  }
+}

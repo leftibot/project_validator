@@ -31,6 +31,10 @@ select = ["E", "W", "F", "I", "B", "BLE", "C4", "PIE", "RET", "S", "SIM", "UP", 
 strict = true
 files = ["project_validator", "tests"]
 
+[[tool.mypy.overrides]]
+module = "atheris"
+ignore_missing_imports = true
+
 [tool.coverage.run]
 branch = true
 source = ["project_validator"]
