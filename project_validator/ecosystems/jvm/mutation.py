@@ -20,7 +20,7 @@ _INCREMENTAL_STEP = re.compile(r".*(?:scmMutationCoverage|withHistory)")
 def _incremental(command: Command) -> bool:
     """`pitest:scmMutationCoverage` mutates the changed code only; `-DwithHistory` (Maven) and `--features=+history`
     (Gradle) skip the mutants whose code and tests are unchanged."""
-    steps = (build_steps(command) or ("", []))[1]
+    _kind, steps = build_steps(command) or ("", [])
     argv = resolved(command)
     return any(_INCREMENTAL_STEP.fullmatch(step) for step in steps) or has_option(
         argv, "-DwithHistory", "--features=+history"

@@ -48,6 +48,7 @@ def incremental_when(*prefix: str, options: tuple[str, ...]) -> Claim:
         if not starting(command):
             return None
         argv = resolved(command)
+        # Stryker.NET also takes `--since:main`, which `has_option` does not see.
         return mutated(
             incremental=has_option(argv, *options) or any(word.partition(":")[0] in options for word in argv)
         )
