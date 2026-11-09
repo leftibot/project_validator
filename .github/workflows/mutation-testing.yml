@@ -10,6 +10,7 @@ jobs:
   mutmut:
     name: mutmut
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -41,9 +42,20 @@ jobs:
           # mutmut copies the tree into mutants/, which is not a git repository, so the tests that call
           # "git ls-files" fail there. The first run only creates the copy (its stats pass stops at the
           # first failures); make the copy a repository, then run for real.
-          mutmut run "${patterns[@]}" > /dev/null 2>&1 || true
+          mutmut run "${patterns[@]}" || true
           git -C mutants init -q
           git -C mutants add -A
           mutmut run "${patterns[@]}"
           # The results also list every mutant not run (the other modules'), which would fill the summary.
-          { echo '## Mutation testing of the changed modules'; echo '```'; mutmut results | grep -v ': not checked$' || true; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          survivors=$(mktemp)
+          mutmut results | grep -v ': not checked$' > "$survivors" || true
+          {
+            echo '## Mutation testing of the changed modules'
+            if [ -s "$survivors" ]; then
+              echo '```'
+              cat "$survivors"
+              echo '```'
+            else
+              echo 'no survivors'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
