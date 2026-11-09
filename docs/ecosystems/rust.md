@@ -27,6 +27,11 @@ Every OS/toolchain combination builds the debug and release profiles, each with 
 
 `overflow-checks` in release builds.
 
+## `mutation-testing`
+
+cargo-mutants (`cargo mutants`; settings in `.cargo/mutants.toml`). `cargo mutants --in-diff changes.diff` counts as
+running on the changes only.
+
 ## `code-formatting`
 
 rustfmt: `cargo fmt --check` (with any toolchain, `cargo +nightly fmt -- --check`), `rustfmt --check`, or the

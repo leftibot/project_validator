@@ -32,6 +32,7 @@ jobs:
       - run: cmake -S . -B build -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} -DENABLE_COVERAGE=ON
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_SANITIZERS=${{ matrix.sanitizers }}
       - run: cmake --build build
+      - run: mull-runner build/tests
       - run: ctest --test-dir build --output-on-failure
       - run: gcovr --fail-under-branch 80
       - run: run-clang-tidy -p build

@@ -2,11 +2,17 @@ import unittest
 
 from project_validator.checks.mutation_testing import mutation_testing
 from project_validator.core import Options, Result, Status
+from project_validator.ecosystems.c_cpp import C_AND_CXX
+from project_validator.ecosystems.go import GO
 from project_validator.ecosystems.python import PYTHON
+from project_validator.ecosystems.rust import RUST
 from tests.support import (
     FIXTURES,
     UNSTRUCTURED_CI_FILES,
+    WELL_CONFIGURED,
+    WELL_CONFIGURED_GO,
     WELL_CONFIGURED_PYTHON,
+    WELL_CONFIGURED_RUST,
     ci_running,
     fixture_files,
     github_job,
@@ -32,6 +38,20 @@ class MutationTestingTests(unittest.TestCase):
             "consider running it on the pull request's changes only: mutmut run <module>.* for the changed modules",
         )
         self.assertEqual(self._run(WELL_CONFIGURED_PYTHON), expected)
+
+    def test_the_well_configured_c_cpp_rust_and_go_projects_pass(self) -> None:
+        cases = (
+            (C_AND_CXX, WELL_CONFIGURED, "Mull runs"),
+            (
+                RUST,
+                WELL_CONFIGURED_RUST,
+                "cargo-mutants (.cargo/mutants.toml) runs; on the pull request's changes only (bonus)",
+            ),
+            (GO, WELL_CONFIGURED_GO, "gremlins runs; on the pull request's changes only (bonus)"),
+        )
+        for ecosystem, files, message in cases:
+            with self.subTest(ecosystem=ecosystem.label):
+                self.assertEqual(run_as(self, mutation_testing, files, ecosystem), Result.passed(message))
 
     def test_an_incremental_run_passes_with_the_bonus(self) -> None:
         files = {**WELL_CONFIGURED_PYTHON, **github_job("ubuntu-latest", "mutmut run 'app.*'")}
