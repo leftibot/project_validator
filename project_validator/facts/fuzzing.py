@@ -7,6 +7,7 @@ and each file it matches is a `TestFile` fact. A fuzzer's `Definition` is where 
 are ordinary `Tool`s; `fuzzer` and `fuzzed` only spell them.
 """
 
+import re
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from functools import partial
@@ -18,6 +19,7 @@ from project_validator.facts.tools import Claim, Definition, Run, Tool, provided
 
 FUZZ = "fuzz"
 RUNS = "runs"
+LIBFUZZER_OPTION = re.compile(r"-(?:max_total_time|runs|max_len|jobs)=\d+")
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)

@@ -7,7 +7,6 @@ import re
 from collections.abc import Iterator
 
 from project_validator.build_configurations import build_type_kinds
-from project_validator.ecosystems.c_cpp.fuzzing import LIBFUZZER_OPTION
 from project_validator.ecosystems.model import BuildSystem, Ecosystem, toolchain_patterns
 from project_validator.facts import Command, Fact, Facts, Setting, Unknown, resolved
 from project_validator.facts.analysis import analysed, analyzer
@@ -17,7 +16,7 @@ from project_validator.facts.coverage import Granularity, coverage_tool, measure
 from project_validator.facts.dependencies import Lock, PackageManager, lockfile_reader, manifest_reader
 from project_validator.facts.expansion import Action
 from project_validator.facts.formatting import Enforcement, flagged, format_tool, formatted
-from project_validator.facts.fuzzing import FuzzTargets, PropertyTests, fuzzed, fuzzer
+from project_validator.facts.fuzzing import LIBFUZZER_OPTION, FuzzTargets, PropertyTests, fuzzed, fuzzer
 from project_validator.facts.limits import Rule, limiter
 from project_validator.facts.outputs import BuildOutput, directories, ignored_at_top_level
 from project_validator.facts.practices import Practice, PracticeName, Wording, always, required, requirement_reader

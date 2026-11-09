@@ -5,7 +5,7 @@ import re
 
 from project_validator.ecosystems.c_cpp import C_AND_CXX
 from project_validator.facts import Command, Facts, resolved
-from project_validator.facts.fuzzing import FuzzTargets, PropertyTests, fuzzed, fuzzer
+from project_validator.facts.fuzzing import LIBFUZZER_OPTION, FuzzTargets, PropertyTests, fuzzed, fuzzer
 from project_validator.facts.tools import Run, known_tools, starts, when
 
 C_FUZZ_TARGETS = FuzzTargets(
@@ -20,8 +20,6 @@ C_PROPERTY_TESTS = PropertyTests(
     path=re.compile(r"\.(?:c|cc|cpp|cxx|C|h|hpp)$"),
     contains=re.compile(r"\brc::check\b|\bRC_GTEST_PROP\b|\bRC_BOOST_PROP\b"),
 )
-
-LIBFUZZER_OPTION = re.compile(r"-(?:max_total_time|runs|max_len|jobs)=\d+")
 
 
 def _libfuzzer_binary(command: Command, facts: Facts) -> Run | None:
