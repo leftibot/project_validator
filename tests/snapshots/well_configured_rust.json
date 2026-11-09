@@ -256,10 +256,17 @@
         "units": [
           {
             "answer": "yes",
-            "declared": [],
+            "declared": [
+              {
+                "manager": "Cargo",
+                "manifest": "fuzz/Cargo.toml"
+              }
+            ],
             "language": "Rust",
-            "lock_required": false,
-            "locked": [],
+            "lock_required": true,
+            "locked": [
+              "fuzz/Cargo.lock"
+            ],
             "unit": ".",
             "unknowns": []
           }
@@ -330,6 +337,50 @@
             "unit": ".",
             "unknown_definitions": [],
             "unknowns": []
+          }
+        ]
+      }
+    ],
+    "fuzz-testing": [
+      {
+        "language": "Rust",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Rust",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "yes",
+              "defined": {
+                "cargo-fuzz": [
+                  "fuzz/fuzz_targets/parse.rs"
+                ]
+              },
+              "known": {
+                "cargo-fuzz": {
+                  "can": {
+                    "runs": "cargo fuzz run <target> -- -max_total_time=60"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Rust",
+              "level": "runs",
+              "runs": {
+                "cargo-fuzz": {
+                  "levels": [
+                    "runs"
+                  ],
+                  "read": []
+                }
+              },
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
           }
         ]
       }
@@ -657,6 +708,21 @@
       "origin": "Cargo.toml"
     },
     {
+      "build_system": "Cargo",
+      "kind": "BuildFile",
+      "languages": [
+        "Rust"
+      ],
+      "origin": "fuzz/Cargo.toml"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Rust",
+      "origin": "fuzz/fuzz_targets/parse.rs",
+      "role": "test"
+    },
+    {
       "ambiguous": false,
       "kind": "SourceFile",
       "language": "Rust",
@@ -673,6 +739,11 @@
       ],
       "origin": ".",
       "role": "product"
+    },
+    {
+      "kind": "cargo-fuzz or AFL.rs fuzz targets (fuzz_target! or afl::fuzz!)",
+      "language": "Rust",
+      "origin": "fuzz/fuzz_targets/parse.rs"
     },
     {
       "kind": "#[test] functions",
@@ -1206,6 +1277,26 @@
       "via": []
     },
     {
+      "argv": [
+        "cargo",
+        "fuzz",
+        "run",
+        "parse",
+        "--",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "RUSTFLAGS": "-D warnings "
+      },
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "cargo fuzz run parse -- -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {
         "RUSTFLAGS": "-D warnings -Zsanitizer=address"
@@ -1341,6 +1432,26 @@
       "kind": "Command",
       "line": "cargo llvm-cov --branch --mcdc",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cargo",
+        "fuzz",
+        "run",
+        "parse",
+        "--",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "RUSTFLAGS": "-D warnings -Zsanitizer=address"
+      },
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "cargo fuzz run parse -- -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -1758,6 +1869,26 @@
       "via": []
     },
     {
+      "argv": [
+        "cargo",
+        "fuzz",
+        "run",
+        "parse",
+        "--",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "RUSTFLAGS": "-D warnings "
+      },
+      "job": ".github/workflows/ci.yml:test[6]",
+      "kind": "Command",
+      "line": "cargo fuzz run parse -- -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {
         "RUSTFLAGS": "-D warnings -Zsanitizer=address"
@@ -1893,6 +2024,26 @@
       "kind": "Command",
       "line": "cargo llvm-cov --branch --mcdc",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cargo",
+        "fuzz",
+        "run",
+        "parse",
+        "--",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "RUSTFLAGS": "-D warnings -Zsanitizer=address"
+      },
+      "job": ".github/workflows/ci.yml:test[7]",
+      "kind": "Command",
+      "line": "cargo fuzz run parse -- -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -2310,6 +2461,26 @@
       "via": []
     },
     {
+      "argv": [
+        "cargo",
+        "fuzz",
+        "run",
+        "parse",
+        "--",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "RUSTFLAGS": "-D warnings "
+      },
+      "job": ".github/workflows/ci.yml:test[10]",
+      "kind": "Command",
+      "line": "cargo fuzz run parse -- -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {
         "RUSTFLAGS": "-D warnings -Zsanitizer=address"
@@ -2445,6 +2616,26 @@
       "kind": "Command",
       "line": "cargo llvm-cov --branch --mcdc",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "cargo",
+        "fuzz",
+        "run",
+        "parse",
+        "--",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "RUSTFLAGS": "-D warnings -Zsanitizer=address"
+      },
+      "job": ".github/workflows/ci.yml:test[11]",
+      "kind": "Command",
+      "line": "cargo fuzz run parse -- -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -3208,6 +3399,56 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": "fuzz/Cargo.lock",
+      "reader": "Cargo lockfile"
+    },
+    {
+      "kind": "Locked",
+      "manager": "Cargo",
+      "origin": "fuzz/Cargo.lock"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/Cargo.toml",
+      "reader": "Cargo.toml license"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/Cargo.toml",
+      "reader": "Cargo dependencies"
+    },
+    {
+      "kind": "Declared",
+      "manager": "Cargo",
+      "origin": "fuzz/Cargo.toml"
+    },
+    {
+      "kind": "Application",
+      "manager": "Cargo",
+      "origin": "fuzz/Cargo.toml"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/Cargo.toml",
+      "reader": "Rust lint settings"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/Cargo.toml",
+      "reader": "Rust build settings"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/Cargo.toml",
+      "reader": "Rust lints"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/Cargo.toml",
+      "reader": "clippy"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": "src/lib.rs",
       "reader": "Rust lint settings"
     },
@@ -3916,6 +4157,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Rust"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cargo-fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -4147,6 +4408,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Rust"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cargo-fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -4840,6 +5121,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[6]",
+      "kind": "ToolRun",
+      "languages": [
+        "Rust"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cargo-fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[7]",
       "kind": "ToolRun",
       "languages": [
@@ -5071,6 +5372,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[7]",
+      "kind": "ToolRun",
+      "languages": [
+        "Rust"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cargo-fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[8]",
       "kind": "ToolRun",
       "languages": [
@@ -5764,6 +6085,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[10]",
+      "kind": "ToolRun",
+      "languages": [
+        "Rust"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cargo-fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[11]",
       "kind": "ToolRun",
       "languages": [
@@ -5991,6 +6332,26 @@
         "."
       ],
       "tool": "unsafe_code forbidden",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[11]",
+      "kind": "ToolRun",
+      "languages": [
+        "Rust"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "cargo-fuzz",
       "via": []
     },
     {
@@ -6770,7 +7131,7 @@
     },
     "dependency-management": {
       "details": [],
-      "message": "no dependencies are declared",
+      "message": "dependencies are declared in fuzz/Cargo.toml (Cargo) and locked in fuzz/Cargo.lock",
       "status": "PASS"
     },
     "dependency-updates": {
@@ -6783,6 +7144,11 @@
     "function-limits": {
       "details": [],
       "message": "function length is limited with lizard",
+      "status": "PASS"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "fuzz targets in 1 file(s), run by cargo-fuzz",
       "status": "PASS"
     },
     "hardening": {

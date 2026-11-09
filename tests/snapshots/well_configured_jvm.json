@@ -333,6 +333,50 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Java",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Java",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "yes",
+              "defined": {
+                "Jazzer": [
+                  "src/test/java/com/example/AppFuzzTest.java"
+                ]
+              },
+              "known": {
+                "Jazzer": {
+                  "can": {
+                    "runs": "mvn test or gradle test with JAZZER_FUZZ=1 (or the jazzer CLI)"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Java",
+              "level": "runs",
+              "runs": {
+                "Jazzer": {
+                  "levels": [
+                    "runs"
+                  ],
+                  "read": []
+                }
+              },
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Java",
@@ -660,6 +704,13 @@
       "ambiguous": false,
       "kind": "SourceFile",
       "language": "Java",
+      "origin": "src/test/java/com/example/AppFuzzTest.java",
+      "role": "product"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Java",
       "origin": "src/test/java/com/example/AppTest.java",
       "role": "product"
     },
@@ -673,6 +724,11 @@
       ],
       "origin": ".",
       "role": "product"
+    },
+    {
+      "kind": "Jazzer fuzz tests (@FuzzTest or fuzzerTestOneInput)",
+      "language": "Java",
+      "origin": "src/test/java/com/example/AppFuzzTest.java"
     },
     {
       "kind": "@Test methods or Kotest specs under src/test/java or src/test/kotlin",
@@ -838,6 +894,24 @@
       "via": []
     },
     {
+      "argv": [
+        "mvn",
+        "--batch-mode",
+        "test",
+        "-Dtest=AppFuzzTest"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "JAZZER_FUZZ": "1"
+      },
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "mvn --batch-mode test -Dtest=AppFuzzTest",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -886,6 +960,24 @@
       "kind": "Command",
       "line": "mvn --batch-mode --strict-checksums verify",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mvn",
+        "--batch-mode",
+        "test",
+        "-Dtest=AppFuzzTest"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "JAZZER_FUZZ": "1"
+      },
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "mvn --batch-mode test -Dtest=AppFuzzTest",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
       "via": []
     },
     {
@@ -940,6 +1032,24 @@
       "via": []
     },
     {
+      "argv": [
+        "mvn",
+        "--batch-mode",
+        "test",
+        "-Dtest=AppFuzzTest"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "JAZZER_FUZZ": "1"
+      },
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "mvn --batch-mode test -Dtest=AppFuzzTest",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -988,6 +1098,24 @@
       "kind": "Command",
       "line": "mvn --batch-mode --strict-checksums verify",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mvn",
+        "--batch-mode",
+        "test",
+        "-Dtest=AppFuzzTest"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "JAZZER_FUZZ": "1"
+      },
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "mvn --batch-mode test -Dtest=AppFuzzTest",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
       "via": []
     },
     {
@@ -1042,6 +1170,24 @@
       "via": []
     },
     {
+      "argv": [
+        "mvn",
+        "--batch-mode",
+        "test",
+        "-Dtest=AppFuzzTest"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "JAZZER_FUZZ": "1"
+      },
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "mvn --batch-mode test -Dtest=AppFuzzTest",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1090,6 +1236,24 @@
       "kind": "Command",
       "line": "mvn --batch-mode --strict-checksums verify",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mvn",
+        "--batch-mode",
+        "test",
+        "-Dtest=AppFuzzTest"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {
+        "JAZZER_FUZZ": "1"
+      },
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "mvn --batch-mode test -Dtest=AppFuzzTest",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
       "via": []
     },
     {
@@ -1737,6 +1901,48 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Jazzer",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mvn test or gradle test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -1874,6 +2080,48 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Jazzer",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mvn test or gradle test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -2011,6 +2259,48 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Jazzer",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mvn test or gradle test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -2148,6 +2438,48 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Jazzer",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mvn test or gradle test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -2285,6 +2617,48 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Jazzer",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mvn test or gradle test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -2418,6 +2792,48 @@
         "."
       ],
       "tool": "OWASP dependency-check",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Jazzer",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[3].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mvn test or gradle test",
       "via": []
     },
     {
@@ -2893,6 +3309,11 @@
     "function-limits": {
       "details": [],
       "message": "function length is limited with lizard",
+      "status": "PASS"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "fuzz targets in 1 file(s), run by Jazzer",
       "status": "PASS"
     },
     "hardening": {

@@ -324,6 +324,50 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Go",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Go",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "yes",
+              "defined": {
+                "go test -fuzz": [
+                  "app_test.go"
+                ]
+              },
+              "known": {
+                "go test -fuzz": {
+                  "can": {
+                    "runs": "go test -fuzz=Fuzz -fuzztime=30s"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Go",
+              "level": "runs",
+              "runs": {
+                "go test -fuzz": {
+                  "levels": [
+                    "runs"
+                  ],
+                  "read": []
+                }
+              },
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Go",
@@ -655,6 +699,11 @@
     },
     {
       "kind": "Test functions in *_test.go files",
+      "language": "Go",
+      "origin": "app_test.go"
+    },
+    {
+      "kind": "Fuzz functions (func FuzzXxx(f *testing.F))",
       "language": "Go",
       "origin": "app_test.go"
     },
@@ -1013,6 +1062,23 @@
       ]
     },
     {
+      "argv": [
+        "go",
+        "test",
+        "-fuzz=Fuzz",
+        "-fuzztime=30s",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "go test -fuzz=Fuzz -fuzztime=30s .",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1253,6 +1319,23 @@
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-fuzz=Fuzz",
+        "-fuzztime=30s",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "go test -fuzz=Fuzz -fuzztime=30s .",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
     },
     {
       "builds": true,
@@ -1497,6 +1580,23 @@
       ]
     },
     {
+      "argv": [
+        "go",
+        "test",
+        "-fuzz=Fuzz",
+        "-fuzztime=30s",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "go test -fuzz=Fuzz -fuzztime=30s .",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1737,6 +1837,23 @@
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-fuzz=Fuzz",
+        "-fuzztime=30s",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "go test -fuzz=Fuzz -fuzztime=30s .",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
     },
     {
       "builds": true,
@@ -1981,6 +2098,23 @@
       ]
     },
     {
+      "argv": [
+        "go",
+        "test",
+        "-fuzz=Fuzz",
+        "-fuzztime=30s",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "go test -fuzz=Fuzz -fuzztime=30s .",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -2221,6 +2355,23 @@
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-fuzz=Fuzz",
+        "-fuzztime=30s",
+        "."
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "go test -fuzz=Fuzz -fuzztime=30s .",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
     },
     {
       "kind": "StepReference",
@@ -2870,6 +3021,46 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test -fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -3019,6 +3210,46 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test -fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -3168,6 +3399,46 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test -fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -3317,6 +3588,46 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test -fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -3466,6 +3777,46 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test -fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -3612,6 +3963,46 @@
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test -fuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Go"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "test": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "go test",
+      "via": []
     },
     {
       "heuristic": false,
@@ -4283,6 +4674,11 @@
     "function-limits": {
       "details": [],
       "message": "function length is limited with lizard",
+      "status": "PASS"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "fuzz targets in 1 file(s), run by go test -fuzz",
       "status": "PASS"
     },
     "hardening": {
