@@ -39,3 +39,12 @@ relative_files = true
 [tool.coverage.report]
 fail_under = 99
 show_missing = true
+
+[tool.mutmut]
+source_paths = ["project_validator/"]
+pytest_add_cli_args_test_selection = ["tests/"]
+# Keep pytest out of the fixtures' own tests and cache files, and stop it collecting the helper
+# functions named test/tested that the test modules import (the unittest classes are still collected).
+pytest_add_cli_args = ["--ignore-glob=*/fixtures/*", "-p", "no:cacheprovider", "-o", "python_functions=__never__"]
+# The self-referential tests read these files from the repository root.
+also_copy = [".github/", ".gitignore", ".jscpd.json", "LICENSE.txt", "README.md", "SECURITY.md", "docs/"]

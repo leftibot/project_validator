@@ -1,0 +1,5 @@
+# The mutation testing mutmut runs, with the pytest it runs the suite under and the dependency the tests import;
+# Dependabot keeps it current.
+mutmut==3.8.1
+pytest==9.2.0
+pyyaml==6.0.3
