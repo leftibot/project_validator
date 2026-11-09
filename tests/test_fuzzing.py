@@ -3,6 +3,7 @@
 import re
 import unittest
 
+from project_validator.core import Result
 from project_validator.ecosystems.c_cpp.fuzzing import (
     AFL,
     C_FUZZ_TARGETS,
@@ -32,7 +33,8 @@ from project_validator.facts.fuzzing import (
 from project_validator.facts.roles import role
 from project_validator.facts.testing import TestFile, TestFiles
 from project_validator.facts.tools import ToolRun
-from project_validator.questions.fuzzing import _other_runs
+from project_validator.policy.fuzzing import judge_fuzzing
+from project_validator.questions.fuzzing import FuzzAnswer, _other_runs, fuzzing
 from tests.support import command, fixture_files, github_job, make_context, temp_project
 
 
@@ -179,7 +181,38 @@ class CFuzzingTests(unittest.TestCase):
 
 def _ctest_entries(files: dict[str, str]) -> tuple[str, ...]:
     facts = facts_of(files)
-    return tuple(entry for entry in _other_runs(facts, ".") if entry.startswith("CTest"))
+    return tuple(entry for entry in _other_runs(facts, ".", "C++") if entry.startswith("CTest"))
+
+
+MIXED_FILES = {
+    "CMakeLists.txt": "project(x LANGUAGES CXX)\nenable_testing()\n"
+    "add_test(NAME fuzz_tester_run COMMAND fuzz_tester -max_total_time=10)\n",
+    "fuzz/t.cpp": 'extern "C" int LLVMFuzzerTestOneInput(const unsigned char*, unsigned long) { return 0; }\n',
+    "fuzz/fuzz_targets/parse.rs": "fuzz_target!(|data: &[u8]| {});\n",
+    "Cargo.toml": "[package]\nname='a'\n",
+    **github_job("ubuntu-latest", "cmake -S . -B build && cmake --build build && ctest --test-dir build"),
+}
+
+
+class CTestLanguageTests(unittest.TestCase):
+    def test_a_ctest_registration_is_evidence_only_for_the_languages_cmake_builds(self) -> None:
+        facts = facts_of(MIXED_FILES)
+        results = {language: judge_fuzzing(_only_unit(language, facts)) for language in ("C++", "Rust")}
+        self.assertEqual(
+            results["C++"],
+            Result.passed("fuzz targets in 1 file(s), run by CTest (CMakeLists.txt): fuzz_tester_run"),
+        )
+        self.assertEqual(
+            results["Rust"],
+            Result.warned(
+                "fuzz targets in 1 file(s), but no CI configuration runs cargo fuzz run <target> -- -max_total_time=60"
+            ),
+        )
+
+
+def _only_unit(language: str, facts: Facts) -> FuzzAnswer:
+    [answer] = fuzzing(language, facts).units
+    return answer
 
 
 class RustFuzzingTests(unittest.TestCase):
