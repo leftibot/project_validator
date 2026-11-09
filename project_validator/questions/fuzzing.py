@@ -43,6 +43,10 @@ class FuzzAnswer:
             return Answer.YES
         return self.tools.answer
 
+    def tools_ran(self) -> tuple[str, ...]:
+        """The fuzzers CI ran (runs that are not tools are not named)."""
+        return self.tools.tools_ran()
+
     def as_dict(self) -> dict[str, object]:
         return answer_dict(
             self,

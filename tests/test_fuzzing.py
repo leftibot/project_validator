@@ -42,7 +42,9 @@ from project_validator.facts.roles import role
 from project_validator.facts.testing import TestFile, TestFiles
 from project_validator.facts.tools import ToolRun
 from project_validator.policy.fuzzing import judge_fuzzing
+from project_validator.questions import Answer
 from project_validator.questions.fuzzing import FuzzAnswer, _other_runs, fuzzing
+from project_validator.questions.tooling import Ran, ToolAnswer
 from tests.support import command, fixture_files, github_job, make_context, temp_project
 
 
@@ -505,3 +507,20 @@ class MixedProjectFuzzingTests(unittest.TestCase):
                 self.assertIsNone(LIBFUZZER.claims(command(line), facts))
         self.assertIsNone(LIBFUZZER.claims(command(".build/debug/AFuzz -max_total_time=30"), facts))
         self.assertIsNone(LIBFUZZER.claims(command("python fuzz.py -max_total_time=30"), facts))
+
+
+class FuzzAnswerToolsTests(unittest.TestCase):
+    def test_tools_ran_are_the_fuzzers_ci_ran(self) -> None:
+        answer = FuzzAnswer(
+            tools=ToolAnswer(
+                aspect=FUZZ,
+                language="Python",
+                unit=".",
+                level=RUNS,
+                answer=Answer.YES,
+                runs=(Ran(name="atheris", levels=frozenset({RUNS})),),
+            ),
+            property_files=(),
+            other_runs=("google/clusterfuzzlite/actions/run_fuzzers",),
+        )
+        self.assertEqual(answer.tools_ran(), ("atheris",))

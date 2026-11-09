@@ -247,6 +247,7 @@ class ListTests(unittest.TestCase):
         self.assertTrue(output.startswith("# project_validator results\n\n✅ pass"))
         self.assertIn("| `coverage` | ✅ coverage.py |", output)
         self.assertIn("| `code-formatting` | ✅ ruff format |", output)
+        self.assertIn("| `fuzz-testing` | ✅ atheris |", output)
         self.assertIn("\n## Results by ecosystem\n\n| Check | Python |\n", output)
         self.assertIn("\n## Whole project\n", output)
 
