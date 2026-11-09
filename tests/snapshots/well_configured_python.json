@@ -2558,6 +2558,11 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": "pyproject.toml",
+      "reader": "mutmut"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": "uv.lock",
       "reader": "Python packages lockfile"
     },
