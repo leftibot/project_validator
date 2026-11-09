@@ -32,25 +32,27 @@ class FuzzAspectTests(unittest.TestCase):
         self.assertEqual(fuzz_kinds(), frozenset(kind.name for kind in known_fuzz_targets()))
         self.assertEqual(property_kinds(), frozenset(kind.name for kind in known_property_tests()))
 
-    def test_a_fuzzer_is_defined_by_the_fuzz_target_files_of_its_languages(self) -> None:
-        tool = fuzzer(
-            name="f", languages=frozenset({"Python"}), how="f", runs=lambda c, f: None, kinds=("python fuzz targets",)
+    def test_a_fuzzer_is_defined_by_the_fuzz_target_files_of_its_targets(self) -> None:
+        kind = FuzzTargets(
+            name="python fuzz targets", languages=frozenset({"Python"}), path=re.compile(r"fuzz_.*\.py$")
         )
+        tool = fuzzer(name="f", languages=frozenset({"Python"}), how="f", runs=lambda c, f: None, targets=(kind,))
         facts = Facts(
             [
                 TestFile(origin=Origin(path="tests/fuzz/fuzz_x.py"), language="Python", kind="python fuzz targets"),
                 TestFile(origin=Origin(path="tests/fuzz/fuzz_x.py"), language="Python", kind="python fuzz targets"),
-                TestFile(origin=Origin(path="tests/fuzz/fuzz_y.rs"), language="Rust", kind="python fuzz targets"),
                 TestFile(origin=Origin(path="tests/test_x.py"), language="Python", kind="test_*.py or *_test.py files"),
             ]
         )
         self.assertEqual(tool.defined(FUZZ, facts), ("tests/fuzz/fuzz_x.py",))
         self.assertTrue(tool.needs_definition(FUZZ))
+        self.assertEqual(tool.definitions[FUZZ].describe, kind.name)
 
-    def test_a_fuzzer_without_kinds_given_is_defined_by_the_known_fuzz_kinds(self) -> None:
-        tool = fuzzer(name="f", languages=frozenset({"Python"}), how="f", runs=lambda c, f: None)
-        facts = Facts([TestFile(origin=Origin(path="tests/test_x.py"), language="Python", kind="test_x")])
-        self.assertEqual(tool.defined(FUZZ, facts), ())
+    def test_a_fuzzer_with_two_targets_names_both(self) -> None:
+        first = FuzzTargets(name="libFuzzer targets", languages=frozenset({"C++"}), path=re.compile(r"\.cpp$"))
+        second = FuzzTargets(name="atheris targets", languages=frozenset({"C++"}), path=re.compile(r"\.py$"))
+        tool = fuzzer(name="f", languages=frozenset({"C++"}), how="f", runs=lambda c, f: None, targets=(first, second))
+        self.assertEqual(tool.definitions[FUZZ].describe, "libFuzzer targets or atheris targets")
 
     def test_fuzzed_provides_runs(self) -> None:
         self.assertEqual(fuzzed().provides, {FUZZ: frozenset({RUNS})})

@@ -3,8 +3,8 @@
 Fuzz targets (a libFuzzer `LLVMFuzzerTestOneInput`, a Go `FuzzXxx`, an atheris or cargo-fuzz harness) and property-based
 tests (Hypothesis, proptest, fast-check) are kinds of test file: a `FuzzTargets` or `PropertyTests` component says so,
 and each file it matches is a `TestFile` fact. A fuzzer's `Definition` is where its fuzz targets are defined: the
-`TestFile` facts of the fuzz-target kinds of its languages. Fuzzers are ordinary `Tool`s; `fuzzer` and `fuzzed` only
-spell them.
+`TestFile` facts of the fuzz-target kinds the profile passes to `fuzzer` (as `test_runner` takes its `tests`). Fuzzers
+are ordinary `Tool`s; `fuzzer` and `fuzzed` only spell them.
 """
 
 from collections.abc import Iterable, Iterator
@@ -48,21 +48,9 @@ def property_kinds() -> frozenset[str]:
     return frozenset(kind.name for kind in known_property_tests())
 
 
-def _described(languages: frozenset[str], chosen: frozenset[str] | None) -> str:
-    """The kinds a fuzzer is defined by, for findings: the known fuzz-target kinds of `languages`, as known now (a
-    profile defines its kinds in its own modules), or `chosen`."""
-    names = (
-        sorted(kind.name for kind in known_fuzz_targets() if kind.languages & languages)
-        if chosen is None
-        else sorted(chosen)
-    )
-    return " or ".join(names) or "fuzz targets"
-
-
-def _fuzz_targets(languages: frozenset[str], chosen: frozenset[str] | None, facts: Facts) -> Iterator[str]:
-    """The paths of the test files of the fuzz-target kinds (`chosen`, else the known ones) of `languages`."""
-    names = fuzz_kinds() if chosen is None else chosen
-    return (test.origin.path for test in facts.of(TestFile) if test.kind in names and test.language in languages)
+def _fuzz_targets(names: frozenset[str], facts: Facts) -> Iterator[str]:
+    """The paths of the test files of the fuzz-target kinds `names`."""
+    return (test.origin.path for test in facts.of(TestFile) if test.kind in names)
 
 
 def fuzzer(
@@ -71,13 +59,14 @@ def fuzzer(
     languages: frozenset[str],
     how: str,
     runs: Claim,
+    targets: Iterable[FuzzTargets],
     reads: tuple[str, ...] = (),
-    kinds: Iterable[str] | None = None,
 ) -> Tool:
     """A fuzzer of `languages`: `how` to run it, and the fuzz targets it runs are the test files of the fuzz-target
-    kinds of those languages. `kinds` (names of kinds) replaces the known fuzz-target kinds when given, for a fuzzer
-    whose kinds a profile does not define."""
-    chosen = None if kinds is None else frozenset(kinds)
+    kinds `targets`, which the profile passes (the registry is not consulted here: profiles call this at import)."""
+    kinds = tuple(targets)
+    names = frozenset(kind.name for kind in kinds)
+
     return Tool(
         name=name,
         languages=languages,
@@ -86,9 +75,9 @@ def fuzzer(
         reads=reads,
         definitions={
             FUZZ: Definition(
-                found=partial(_fuzz_targets, languages, chosen),
+                found=partial(_fuzz_targets, names),
                 default=False,
-                describe=_described(languages, chosen),
+                describe=" or ".join(kind.name for kind in kinds),
                 from_test_units=True,
             )
         },
