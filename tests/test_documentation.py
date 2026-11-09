@@ -1,5 +1,6 @@
 """The README documents every check, and each built-in ecosystem's page every check that applies to it."""
 
+import os
 import re
 import unittest
 from pathlib import Path
@@ -64,7 +65,10 @@ class ReadmeExampleTests(unittest.TestCase):
 class SupportMatrixTests(unittest.TestCase):
     def test_the_committed_matrix_is_current(self) -> None:
         expected = render(support_matrix(discover().checks))
-        actual = (ROOT / "docs" / "support-matrix.md").read_text(encoding="utf-8")
+        page = ROOT / "docs" / "support-matrix.md"
+        if os.environ.get("UPDATE_SNAPSHOTS") == "1":
+            page.write_text(expected, encoding="utf-8", newline="\n")
+        actual = page.read_text(encoding="utf-8")
         self.assertEqual(actual, expected, f"docs/support-matrix.md is stale: run `{REGENERATE}`")
 
     def test_the_readme_links_the_matrix(self) -> None:

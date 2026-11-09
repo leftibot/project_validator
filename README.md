@@ -62,7 +62,7 @@ Exit codes: `0` everything passed, `1` a check failed or raised an error, `2` us
 
 ## Checks
 
-What each check accepts for a language is on that ecosystem's page in [docs/ecosystems](docs/ecosystems); [docs/support-matrix.md](docs/support-matrix.md) is the generated grid of every check against every ecosystem, with the tools each recognises.
+What each check accepts for a language is on that ecosystem's page in [docs/ecosystems](docs/ecosystems); [docs/support-matrix.md](docs/support-matrix.md) is the generated grid of every check against every ecosystem, with the tools each recognises (regenerated with `UPDATE_SNAPSHOTS=1 python -m unittest tests.test_documentation`).
 
 | Check | Passes when |
 |---|---|

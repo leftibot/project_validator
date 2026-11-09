@@ -100,18 +100,16 @@ def answered_check[A: UnitAnswer](
         if aspect is None:
             raise TypeError("answered_check needs an aspect or languages")
         languages = handling(aspect)
-    known = languages
+    handled = languages
 
     def run(context: Context) -> Result:
-        handled = known()
-        by_ecosystem_ = {
-            ecosystem: ecosystem.languages & handled for ecosystem in registered() if ecosystem.languages & handled
-        }
+        now = handled()
+        by_ecosystem_ = {e: e.languages & now for e in registered() if e.languages & now}
         return check_each_ecosystem(
             context, by_ecosystem_, lambda judged_languages, found: judged(judged_languages, found, answers, judge)
         )
 
-    return Check(name=name, description=description, run=run, languages_from=known, aspect=aspect, aliases=aliases)
+    return Check(name=name, description=description, run=run, languages_from=handled, aspect=aspect, aliases=aliases)
 
 
 __all__ = ["answered_check", "by_ecosystem", "check_each_ecosystem", "combined", "judged", "labelled"]

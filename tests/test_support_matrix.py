@@ -2,9 +2,17 @@ import unittest
 
 from project_validator.ecosystems import BUILT_IN, isolated_registry
 from project_validator.plugins import discover
-from project_validator.support_matrix import LEGEND, REGENERATE, Row, SupportMatrix, as_dict, render, support_matrix
-from tests.support import temp_project
-from tests.test_plugins import ECOSYSTEM_PLUGIN
+from project_validator.support_matrix import (
+    LEGEND,
+    REGENERATE,
+    Cell,
+    Row,
+    SupportMatrix,
+    as_dict,
+    render,
+    support_matrix,
+)
+from tests.support import ECOSYSTEM_PLUGIN, temp_project
 
 SMALL = SupportMatrix(
     ecosystems=("A", "B"),
@@ -18,9 +26,7 @@ SMALL = SupportMatrix(
 
 class SupportMatrixTests(unittest.TestCase):
     def setUp(self) -> None:
-        registry = isolated_registry()
-        registry.__enter__()
-        self.addCleanup(registry.__exit__, None, None, None)
+        self.enterContext(isolated_registry())
         with temp_project({"zig.py": ECOSYSTEM_PLUGIN}) as directory:
             plugins = discover([directory])
         self.matrix = support_matrix(plugins.checks)
@@ -28,7 +34,7 @@ class SupportMatrixTests(unittest.TestCase):
     def _row(self, matrix: SupportMatrix, name: str) -> Row:
         return next(row for row in matrix.rows if row.check == name)
 
-    def _cell(self, name: str, ecosystem: str) -> tuple[str, ...] | None:
+    def _cell(self, name: str, ecosystem: str) -> Cell:
         return self._row(self.matrix, name).cells[self.matrix.ecosystems.index(ecosystem)]
 
     def test_columns_are_the_registered_ecosystems_built_in_first(self) -> None:
@@ -65,6 +71,16 @@ class SupportMatrixTests(unittest.TestCase):
             + "\n| Check | A | B |\n|---|---|---|\n| `x` | t1, t2 | — |\n| `y` | ✓ | ✓ |\n\n"
             + "Checks of every project, whatever its languages: `z`.\n",
         )
+
+    def test_a_pipe_in_a_cell_is_escaped(self) -> None:
+        matrix = SupportMatrix(
+            ecosystems=("A",), rows=(Row(check="x", description="d", cells=(("a|b",),)),), everywhere=("z",)
+        )
+        self.assertIn("| `x` | a\\|b |\n", render(matrix))
+
+    def test_without_checks_of_every_project_the_page_ends_with_the_table(self) -> None:
+        matrix = SupportMatrix(ecosystems=("A",), rows=(Row(check="x", description="d", cells=((),)),), everywhere=())
+        self.assertTrue(render(matrix).endswith("| `x` | ✓ |\n"))
 
     def test_as_dict(self) -> None:
         self.assertEqual(

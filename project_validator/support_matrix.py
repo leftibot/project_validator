@@ -6,20 +6,19 @@ It is printed by `--support-matrix` and kept in docs/support-matrix.md.
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-from project_validator.components import known
 from project_validator.core import Check
 from project_validator.ecosystems import applies_to, registered
 from project_validator.ecosystems.model import Ecosystem
-from project_validator.facts.tools import Tool
+from project_validator.facts.tools import tools_for
 
 type Cell = tuple[str, ...] | None  # tool names (maybe none) where the check applies; None where it does not
 
-REGENERATE = "python -m project_validator --support-matrix > docs/support-matrix.md"
+REGENERATE = "UPDATE_SNAPSHOTS=1 python -m unittest tests.test_documentation"
 LEGEND = f"""\
-What project_validator checks for each ecosystem, and the tools it recognises for it. Generated: regenerate with
-`{REGENERATE}` (a test fails while this page is stale). A
-cell lists the tools the check recognises; `✓` means the check applies without naming tools; `—` means it does not
-apply.
+What project_validator checks for each ecosystem, and the tools it recognises for it. Generated: regenerate
+with `{REGENERATE}`
+(a test fails while this page is stale). A cell lists the tools the check recognises; `✓` means the check applies
+without naming tools; `—` means it does not apply.
 """
 
 
@@ -40,7 +39,9 @@ class SupportMatrix:
 def _cell(check: Check, ecosystem: Ecosystem) -> Cell:
     if ecosystem.label not in applies_to(check):
         return None
-    names = (tool.name for tool in known(Tool) if check.aspect in tool.can and tool.languages & ecosystem.languages)
+    names = (
+        tool.name for tool in (tools_for(check.aspect) if check.aspect else ()) if tool.languages & ecosystem.languages
+    )
     return tuple(dict.fromkeys(names))
 
 
@@ -62,7 +63,7 @@ def support_matrix(checks: Sequence[Check]) -> SupportMatrix:
 def _render_cell(cell: Cell) -> str:
     if cell is None:
         return "—"
-    return ", ".join(cell) if cell else "✓"
+    return ", ".join(name.replace("|", "\\|") for name in cell) if cell else "✓"
 
 
 def render(matrix: SupportMatrix) -> str:
@@ -72,9 +73,11 @@ def render(matrix: SupportMatrix) -> str:
         "|---|" + "---|" * len(matrix.ecosystems),
         *(f"| `{row.check}` | " + " | ".join(_render_cell(c) for c in row.cells) + " |" for row in matrix.rows),
     ]
+    page = "# Support matrix\n\n" + LEGEND + "\n" + "\n".join(lines) + "\n"
+    if not matrix.everywhere:
+        return page
     everywhere = ", ".join(f"`{name}`" for name in matrix.everywhere)
-    footer = f"Checks of every project, whatever its languages: {everywhere}.\n"
-    return "# Support matrix\n\n" + LEGEND + "\n" + "\n".join(lines) + "\n\n" + footer
+    return page + f"\nChecks of every project, whatever its languages: {everywhere}.\n"
 
 
 def as_dict(matrix: SupportMatrix) -> dict[str, object]:

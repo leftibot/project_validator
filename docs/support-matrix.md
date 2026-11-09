@@ -1,9 +1,9 @@
 # Support matrix
 
-What project_validator checks for each ecosystem, and the tools it recognises for it. Generated: regenerate with
-`python -m project_validator --support-matrix > docs/support-matrix.md` (a test fails while this page is stale). A
-cell lists the tools the check recognises; `✓` means the check applies without naming tools; `—` means it does not
-apply.
+What project_validator checks for each ecosystem, and the tools it recognises for it. Generated: regenerate
+with `UPDATE_SNAPSHOTS=1 python -m unittest tests.test_documentation`
+(a test fails while this page is stale). A cell lists the tools the check recognises; `✓` means the check applies
+without naming tools; `—` means it does not apply.
 
 | Check | C/C++ | .NET | Fortran | Go | JavaScript/TypeScript | JVM | PHP | Python | Ruby | Rust | Swift |
 |---|---|---|---|---|---|---|---|---|---|---|---|
