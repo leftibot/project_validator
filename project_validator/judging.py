@@ -46,7 +46,7 @@ def by_ecosystem(results: Mapping[Ecosystem, Result]) -> Result:
     places = tuple(
         replace(place, ecosystem=ecosystem.label)
         for ecosystem, result in results.items()
-        for place in result.places or (Placed(ecosystem="", unit=".", result=result),)
+        for place in result.places or (Placed(ecosystem="", unit="", result=result),)
     )
     return replace(folded, places=places)
 
@@ -79,7 +79,8 @@ def judged[A: UnitAnswer](
     judge: Judge[A],
 ) -> Result:
     """The policy's judgement of each of `languages` the project uses, in each unit that has it; one result when they
-    agree. A language the practice does not apply to (C in a C++ project) says nothing beside those it does."""
+    agree. A language the practice does not apply to (C in a C++ project) says nothing beside those it does.
+    Places are named by `by_ecosystem`; a result returned from here alone has unnamed places."""
     found = [
         answer
         for language in sorted(languages & context.structure.languages)

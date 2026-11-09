@@ -169,6 +169,6 @@ class PlacesTests(unittest.TestCase):
             result.places,
             (
                 Placed(ecosystem="C/C++", unit="lib", result=Result.passed("ok"), tools=("t",)),
-                Placed(ecosystem="Python", unit=".", result=Result.skipped("n/a")),
+                Placed(ecosystem="Python", unit="", result=Result.skipped("n/a")),
             ),
         )

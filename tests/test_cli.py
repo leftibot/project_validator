@@ -243,9 +243,10 @@ class ListTests(unittest.TestCase):
     def test_markdown_format_is_the_grid(self) -> None:
         code, output, _ = run_cli("--format", "markdown", str(FIXTURES / "well_configured_python"))
         self.assertEqual(code, EXIT_SUCCESS)
-        self.assertTrue(output.startswith("## Results by ecosystem\n\n| Check | Python |\n"))
+        self.assertTrue(output.startswith("# project_validator results\n\n✅ pass"))
         self.assertIn("| `coverage` | ✅ coverage.py |", output)
         self.assertIn("| `code-formatting` | ✅ ruff format |", output)
+        self.assertIn("\n## Results by ecosystem\n\n| Check | Python |\n", output)
         self.assertIn("\n## Whole project\n", output)
 
     def test_list_as_json_is_the_support_matrix(self) -> None:

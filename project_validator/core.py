@@ -63,7 +63,8 @@ class Result:
 
 @dataclass(frozen=True, slots=True, kw_only=True)
 class Placed:
-    """One ecosystem's result in one unit ("." for the root), with the tools that ran for the practice there."""
+    """One ecosystem's result in one unit ("." for the root, "" for the whole project), with the tools that ran for
+    the practice there."""
 
     ecosystem: str  # the label; "" until by_ecosystem names it
     unit: str

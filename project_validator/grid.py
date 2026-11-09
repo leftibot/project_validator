@@ -14,33 +14,43 @@ MARKS: Mapping[Status, str] = {
     Status.SKIP: "⏭️",
 }
 
-_Column = tuple[str, str]  # (unit, ecosystem)
+_Column = tuple[str, str]  # (unit, ecosystem); a unit of "" is the whole project
+_HEAD = (
+    "# project_validator results",
+    "",
+    "✅ pass · ⚠️ warn · ❌ fail · ❗ error · ⏭️ skip · — does not apply",
+)
 
 
-def _escape(text: str) -> str:
-    return text.replace("|", "\\|")
+def _md(text: str) -> str:
+    """The text with every character markdown would read as markup escaped."""
+    return "".join(f"\\{char}" if char in "\\`*_[]<>|~" else char for char in text)
 
 
 def _columns(rows: Sequence[Report]) -> list[_Column]:
-    found = {(place.unit, place.ecosystem) for row in rows for place in row.result.places}
-    return sorted(found, key=lambda column: (column[0] != ".", column[0], column[1]))
+    places = [place for row in rows for place in row.result.places]
+    units = {(place.unit, place.ecosystem) for place in places if place.unit}
+    whole = {("", place.ecosystem) for place in places} - {("", ecosystem) for _, ecosystem in units}
+    return sorted(units | whole, key=lambda column: (column[0] not in ("", "."), column[0], column[1]))
 
 
 def _heading(column: _Column, single_unit: bool) -> str:
     unit, ecosystem = column
-    if single_unit:
-        return ecosystem
-    return f"{ecosystem} in {'the root' if unit == '.' else unit}"
+    if single_unit or not unit:
+        return _md(ecosystem)
+    return _md(f"{ecosystem} in {'the root' if unit == '.' else unit}")
 
 
 def _cell(row: Report, column: _Column) -> str:
     places = row.result.places
     if not places:
         return MARKS[row.result.status] if column[1] in applies_to(row.check) else "—"
-    here = [place for place in places if (place.unit, place.ecosystem) == column]
-    if not here:
+    ecosystem = column[1]
+    by_place = {(place.unit, place.ecosystem): place for place in reversed(places)}
+    found = by_place.get(column) or by_place.get(("", ecosystem))
+    if found is None:
         return "—"
-    return _escape(f"{MARKS[here[0].result.status]} {', '.join(here[0].tools)}".rstrip())
+    return f"{MARKS[found.result.status]} {', '.join(_md(tool) for tool in found.tools)}".rstrip()
 
 
 def _table(headers: Sequence[str], rows: Sequence[Sequence[str]]) -> list[str]:
@@ -61,7 +71,7 @@ def _grid_section(reports: Sequence[Report]) -> list[str]:
 
 def _whole_project_section(reports: Sequence[Report]) -> list[str]:
     rows = [
-        [f"`{r.check.name}`", _escape(f"{MARKS[r.result.status]} {r.result.message}")]
+        [f"`{r.check.name}`", f"{MARKS[r.result.status]} {_md(r.result.message)}"]
         for r in reports
         if not r.check.languages
     ]
@@ -75,8 +85,8 @@ def _findings_section(reports: Sequence[Report]) -> list[str]:
     for report in reports:
         result = report.result
         if result.status in (Status.WARN, Status.FAIL, Status.ERROR):
-            lines.append(f"- {MARKS[result.status]} `{report.check.name}`: {result.message}")
-            lines.extend(f"  - {detail}" for detail in result.details)
+            lines.append(f"- {MARKS[result.status]} `{report.check.name}`: {_md(result.message)}")
+            lines.extend(f"  - {_md(detail)}" for detail in result.details)
     return ["## Findings", "", *lines] if lines else []
 
 
@@ -87,4 +97,6 @@ def render_grid(reports: Sequence[Report]) -> str:
         for section in (_grid_section(reports), _whole_project_section(reports), _findings_section(reports))
         if section
     ]
-    return "\n".join("\n".join(lines) + "\n" for lines in sections)
+    if not sections:
+        return ""
+    return "\n".join(["\n".join(_HEAD) + "\n", *("\n".join(lines) + "\n" for lines in sections)])
