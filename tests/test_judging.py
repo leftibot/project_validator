@@ -6,9 +6,11 @@ from project_validator.core import Placed, Result, Status
 from project_validator.ecosystems.c_cpp import C_AND_CXX
 from project_validator.ecosystems.python import PYTHON
 from project_validator.facts import Facts
+from project_validator.facts.coverage import Granularity
 from project_validator.judging import by_ecosystem, combined, judged
 from project_validator.policy import skipped_or_unknown, unknown
 from project_validator.questions import Answer, LanguageAnswers
+from project_validator.questions.coverage import CoverageAnswer, GranularityAnswer
 from project_validator.questions.tooling import Ran, ToolAnswer
 from tests.support import make_context, temp_project
 
@@ -132,6 +134,22 @@ class PlacesTests(unittest.TestCase):
                 ),
             ),
         )
+
+    def test_coverage_places_name_the_tools_of_every_granularity_once(self) -> None:
+        answer = CoverageAnswer(
+            language="C",
+            granularities={
+                Granularity.LINE: GranularityAnswer(answer=Answer.YES, tools=("gcovr",)),
+                Granularity.BRANCH: GranularityAnswer(answer=Answer.YES, tools=("gcovr", "lcov")),
+            },
+        )
+
+        def answers(language: str, facts: Facts) -> LanguageAnswers[CoverageAnswer]:
+            return LanguageAnswers(language=language, units=(answer,))
+
+        with temp_project({"a.c": ""}) as root:
+            result = judged(frozenset({"C"}), make_context(root), answers, lambda found, /, **_: Result.passed("ok"))
+        self.assertEqual([placed.tools for placed in result.places], [("gcovr", "lcov")])
 
     def test_places_do_not_take_part_in_equality_and_survive_with_details(self) -> None:
         placed = Placed(ecosystem="X", unit=".", result=Result.passed("ok"))

@@ -36,6 +36,10 @@ class CoverageAnswer:
         """The granularities a known tool can measure for the language, coarsest first."""
         return tuple(found for found, answer in self.granularities.items() if answer.answer is not Answer.IMPOSSIBLE)
 
+    def tools_ran(self) -> tuple[str, ...]:
+        """The names of every tool CI ran that reports some granularity, each once, in order."""
+        return tuple(dict.fromkeys(tool for found in self.granularities.values() for tool in found.tools))
+
     def as_dict(self) -> dict[str, object]:
         return answer_dict(
             self,

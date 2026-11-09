@@ -244,6 +244,7 @@ class ListTests(unittest.TestCase):
         code, output, _ = run_cli("--format", "markdown", str(FIXTURES / "well_configured_python"))
         self.assertEqual(code, EXIT_SUCCESS)
         self.assertTrue(output.startswith("## Results by ecosystem\n\n| Check | Python |\n"))
+        self.assertIn("| `coverage` | ✅ coverage.py |", output)
         self.assertIn("| `code-formatting` | ✅ ruff format |", output)
         self.assertIn("\n## Whole project\n", output)
 

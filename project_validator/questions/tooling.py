@@ -66,6 +66,10 @@ class ToolAnswer:
         wanted = self.level if level is None else level
         return tuple(ran.name for ran in self.runs if wanted in ran.levels)
 
+    def tools_ran(self) -> tuple[str, ...]:
+        """The names of every tool CI ran for the aspect, each once, in order."""
+        return tuple(dict.fromkeys(ran.name for ran in self.runs))
+
     def others(self) -> tuple[str, ...]:
         """The tools CI runs that do not provide the answer's level (a formatter that only rewrites files)."""
         return tuple(ran.name for ran in self.runs if self.level not in ran.levels)
