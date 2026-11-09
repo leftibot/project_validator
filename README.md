@@ -9,9 +9,12 @@ It recognises a project's languages and build systems, and judges each language 
 ecosystem's tools: a C++ project needs branch coverage from gcovr or llvm-cov, a Python project from coverage.py, a
 Rust project from cargo-llvm-cov. [docs/ecosystems](docs/ecosystems) has a page for each supported ecosystem, saying
 how it is recognised and what each check accepts for it; `project-validator --list` shows which checks apply to which
-ecosystems. Checks that do not apply to any of the project's languages are reported as `SKIP`. A project using
-several languages is judged for each of them and gets the worst result. In a project of no recognised language, only
-the checks that apply to every project run.
+ecosystems, and `--format markdown` lays a project's results out as a grid of checks against ecosystems, each
+cell naming the tools that ran. The grid for project_validator itself is in the job summary of every
+[CI run](https://github.com/cpp-best-practices/project_validator/actions/workflows/ci.yml?query=branch%3Amain).
+Checks that do not apply to any of the project's languages are reported as `SKIP`. A project using several languages
+is judged for each of them and gets the worst result. In a project of no recognised language, only the checks that
+apply to every project run.
 More ecosystems can be added with plugins (see [Adding an ecosystem](#adding-an-ecosystem)).
 
 The validator itself is pure Python and has no build step; it only inspects
@@ -214,7 +217,8 @@ The project validates itself; CI runs the same command:
 python3 -m project_validator --strict --exclude tests/fixtures .
 ```
 
-CI also appends `--format markdown` output to the job summary, a grid of every check against the ecosystems in the project.
+CI also appends `--format markdown` output to the job summary, a grid of every check against the ecosystems in the
+project: open the latest [CI run on main](https://github.com/cpp-best-practices/project_validator/actions/workflows/ci.yml?query=branch%3Amain) to see it.
 
 Each quality gate is its own CI job, so a pull request shows which one failed.
 To run them locally:
