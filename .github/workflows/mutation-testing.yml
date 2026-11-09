@@ -3,6 +3,10 @@ name: mutation testing
 # Pull requests only: it mutates the modules the pull request changes and reports the survivors without failing.
 on: pull_request
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 
@@ -28,20 +32,28 @@ jobs:
         env:
           BASE: ${{ github.base_ref }}
         run: |
-          mapfile -t files < <(git diff --name-only "origin/$BASE...HEAD" -- 'project_validator/*.py' 'project_validator/**/*.py')
+          # Its own command, so that a failing diff fails the step instead of reading as "no modules changed".
+          git diff --name-only "origin/$BASE...HEAD" -- 'project_validator/*.py' 'project_validator/**/*.py' > changed.txt
+          mapfile -t files < changed.txt
           patterns=()
           for file in "${files[@]}"; do
             [ -f "$file" ] || continue
+            # mutmut asserts when a filter matches no mutant, which is the case of a module with no function.
+            grep -qE '^\s*(async )?def ' "$file" || continue
             module=${file%.py}; module=${module//\//.}; module=${module%.__init__}
-            patterns+=("$module.*")
+            # mutmut 3 names a mutant <module>.x_<function>__mutmut_N (or <module>.xǁClassǁmethod__mutmut_N), so
+            # ".x*" selects this module's own mutants; ".*" would also match every submodule, as * crosses dots.
+            patterns+=("$module.x*")
           done
           if [ ${#patterns[@]} -eq 0 ]; then
-            echo "No modules changed: nothing to mutate." >> "$GITHUB_STEP_SUMMARY"
+            echo "No mutable modules changed: nothing to mutate." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           # mutmut copies the tree into mutants/, which is not a git repository, so the tests that call
           # "git ls-files" fail there. The first run only creates the copy (its stats pass stops at the
-          # first failures); make the copy a repository, then run for real.
+          # first failures); make the copy a repository, then run for real. The priming run is expected to fail
+          # fast in its stats pass, because the copy is not a git repository yet; if that pass ever succeeds, the
+          # job runs the named mutants twice.
           mutmut run "${patterns[@]}" || true
           git -C mutants init -q
           git -C mutants add -A

@@ -1,4 +1,4 @@
-"""The JVM's mutation testing tool: PIT, run by its Maven goal or Gradle task, or by a build bringing in its plugin."""
+"""The JVM's mutation testing tool: PIT, run by its Maven goal or Gradle task, or by a build wiring it in."""
 
 import re
 
@@ -12,19 +12,18 @@ _WIRING = Wiring(
     report=re.compile(r"(?:org\.pitest:)?pitest(?:-maven)?(?::[^:]+)?:(?:scmM|m)utationCoverage|pitest"),
     maven_plugin="pitest-maven",
     bound_goal=re.compile(r"(?:scmM|m)utationCoverage"),
-    gradle_plugin="info.solidsoft.pitest",
+    # The plugin does not attach `pitest` to `check`; a project adds that link itself, which is recognised.
+    gradle_plugin=None,
 )
 _INCREMENTAL_STEP = re.compile(r".*(?:scmMutationCoverage|withHistory)")
 
 
 def _incremental(command: Command) -> bool:
-    """`pitest:scmMutationCoverage` mutates the changed code only; `-DwithHistory` (Maven) and `--features=+history`
-    (Gradle) skip the mutants whose code and tests are unchanged."""
+    """`pitest:scmMutationCoverage` mutates the changed code only; `-DwithHistory` (Maven) skips the mutants whose
+    code and tests are unchanged."""
     _kind, steps = build_steps(command) or ("", [])
     argv = resolved(command)
-    return any(_INCREMENTAL_STEP.fullmatch(step) for step in steps) or has_option(
-        argv, "-DwithHistory", "--features=+history"
-    )
+    return any(_INCREMENTAL_STEP.fullmatch(step) for step in steps) or has_option(argv, "-DwithHistory")
 
 
 def _pit(command: Command, facts: Facts) -> Run | None:

@@ -22,7 +22,7 @@ STRYKER_JS = mutation_tool(
     languages=JS_LANGUAGES,
     how="stryker run",
     # `npx stryker run`, and a package script running it, are expanded to `stryker run` by the profile.
-    runs=incremental_when("stryker", "run", options=("--incremental", "--since")),
+    runs=incremental_when("stryker", "run", options=("--incremental",)),
     defined=defined_by(files=(STRYKER_SETTINGS.name,)),
     incremental_how="stryker run --incremental",
 )

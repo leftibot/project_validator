@@ -36,7 +36,7 @@ default.
 ## `mutation-testing`
 
 StrykerJS (`stryker run`, also as `npx stryker run` or a package script; settings in `stryker.config.json`,
-`.js`, `.mjs` or `.cjs`, or `stryker.conf.json` or `.js`). `stryker run --incremental` or `--since <branch>` counts as
+`.js`, `.mjs` or `.cjs`, or `stryker.conf.json` or `.js`). `stryker run --incremental` counts as
 running on the changes only.
 
 ## `code-formatting`

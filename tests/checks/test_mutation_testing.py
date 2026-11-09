@@ -98,6 +98,40 @@ class MutationTestingTests(unittest.TestCase):
         expected = Result.warned("mutmut is configured (pyproject.toml) but does not run", PYTHON_HINT)
         self.assertEqual(self._run({**BARE_PYTHON_WITH_CI, "pyproject.toml": pyproject}), expected)
 
+    def test_a_tool_that_no_step_runs_warns_in_every_profile(self) -> None:
+        workflow = ".github/workflows/ci.yml"
+        cases = (
+            (PYTHON, WELL_CONFIGURED_PYTHON, "mutmut run", "mutmut"),
+            (C_AND_CXX, WELL_CONFIGURED, "mull-runner", None),
+            (RUST, WELL_CONFIGURED_RUST, "cargo mutants", "cargo-mutants"),
+            (GO, WELL_CONFIGURED_GO, "gremlins", None),
+            (JAVASCRIPT_AND_TYPESCRIPT, WELL_CONFIGURED_JAVASCRIPT, "stryker run", "StrykerJS"),
+            (DOTNET, WELL_CONFIGURED_DOTNET, "dotnet stryker", "Stryker.NET"),
+            (PHP, WELL_CONFIGURED_PHP, "infection", "Infection"),
+            (RUBY, WELL_CONFIGURED_RUBY, "mutant run", "mutant"),
+            (SWIFT, WELL_CONFIGURED_SWIFT, "muter", "Muter"),
+        )
+        for ecosystem, files, marker, tool in cases:
+            with self.subTest(ecosystem=ecosystem.label):
+                lines = files[workflow].splitlines()
+                kept = [line for line in lines if marker not in line]
+                self.assertEqual(len(kept), len(lines) - 1)
+                result = run_as(self, mutation_testing, {**files, workflow: "\n".join(kept) + "\n"}, ecosystem)
+                self._assert_idle(result, tool)
+        pom = WELL_CONFIGURED_JVM["pom.xml"]
+        start = pom.index("      <plugin>\n        <groupId>org.pitest")
+        end = pom.index("      </plugin>\n", start) + len("      </plugin>\n")
+        result = run_as(self, mutation_testing, {**WELL_CONFIGURED_JVM, "pom.xml": pom[:start] + pom[end:]}, JVM)
+        self._assert_idle(result, None)
+
+    def _assert_idle(self, result: Result, tool: str | None) -> None:
+        self.assertEqual(result.status, Status.WARN)
+        if tool is None:
+            self.assertEqual(result.message, "no mutation testing runs")
+        else:
+            self.assertTrue(result.message.startswith(f"{tool} is configured ("), result.message)
+            self.assertTrue(result.message.endswith("but does not run"), result.message)
+
     def test_fortran_is_skipped(self) -> None:
         result = mutation_testing.run(make_context(FIXTURES / "well_configured_fortran"))
         self.assertEqual(result.status, Status.SKIP)

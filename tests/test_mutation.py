@@ -84,9 +84,17 @@ class PythonMutationTests(unittest.TestCase):
         run = MUTMUT.claims(command("mutmut run 'project_validator.text.*'"), Facts())
         self.assertEqual(provided(run)[MUTATION], frozenset({RUNS, INCREMENTAL}))
         self.assertTrue(run and run.heuristic)
-        for line in ("mutmut run --max-children 4", "mutmut run --max-children=4"):
+        for line in (
+            "mutmut run --max-children 4",
+            "mutmut run --max-children=4",
+            "mutmut run --paths-to-mutate src",
+            "mutmut run --runner pytest",
+            "mutmut run --tests-dir t",
+        ):
             plain = MUTMUT.claims(command(line), Facts())
             self.assertEqual(provided(plain)[MUTATION], frozenset({RUNS}), line)
+        named = MUTMUT.claims(command("mutmut run --max-children=4 'app.*'"), Facts())
+        self.assertEqual(provided(named)[MUTATION], frozenset({RUNS, INCREMENTAL}))
 
     def test_mutmut_other_subcommands_are_not_runs(self) -> None:
         for line in ("mutmut results", "mutmut show 3", "mutmut browse"):
@@ -115,19 +123,15 @@ class CMutationTests(unittest.TestCase):
             self.assertEqual(provided(MULL.claims(command(line), Facts())), {MUTATION: frozenset({RUNS})}, line)
         self.assertIsNone(MULL.claims(command("cmake --build build"), Facts()))
 
-    def test_a_mull_compiler_plugin_in_the_build_is_a_run(self) -> None:
+    def test_a_build_with_the_mull_plugin_is_not_a_run(self) -> None:
         option = CompilerOption(
             origin=Origin(path="CMakeLists.txt"),
             build_system="CMake",
             option="-fpass-plugin=/usr/lib/mull-ir-frontend-18",
             applies=Applies(),
         )
-        facts = Facts([option])
         for line in ("cmake --build build", "make", "ninja -C build"):
-            run = MULL.claims(command(line), facts)
-            self.assertEqual(provided(run), {MUTATION: frozenset({RUNS})}, line)
-            self.assertTrue(run and run.heuristic, line)
-        self.assertIsNone(MULL.claims(command("ctest"), facts))
+            self.assertIsNone(MULL.claims(command(line), Facts([option])), line)
 
     def test_dextool_mutate_is_a_run(self) -> None:
         self.assertIsNotNone(DEXTOOL.claims(command("dextool mutate test"), Facts()))
@@ -192,9 +196,9 @@ class JavaScriptMutationTests(unittest.TestCase):
         self.assertIn("StrykerJS", {run.tool for run in runs})
         self.assertIsNone(STRYKER_JS.claims(command("stryker init"), Facts()))
 
-    def test_incremental_or_since_is_incremental(self) -> None:
-        for line in ("stryker run --incremental", "stryker run --since main"):
-            self.assertEqual(provided(STRYKER_JS.claims(command(line), Facts())), RUN_INCREMENTALLY, line)
+    def test_incremental_is_incremental_and_since_is_not_a_stryker_js_option(self) -> None:
+        self.assertEqual(provided(STRYKER_JS.claims(command("stryker run --incremental"), Facts())), RUN_INCREMENTALLY)
+        self.assertEqual(provided(STRYKER_JS.claims(command("stryker run --since main"), Facts())), RUN_ONLY)
 
     def test_defined_by_its_config_file(self) -> None:
         for name in ("stryker.config.json", "stryker.config.mjs", "stryker.config.js", "stryker.config.cjs"):
@@ -222,11 +226,14 @@ class JvmMutationTests(unittest.TestCase):
     def test_scm_mutation_coverage_is_incremental(self) -> None:
         for line in ("mvn pitest:scmMutationCoverage", "mvn pitest:mutationCoverage -DwithHistory"):
             self.assertEqual(provided(self._claim(line, _pom())), RUN_INCREMENTALLY, line)
+        self.assertEqual(provided(self._claim("./gradlew pitest --features=+history", {})), RUN_ONLY)
 
     def test_gradle_pitest_task_is_a_run(self) -> None:
-        files = {"build.gradle.kts": 'plugins {\n    id("info.solidsoft.pitest") version "1.15.0"\n}\n'}
+        plugin = 'plugins {\n    id("info.solidsoft.pitest") version "1.15.0"\n}\n'
+        files = {"build.gradle.kts": plugin + 'tasks.check { dependsOn("pitest") }\n'}
         self.assertEqual(provided(self._claim("./gradlew pitest", {})), RUN_ONLY)
         self.assertEqual(provided(self._claim("./gradlew check", files)), RUN_ONLY)
+        self.assertIsNone(self._claim("./gradlew check", {"build.gradle.kts": plugin}))
         self.assertIsNone(self._claim("./gradlew check", {}))
 
 

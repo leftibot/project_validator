@@ -50,9 +50,9 @@ standard such as `c++20` rather than `gnu++20`, so `-std=c++NN` is used rather t
 
 ## `mutation-testing`
 
-Mull (`mull-runner` or `mull-cxx`, settings in `mull.yml`), or a build command (`cmake --build`, `make`, `ninja`) when the
-build compiles with Mull's compiler plugin (a `mull-ir-frontend` option; a heuristic), or dextool
-(`dextool mutate`, settings in `.dextool_mutate.toml`). Neither has an option for the pull request's changes only.
+Mull (`mull-runner` or `mull-cxx`, settings in `mull.yml`; a build with its compiler plugin only embeds the mutants,
+so it is not a run) or dextool (`dextool mutate`, settings in `.dextool_mutate.toml`). No changes-only mode is
+recognised for either.
 
 ## `code-formatting`
 

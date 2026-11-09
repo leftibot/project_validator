@@ -19,10 +19,11 @@ MUTMUT_SETTINGS = SettingsReader(name="mutmut", files=("pyproject.toml", "setup.
 
 
 def _names_mutants(argv: tuple[str, ...]) -> bool:
-    """Whether `mutmut run`'s arguments name mutants: a word that is neither an option nor `--max-children`'s value."""
+    """Whether `mutmut run`'s arguments name mutants: a word that is neither an option nor the value of the option
+    before it (`--max-children 4`; only that one takes a value in mutmut 3, but any `--opt value` pair is read so)."""
     words = argv[2:]
     return any(
-        not word.startswith("-") and not (index and words[index - 1] == "--max-children")
+        not word.startswith("-") and not (index and words[index - 1].startswith("-") and "=" not in words[index - 1])
         for index, word in enumerate(words)
     )
 
