@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from functools import partial
 
 from project_validator.components import known
-from project_validator.facts import Facts, Setting
+from project_validator.facts import Command, Facts, Setting
 from project_validator.facts.testing import TestFile, TestFiles
 from project_validator.facts.tools import Claim, Definition, Run, Tool, provided
 
@@ -84,6 +84,14 @@ def fuzzer(
     )
 
 
+_FALSE = frozenset({"", "0", "false", "no", "off"})
+
+
+def env_enabled(command: Command, name: str) -> bool:
+    """Whether the command's environment turns the variable `name` on (set to anything but a false value)."""
+    return command.env.get(name, "0").strip().lower() not in _FALSE
+
+
 def fuzzed(*, read: Iterable[Setting | str] = (), heuristic: bool = False) -> Run:
     return provided(FUZZ, RUNS, read=read, heuristic=heuristic)
 
@@ -93,6 +101,7 @@ __all__ = [
     "RUNS",
     "FuzzTargets",
     "PropertyTests",
+    "env_enabled",
     "fuzz_kinds",
     "fuzzed",
     "fuzzer",

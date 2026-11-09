@@ -21,14 +21,14 @@ C_PROPERTY_TESTS = PropertyTests(
     contains=re.compile(r"\brc::check\b|\bRC_GTEST_PROP\b|\bRC_BOOST_PROP\b"),
 )
 
-_LIBFUZZER_OPTION = re.compile(r"-(?:max_total_time|runs|max_len|jobs)=\d+")
+LIBFUZZER_OPTION = re.compile(r"-(?:max_total_time|runs|max_len|jobs)=\d+")
 
 
 def _libfuzzer_binary(command: Command, facts: Facts) -> Run | None:
     """A fuzz target binary run with a libFuzzer option (`./build/fuzz_tester -max_total_time=30`): a heuristic,
     for any program that is not a known tool (which claims its own commands)."""
     argv = resolved(command)
-    if not argv or not any(_LIBFUZZER_OPTION.fullmatch(word) for word in argv[1:]):
+    if not argv or not any(LIBFUZZER_OPTION.fullmatch(word) for word in argv[1:]):
         return None
     if any(tool.name != "libFuzzer" and tool.claims(command, facts) for tool in known_tools()):
         return None

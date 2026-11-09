@@ -10,13 +10,21 @@ from project_validator.ecosystems.c_cpp.fuzzing import (
     C_PROPERTY_TESTS,
     LIBFUZZER,
 )
+from project_validator.ecosystems.dotnet.fuzzing import DOTNET_FUZZ_TARGETS, DOTNET_PROPERTY_TESTS, SHARPFUZZ
 from project_validator.ecosystems.go import GO_FUZZ, GO_FUZZ_TARGETS, GO_PROPERTY_TESTS, GO_TEST_FILES
+from project_validator.ecosystems.javascript.fuzzing import (
+    JAZZER_JS,
+    JS_FUZZ_TARGETS,
+    JS_PROPERTY_TESTS,
+)
+from project_validator.ecosystems.jvm.fuzzing import JAZZER, JVM_FUZZ_TARGETS, JVM_PROPERTY_TESTS
 from project_validator.ecosystems.python.fuzzing import ATHERIS, PYTHON_FUZZ_TARGETS, PYTHON_PROPERTY_TESTS
 from project_validator.ecosystems.rust.fuzzing import (
     CARGO_FUZZ,
     RUST_FUZZ_TARGETS,
     RUST_PROPERTY_TESTS,
 )
+from project_validator.ecosystems.swift import SWIFT_FUZZ_TARGETS, SWIFT_LIBFUZZER, SWIFT_PROPERTY_TESTS
 from project_validator.facts import Facts, Origin
 from project_validator.facts.fuzzing import (
     FUZZ,
@@ -256,3 +264,89 @@ class GoFuzzingTests(unittest.TestCase):
     def test_plain_go_test_does_not_fuzz(self) -> None:
         self.assertIsNone(GO_FUZZ.claims(command("go test ./..."), Facts([])))
         self.assertIsNotNone(GO_FUZZ.claims(command("go test -fuzz=Fuzz -fuzztime=30s ."), Facts([])))
+
+
+def _marks(path: str, text: str, *kinds: TestFiles) -> list[bool]:
+    found = _kinds({path: text})
+    return [(path, kind.name) in found for kind in kinds]
+
+
+class JvmFuzzingTests(unittest.TestCase):
+    def test_fuzz_tests_are_targets_and_jqwik_properties_are_property_tests(self) -> None:
+        target = "class T { @FuzzTest void f(FuzzedDataProvider d) {} }\n"
+        self.assertEqual(_marks("src/test/java/T.java", target, JVM_FUZZ_TARGETS, JVM_PROPERTY_TESTS), [True, False])
+        classic = "class T { static void fuzzerTestOneInput(byte[] b) {} }\n"
+        self.assertEqual(_marks("src/T.kt", classic, JVM_FUZZ_TARGETS), [True])
+        prop = "import net.jqwik.api.*;\nclass P { @Property void p() {} }\n"
+        self.assertEqual(_marks("src/test/java/P.java", prop, JVM_FUZZ_TARGETS, JVM_PROPERTY_TESTS), [False, True])
+        self.assertEqual(_marks("notes.txt", target, JVM_FUZZ_TARGETS), [False])
+
+    def test_jazzer_runs_by_its_cli_or_by_a_maven_or_gradle_test_with_jazzer_fuzz(self) -> None:
+        facts = Facts([])
+        self.assertIsNotNone(JAZZER.claims(command("jazzer --cp=a.jar --target_class=T"), facts))
+        for line in ("mvn test", "mvn --batch-mode verify -Dtest=T", "./gradlew test", "gradle check"):
+            with self.subTest(line=line):
+                self.assertIsNotNone(JAZZER.claims(command(line, {"JAZZER_FUZZ": "1"}), facts))
+                self.assertIsNone(JAZZER.claims(command(line), facts))
+                self.assertIsNone(JAZZER.claims(command(line, {"JAZZER_FUZZ": "0"}), facts))
+        self.assertIsNone(JAZZER.claims(command("mvn package", {"JAZZER_FUZZ": "1"}), facts))
+        self.assertIsNone(JAZZER.claims(command("make test", {"JAZZER_FUZZ": "1"}), facts))
+
+
+class JavaScriptFuzzingTests(unittest.TestCase):
+    def test_fuzz_exports_are_targets_and_fast_check_tests_are_property_tests(self) -> None:
+        self.assertEqual(_marks("fuzz/a.fuzz.js", "module.exports.fuzz = (d) => {};\n", JS_FUZZ_TARGETS), [True])
+        self.assertEqual(_marks("fuzz/a.ts", "export function fuzz(d: Buffer) {}\n", JS_FUZZ_TARGETS), [True])
+        self.assertEqual(_marks("src/a.test.js", "it.fuzz('x', (d) => {});\n", JS_FUZZ_TARGETS), [True])
+        self.assertEqual(_marks("src/a.js", "function fuzzy() {}\n", JS_FUZZ_TARGETS), [False])
+        prop = "import fc from 'fast-check';\nfc.assert(fc.property(fc.nat(), () => true));\n"
+        self.assertEqual(_marks("src/p.test.js", prop, JS_FUZZ_TARGETS, JS_PROPERTY_TESTS), [False, True])
+
+    def test_jazzer_js_runs_by_its_cli_or_by_jest_with_jazzer_fuzz(self) -> None:
+        facts = Facts([])
+        self.assertIsNotNone(JAZZER_JS.claims(command("jazzer fuzz/add.fuzz.js -- -max_total_time=30"), facts))
+        self.assertIsNotNone(JAZZER_JS.claims(command("jest", {"JAZZER_FUZZ": "1"}), facts))
+        self.assertIsNotNone(JAZZER_JS.claims(command("jest", {"JAZZER_FUZZ": "true"}), facts))
+        self.assertIsNone(JAZZER_JS.claims(command("jest"), facts))
+        self.assertIsNone(JAZZER_JS.claims(command("jest", {"JAZZER_FUZZ": "0"}), facts))
+        self.assertIsNone(JAZZER_JS.claims(command("npm audit"), facts))
+
+
+class DotnetFuzzingTests(unittest.TestCase):
+    def test_sharpfuzz_entry_points_are_targets_and_fscheck_tests_are_property_tests(self) -> None:
+        self.assertEqual(_marks("fuzz/Program.cs", "Fuzzer.LibFuzzer.Run(x => {});\n", DOTNET_FUZZ_TARGETS), [True])
+        self.assertEqual(_marks("fuzz/P.fs", "Fuzzer.OutOfProcess.Run(f)\n", DOTNET_FUZZ_TARGETS), [True])
+        self.assertEqual(_marks("src/A.cs", "Fuzzer.Run(f);\n", DOTNET_FUZZ_TARGETS), [True])
+        self.assertEqual(_marks("src/A.cs", "class A {}\n", DOTNET_FUZZ_TARGETS), [False])
+        prop = "[Property] public void P() { Prop.ForAll(g, f); }\n"
+        self.assertEqual(_marks("tests/P.cs", prop, DOTNET_FUZZ_TARGETS, DOTNET_PROPERTY_TESTS), [False, True])
+
+    def test_sharpfuzz_runs_by_libfuzzer_dotnet_sharpfuzz_or_afl(self) -> None:
+        facts = Facts([])
+        for line in (
+            "libfuzzer-dotnet --target_path=x -max_total_time=30",
+            "sharpfuzz a.dll",
+            "afl-fuzz -i in -o out x",
+        ):
+            with self.subTest(line=line):
+                self.assertIsNotNone(SHARPFUZZ.claims(command(line), facts))
+        self.assertIsNone(SHARPFUZZ.claims(command("dotnet test"), facts))
+
+
+class SwiftFuzzingTests(unittest.TestCase):
+    def test_the_libfuzzer_entry_point_is_a_target_and_swiftcheck_tests_are_property_tests(self) -> None:
+        main = '@_cdecl("LLVMFuzzerTestOneInput")\npublic func f(_ d: UnsafePointer<UInt8>, _ n: Int) -> CInt { 0 }\n'
+        self.assertEqual(_marks("Sources/F/main.swift", main, SWIFT_FUZZ_TARGETS), [True])
+        self.assertEqual(_marks("Sources/A/a.swift", "func f() {}\n", SWIFT_FUZZ_TARGETS), [False])
+        prop = 'import SwiftCheck\nproperty("p") <- forAll { (x: Int) in true }\n'
+        self.assertEqual(_marks("Tests/P.swift", prop, SWIFT_FUZZ_TARGETS, SWIFT_PROPERTY_TESTS), [False, True])
+
+    def test_a_product_under_build_with_a_libfuzzer_option_is_a_heuristic_run(self) -> None:
+        facts = Facts([])
+        run = SWIFT_LIBFUZZER.claims(command(".build/debug/AppFuzz -max_total_time=30"), facts)
+        self.assertTrue(run is not None and run.heuristic)
+        self.assertIsNotNone(SWIFT_LIBFUZZER.claims(command(".build/release/AppFuzz corpus -runs=100"), facts))
+        self.assertIsNone(SWIFT_LIBFUZZER.claims(command(".build/debug/AppFuzz"), facts))
+        self.assertIsNone(SWIFT_LIBFUZZER.claims(command("./other/AppFuzz -max_total_time=30"), facts))
+        build = "swift build -Xswiftc -sanitize=fuzzer --product AppFuzz"
+        self.assertIsNone(SWIFT_LIBFUZZER.claims(command(build), facts))

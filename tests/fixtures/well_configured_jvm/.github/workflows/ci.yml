@@ -12,3 +12,6 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
       - run: mvn --batch-mode --strict-checksums verify
+      - run: mvn --batch-mode test -Dtest=AppFuzzTest
+        env:
+          JAZZER_FUZZ: 1

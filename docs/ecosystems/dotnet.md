@@ -8,6 +8,12 @@ C# and F#, recognised by `.cs` and `.fs` sources and MSBuild project and solutio
 A test project referencing `Microsoft.NET.Test.Sdk` (or `MSTest.Sdk`) with `[Fact]`, `[Test]` or `[TestMethod]`
 tests, run by `dotnet test`.
 
+## `fuzz-testing`
+
+SharpFuzz targets (`.cs` or `.fs` files that call `Fuzzer.Run`, `Fuzzer.OutOfProcess.Run` or `Fuzzer.LibFuzzer.Run`),
+run by a CI step `libfuzzer-dotnet`, `sharpfuzz`, `afl-fuzz` or `dotnet fuzz`. FsCheck tests alone warn: they are
+property-based tests, not fuzz targets.
+
 ## `coverage`
 
 coverlet (`dotnet test --collect "XPlat Code Coverage"`, `CollectCoverage=true` on the command line or in the MSBuild

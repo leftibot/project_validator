@@ -16,3 +16,4 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm audit --audit-level=moderate
+      - run: npx jazzer fuzz/add.fuzz.js -- -max_total_time=30

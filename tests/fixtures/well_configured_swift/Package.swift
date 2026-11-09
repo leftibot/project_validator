@@ -12,6 +12,7 @@ let package = Package(
             name: "App",
             dependencies: ["AppCore", .product(name: "ArgumentParser", package: "swift-argument-parser")]
         ),
+        .executableTarget(name: "AppFuzz", dependencies: ["AppCore"]),
         .testTarget(name: "AppCoreTests", dependencies: ["AppCore"]),
     ]
 )

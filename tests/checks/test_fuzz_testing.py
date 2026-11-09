@@ -3,9 +3,13 @@ import unittest
 from project_validator.checks.fuzz_testing import fuzz_testing
 from project_validator.core import Options, Result, Status
 from project_validator.ecosystems.c_cpp import C_AND_CXX
+from project_validator.ecosystems.dotnet import DOTNET
 from project_validator.ecosystems.go import GO
+from project_validator.ecosystems.javascript import JAVASCRIPT_AND_TYPESCRIPT
+from project_validator.ecosystems.jvm import JVM
 from project_validator.ecosystems.python import PYTHON
 from project_validator.ecosystems.rust import RUST
+from project_validator.ecosystems.swift import SWIFT
 from tests.support import (
     FIXTURES,
     GITHUB_WORKFLOW,
@@ -55,8 +59,33 @@ class FuzzTestingTests(unittest.TestCase):
         result = run_as(self, fuzz_testing, fixture_files("well_configured_go"), GO)
         self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by go test -fuzz"))
 
+    def test_the_well_configured_jvm_project_passes(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("well_configured_jvm"), JVM)
+        self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by Jazzer"))
+
+    def test_the_well_configured_javascript_project_passes(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("well_configured_javascript"), JAVASCRIPT_AND_TYPESCRIPT)
+        self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by Jazzer.js"))
+
+    def test_the_well_configured_dotnet_project_passes(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("well_configured_dotnet"), DOTNET)
+        self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by SharpFuzz"))
+
+    def test_the_well_configured_swift_project_passes(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("well_configured_swift"), SWIFT)
+        self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by libFuzzer"))
+
     def test_the_bare_projects_fail(self) -> None:
-        for name, ecosystem in (("bare_c_cpp", C_AND_CXX), ("bare_rust", RUST), ("bare_go", GO)):
+        bare = (
+            ("bare_c_cpp", C_AND_CXX),
+            ("bare_rust", RUST),
+            ("bare_go", GO),
+            ("bare_jvm", JVM),
+            ("bare_javascript", JAVASCRIPT_AND_TYPESCRIPT),
+            ("bare_dotnet", DOTNET),
+            ("bare_swift", SWIFT),
+        )
+        for name, ecosystem in bare:
             with self.subTest(project=name):
                 files = {**fixture_files(name), **github_job("ubuntu-latest", "make")}
                 self.assertEqual(run_as(self, fuzz_testing, files, ecosystem).status, Status.FAIL)
