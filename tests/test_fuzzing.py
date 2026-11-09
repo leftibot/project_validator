@@ -116,7 +116,9 @@ class PythonFuzzingTests(unittest.TestCase):
             {
                 "a_pattern.py": 'import re\nP = re.compile(r"\\batheris\\.Setup")\n',
                 "a_string.py": 'MESSAGE = "call atheris.Setup(argv, f) first"\n',
-                "tests/fuzz/fuzz_real.py": "import atheris\n\nif __name__ == '__main__':\n    atheris.Setup(sys.argv, TestOneInput)\n",
+                "tests/fuzz/fuzz_real.py": (
+                    "import atheris\n\nif __name__ == '__main__':\n    atheris.Setup(sys.argv, TestOneInput)\n"
+                ),
             }
         )
         targets = {t.origin.path for t in facts.of(TestFile) if t.kind == PYTHON_FUZZ_TARGETS.name}
