@@ -4517,24 +4517,24 @@
     },
     {
       "applies": {
-        "compilers": "all but msvc"
+        "compilers": "all but flang, gcc, intel, msvc"
       },
       "build_system": "CMake",
       "kind": "CompilerOption",
       "linking": false,
       "option": "-fsanitize=fuzzer,undefined,address",
-      "origin": "fuzz_test/CMakeLists.txt:target_compile_options[2]",
+      "origin": "fuzz_test/CMakeLists.txt:target_compile_options[3]",
       "target": "fuzz_tester"
     },
     {
       "applies": {
-        "compilers": "all but msvc"
+        "compilers": "all but flang, gcc, intel, msvc"
       },
       "build_system": "CMake",
       "kind": "CompilerOption",
       "linking": true,
       "option": "-fsanitize=fuzzer,undefined,address",
-      "origin": "fuzz_test/CMakeLists.txt:target_link_options[3]",
+      "origin": "fuzz_test/CMakeLists.txt:target_link_options[4]",
       "target": "fuzz_tester"
     },
     {

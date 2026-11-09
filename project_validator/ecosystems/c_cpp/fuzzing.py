@@ -5,8 +5,8 @@ import re
 
 from project_validator.ecosystems.c_cpp import C_AND_CXX
 from project_validator.facts import Command, Facts, resolved
-from project_validator.facts.fuzzing import LIBFUZZER_OPTION, FuzzTargets, PropertyTests, fuzzed, fuzzer
-from project_validator.facts.tools import Run, known_tools, starts, when
+from project_validator.facts.fuzzing import LIBFUZZER_OPTION, FuzzTargets, PropertyTests, dotnet_target, fuzzed, fuzzer
+from project_validator.facts.tools import Run, all_of, known_tools, starts, when
 
 C_FUZZ_TARGETS = FuzzTargets(
     name="libFuzzer or AFL++ fuzz targets (LLVMFuzzerTestOneInput, __AFL_LOOP)",
@@ -23,10 +23,13 @@ C_PROPERTY_TESTS = PropertyTests(
 
 
 def _libfuzzer_binary(command: Command, facts: Facts) -> Run | None:
-    """A fuzz target binary run with a libFuzzer option (`./build/fuzz_tester -max_total_time=30`): a heuristic,
-    for any program that is not a known tool (which claims its own commands)."""
+    """A fuzz target binary run with a libFuzzer option (`./build/fuzz_tester -max_total_time=30`): a heuristic, for
+    a program given as a path (a bare program is a launcher's, `npx jazzer`) that is not Swift's product (under
+    `.build/`) and not a known tool (which claims its own commands)."""
     argv = resolved(command)
-    if not argv or not any(LIBFUZZER_OPTION.fullmatch(word) for word in argv[1:]):
+    if not argv or "/" not in argv[0] or argv[0].removeprefix("./").startswith(".build/"):
+        return None
+    if not any(LIBFUZZER_OPTION.fullmatch(word) for word in argv[1:]):
         return None
     if any(tool.name != "libFuzzer" and tool.claims(command, facts) for tool in known_tools()):
         return None
@@ -45,6 +48,6 @@ AFL = fuzzer(
     name="AFL++",
     languages=C_AND_CXX.languages,
     how="afl-fuzz -i <corpus> -o <findings> -- <target>",
-    runs=when(starts(("afl-fuzz",)), fuzzed),
+    runs=when(all_of(starts(("afl-fuzz",)), lambda command: not dotnet_target(command)), fuzzed),
     targets=(C_FUZZ_TARGETS,),
 )

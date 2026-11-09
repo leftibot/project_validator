@@ -3,7 +3,7 @@
 import re
 
 from project_validator.ecosystems.javascript import JS_LANGUAGES
-from project_validator.facts import Command
+from project_validator.facts import Command, resolved
 from project_validator.facts.fuzzing import FuzzTargets, PropertyTests, env_enabled, fuzzed, fuzzer
 from project_validator.facts.tools import any_of, starts, when
 
@@ -21,15 +21,23 @@ JS_PROPERTY_TESTS = PropertyTests(
 )
 
 
+_SCRIPTS = (".js", ".mjs", ".cjs", ".ts", ".mts")
+
+
 def _jest_fuzzing(command: Command) -> bool:
     """jest with `JAZZER_FUZZ` on: its `it.fuzz` tests then fuzz, rather than run their seed inputs."""
     return starts(("jest",))(command) and env_enabled(command, "JAZZER_FUZZ")
+
+
+def _jazzer_cli(command: Command) -> bool:
+    """The `jazzer` CLI given a JavaScript or TypeScript target file (the JVM's is given a class or a jar)."""
+    return starts(("jazzer",))(command) and any(word.endswith(_SCRIPTS) for word in resolved(command)[1:])
 
 
 JAZZER_JS = fuzzer(
     name="Jazzer.js",
     languages=JS_LANGUAGES,
     how="npx jazzer <target> -- -max_total_time=30 (or jest with JAZZER_FUZZ=1)",
-    runs=when(any_of(starts(("jazzer",)), _jest_fuzzing), fuzzed),
+    runs=when(any_of(_jazzer_cli, _jest_fuzzing), fuzzed),
     targets=(JS_FUZZ_TARGETS,),
 )

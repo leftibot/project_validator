@@ -9,12 +9,18 @@ with atheris.instrument_imports():
     from project_validator.text import JsonSyntaxError, check_json
 
 
-def standard_verdict(text: str) -> str | None:
-    """None when `json.loads` accepts the text, its error otherwise; `RecursionError` gives no verdict."""
+def _reject(name: str) -> object:
+    """`NaN`, `Infinity` and `-Infinity` are not JSON, though `json.loads` takes them."""
+    raise ValueError(f"not JSON: {name}")
+
+
+def standard_verdict(text: str) -> str | type[RecursionError] | None:
+    """None when `json.loads` accepts the text (as JSON: no non-finite numbers, and integers stay text, since
+    `json.loads` refuses integers of over 4300 digits), its error otherwise; `RecursionError` gives no verdict."""
     try:
-        json.loads(text)
+        json.loads(text, parse_constant=_reject, parse_int=str)
     except RecursionError:
-        raise
+        return RecursionError
     except ValueError as error:
         return repr(error)
     return None
@@ -30,9 +36,8 @@ def own_verdict(text: str) -> str | None:
 
 def TestOneInput(data: bytes) -> None:
     text = data.decode("utf-8", "surrogateescape")
-    try:
-        standard = standard_verdict(text)
-    except RecursionError:
+    standard = standard_verdict(text)
+    if standard is RecursionError:
         return
     ours = own_verdict(text)
     if (standard is None) != (ours is None):

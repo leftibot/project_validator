@@ -6965,27 +6965,6 @@
       "job": ".github/workflows/ci.yml:fuzz",
       "kind": "ToolRun",
       "languages": [
-        "C",
-        "C++"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.fuzz.steps[3].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "libFuzzer",
-      "via": []
-    },
-    {
-      "heuristic": true,
-      "job": ".github/workflows/ci.yml:fuzz",
-      "kind": "ToolRun",
-      "languages": [
         "Swift"
       ],
       "origin": ".github/workflows/ci.yml:jobs.fuzz.steps[3].run",

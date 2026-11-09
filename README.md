@@ -67,7 +67,7 @@ What each check accepts for a language is on that ecosystem's page in [docs/ecos
 |---|---|
 | `ci-present` | at least one CI configuration is found |
 | `tests-run` | each language's tests exist in each unit (a separate test project's count for all of them) and CI runs them (`ctest-runs` is accepted as an old name). Warns when CI never runs the tests |
-| `fuzz-testing` | each language with a fuzzer has fuzz targets in each unit (libFuzzer, cargo-fuzz, atheris, Go fuzzing, ...) and CI runs them (a ClusterFuzzLite action counts). Warns when CI never runs the targets, or only property-based tests exist |
+| `fuzz-testing` | each language with a fuzzer has fuzz targets in each unit (libFuzzer, cargo-fuzz, atheris, Go fuzzing, ...) and CI runs them (a ClusterFuzzLite action, or a CTest registration that passes a libFuzzer option, counts). Warns when CI never runs the targets, when CI runs a fuzzer but no targets are recognised, or when only property-based tests exist |
 | `coverage` | A coverage tool CI runs reports branch coverage, or the finest coverage any known tool can measure for the language when none measures branches. Path or MC/DC coverage is a bonus. A setting counts when CI runs the tool that reads it |
 | `platform-matrix` | CI covers at least 2 operating systems, 2 toolchains (compilers, or the ecosystem's language versions) and 3 OS/toolchain combinations |
 | `ci-build-types` | every OS/toolchain combination in CI builds Debug and Release, each with and without sanitizers |
@@ -225,7 +225,7 @@ To run them locally:
 | `typing` | `mypy` |
 | `copy-paste-detection` | `npx --yes jscpd@4.3.0` (settings in `.jscpd.json`) |
 | `function-limits` | `lizard --length 30 --warnings_only project_validator tests` |
-| `fuzzing` | `python tests/fuzz/fuzz_<parser>.py tests/fuzz/corpus/<parser> -max_total_time=60` for each of the six parsers (atheris) |
+| `fuzzing` | `python tests/fuzz/fuzz_<parser>.py tests/fuzz/corpus/<parser> -max_total_time=60` for each of the six parsers (atheris); locally, write new corpus entries to a temp directory first: `python tests/fuzz/fuzz_<parser>.py "$(mktemp -d)" tests/fuzz/corpus/<parser> -max_total_time=60` |
 
 Branch coverage is measured with [coverage.py](https://coverage.readthedocs.io/)
 (configured in `pyproject.toml`, which fails the report below 95%):

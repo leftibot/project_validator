@@ -358,7 +358,7 @@
               "known": {
                 "SharpFuzz": {
                   "can": {
-                    "runs": "libfuzzer-dotnet --target_path=<fuzz project> (or sharpfuzz, afl-fuzz, dotnet fuzz)"
+                    "runs": "libfuzzer-dotnet --target_path=<fuzz project> (or afl-fuzz -i <corpus> -o <findings> -- dotnet <fuzz>.dll)"
                   },
                   "needs_definition": true,
                   "required": false

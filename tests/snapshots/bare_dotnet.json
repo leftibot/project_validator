@@ -267,7 +267,7 @@
               "known": {
                 "SharpFuzz": {
                   "can": {
-                    "runs": "libfuzzer-dotnet --target_path=<fuzz project> (or sharpfuzz, afl-fuzz, dotnet fuzz)"
+                    "runs": "libfuzzer-dotnet --target_path=<fuzz project> (or afl-fuzz -i <corpus> -o <findings> -- dotnet <fuzz>.dll)"
                   },
                   "needs_definition": true,
                   "required": false
@@ -721,7 +721,7 @@
     },
     "fuzz-testing": {
       "details": [
-        "consider adding libfuzzer-dotnet --target_path=<fuzz project> (or sharpfuzz, afl-fuzz, dotnet fuzz)"
+        "consider adding libfuzzer-dotnet --target_path=<fuzz project> (or afl-fuzz -i <corpus> -o <findings> -- dotnet <fuzz>.dll)"
       ],
       "message": "no fuzz targets found (SharpFuzz fuzz targets (Fuzzer.Run, Fuzzer.LibFuzzer.Run))",
       "status": "FAIL"

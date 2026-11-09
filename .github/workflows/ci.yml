@@ -234,19 +234,44 @@ jobs:
       - name: Install atheris
         run: python -m pip install --require-hashes -r .github/requirements/fuzz.txt
 
-      - name: Fuzz the parsers
+      - name: Fuzz yaml
+        if: ${{ !cancelled() }}
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: |
-          python tests/fuzz/fuzz_yaml.py tests/fuzz/corpus/yaml -max_total_time=60 -rss_limit_mb=2048
-          python tests/fuzz/fuzz_cmake.py tests/fuzz/corpus/cmake -max_total_time=60 -rss_limit_mb=2048
-          python tests/fuzz/fuzz_meson.py tests/fuzz/corpus/meson -max_total_time=60 -rss_limit_mb=2048
-          python tests/fuzz/fuzz_shell.py tests/fuzz/corpus/shell -max_total_time=60 -rss_limit_mb=2048
-          python tests/fuzz/fuzz_github_expressions.py tests/fuzz/corpus/github_expressions -max_total_time=60 -rss_limit_mb=2048
-          python tests/fuzz/fuzz_json.py tests/fuzz/corpus/json -max_total_time=60 -rss_limit_mb=2048
+        run: python tests/fuzz/fuzz_yaml.py tests/fuzz/corpus/yaml -max_total_time=60 -timeout=25 -rss_limit_mb=2048
+
+      - name: Fuzz cmake
+        if: ${{ !cancelled() }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/fuzz/fuzz_cmake.py tests/fuzz/corpus/cmake -max_total_time=60 -timeout=25 -rss_limit_mb=2048
+
+      - name: Fuzz meson
+        if: ${{ !cancelled() }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/fuzz/fuzz_meson.py tests/fuzz/corpus/meson -max_total_time=60 -timeout=25 -rss_limit_mb=2048
+
+      - name: Fuzz shell
+        if: ${{ !cancelled() }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/fuzz/fuzz_shell.py tests/fuzz/corpus/shell -max_total_time=60 -timeout=25 -rss_limit_mb=2048
+
+      - name: Fuzz github_expressions
+        if: ${{ !cancelled() }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/fuzz/fuzz_github_expressions.py tests/fuzz/corpus/github_expressions -max_total_time=60 -timeout=25 -rss_limit_mb=2048
+
+      - name: Fuzz json
+        if: ${{ !cancelled() }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/fuzz/fuzz_json.py tests/fuzz/corpus/json -max_total_time=60 -timeout=25 -rss_limit_mb=2048
 
       - name: Upload crashes
-        if: failure()
+        if: failure() || cancelled()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: fuzz-crashes

@@ -3680,27 +3680,6 @@
       "via": []
     },
     {
-      "heuristic": true,
-      "job": ".github/workflows/ci.yml:test[0]",
-      "kind": "ToolRun",
-      "languages": [
-        "C",
-        "C++"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "libFuzzer",
-      "via": []
-    },
-    {
       "heuristic": false,
       "job": ".github/workflows/ci.yml:test[0]",
       "kind": "ToolRun",
@@ -3725,29 +3704,6 @@
     },
     {
       "heuristic": false,
-      "job": ".github/workflows/ci.yml:test[0]",
-      "kind": "ToolRun",
-      "languages": [
-        "Java",
-        "Kotlin"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "Jazzer",
-      "via": [
-        ".github/workflows/ci.yml:jobs.test.steps[8].run"
-      ]
-    },
-    {
-      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -3936,27 +3892,6 @@
       "via": []
     },
     {
-      "heuristic": true,
-      "job": ".github/workflows/ci.yml:test[1]",
-      "kind": "ToolRun",
-      "languages": [
-        "C",
-        "C++"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "libFuzzer",
-      "via": []
-    },
-    {
       "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
@@ -3975,29 +3910,6 @@
         "."
       ],
       "tool": "Jazzer.js",
-      "via": [
-        ".github/workflows/ci.yml:jobs.test.steps[8].run"
-      ]
-    },
-    {
-      "heuristic": false,
-      "job": ".github/workflows/ci.yml:test[1]",
-      "kind": "ToolRun",
-      "languages": [
-        "Java",
-        "Kotlin"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "Jazzer",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[8].run"
       ]
@@ -4192,27 +4104,6 @@
       "via": []
     },
     {
-      "heuristic": true,
-      "job": ".github/workflows/ci.yml:test[2]",
-      "kind": "ToolRun",
-      "languages": [
-        "C",
-        "C++"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "libFuzzer",
-      "via": []
-    },
-    {
       "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
@@ -4231,29 +4122,6 @@
         "."
       ],
       "tool": "Jazzer.js",
-      "via": [
-        ".github/workflows/ci.yml:jobs.test.steps[8].run"
-      ]
-    },
-    {
-      "heuristic": false,
-      "job": ".github/workflows/ci.yml:test[2]",
-      "kind": "ToolRun",
-      "languages": [
-        "Java",
-        "Kotlin"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "Jazzer",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[8].run"
       ]
@@ -4448,27 +4316,6 @@
       "via": []
     },
     {
-      "heuristic": true,
-      "job": ".github/workflows/ci.yml:test[3]",
-      "kind": "ToolRun",
-      "languages": [
-        "C",
-        "C++"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "libFuzzer",
-      "via": []
-    },
-    {
       "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
@@ -4487,29 +4334,6 @@
         "."
       ],
       "tool": "Jazzer.js",
-      "via": [
-        ".github/workflows/ci.yml:jobs.test.steps[8].run"
-      ]
-    },
-    {
-      "heuristic": false,
-      "job": ".github/workflows/ci.yml:test[3]",
-      "kind": "ToolRun",
-      "languages": [
-        "Java",
-        "Kotlin"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "Jazzer",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[8].run"
       ]
@@ -4704,27 +4528,6 @@
       "via": []
     },
     {
-      "heuristic": true,
-      "job": ".github/workflows/ci.yml:test[4]",
-      "kind": "ToolRun",
-      "languages": [
-        "C",
-        "C++"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "libFuzzer",
-      "via": []
-    },
-    {
       "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
@@ -4743,29 +4546,6 @@
         "."
       ],
       "tool": "Jazzer.js",
-      "via": [
-        ".github/workflows/ci.yml:jobs.test.steps[8].run"
-      ]
-    },
-    {
-      "heuristic": false,
-      "job": ".github/workflows/ci.yml:test[4]",
-      "kind": "ToolRun",
-      "languages": [
-        "Java",
-        "Kotlin"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "Jazzer",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[8].run"
       ]
@@ -4960,27 +4740,6 @@
       "via": []
     },
     {
-      "heuristic": true,
-      "job": ".github/workflows/ci.yml:test[5]",
-      "kind": "ToolRun",
-      "languages": [
-        "C",
-        "C++"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "libFuzzer",
-      "via": []
-    },
-    {
       "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
@@ -4999,29 +4758,6 @@
         "."
       ],
       "tool": "Jazzer.js",
-      "via": [
-        ".github/workflows/ci.yml:jobs.test.steps[8].run"
-      ]
-    },
-    {
-      "heuristic": false,
-      "job": ".github/workflows/ci.yml:test[5]",
-      "kind": "ToolRun",
-      "languages": [
-        "Java",
-        "Kotlin"
-      ],
-      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
-      "provides": {
-        "fuzz": [
-          "runs"
-        ]
-      },
-      "read": [],
-      "scope": [
-        "."
-      ],
-      "tool": "Jazzer",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[8].run"
       ]

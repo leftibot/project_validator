@@ -119,7 +119,7 @@ class FuzzTestingTests(unittest.TestCase):
         result = run_as(self, fuzz_testing, files, PYTHON)
         self.assertEqual(
             result,
-            Result.passed(f"fuzz targets in 1 file(s), run by CI ({GITHUB_WORKFLOW}): {CLUSTERFUZZLITE}"),
+            Result.passed(f"fuzz targets in 1 file(s), run by ClusterFuzzLite ({GITHUB_WORKFLOW})"),
         )
 
     def test_both_kinds_of_run_are_named(self) -> None:
@@ -127,7 +127,7 @@ class FuzzTestingTests(unittest.TestCase):
         files = {**WELL_CONFIGURED_PYTHON, GITHUB_WORKFLOW: f"{workflow}      - uses: {CLUSTERFUZZLITE}\n"}
         self.assertEqual(
             run_as(self, fuzz_testing, files, PYTHON),
-            Result.passed(f"fuzz targets in 1 file(s), run by atheris and CI ({GITHUB_WORKFLOW}): {CLUSTERFUZZLITE}"),
+            Result.passed(f"fuzz targets in 1 file(s), run by atheris and ClusterFuzzLite ({GITHUB_WORKFLOW})"),
         )
 
     def test_a_fuzzer_running_without_recognised_targets_warns(self) -> None:
@@ -135,6 +135,14 @@ class FuzzTestingTests(unittest.TestCase):
         result = run_as(self, fuzz_testing, files, PYTHON)
         self.assertEqual(result.status, Status.WARN)
         self.assertIn("no fuzz targets were recognised", result.message)
+        [hint] = result.details
+        self.assertTrue(hint.startswith("consider adding a fuzz target (atheris"), hint)
+
+    def test_without_a_run_or_targets_the_hint_says_how_to_run_a_fuzzer(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("bare_python"), PYTHON)
+        self.assertEqual(result.status, Status.FAIL)
+        [hint] = result.details
+        self.assertTrue(hint.startswith("consider adding python"), hint)
 
     def test_php_is_skipped(self) -> None:
         self.assertEqual(fuzz_testing.run(make_context(FIXTURES / "well_configured_php")).status, Status.SKIP)

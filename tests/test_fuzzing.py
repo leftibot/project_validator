@@ -157,6 +157,9 @@ def _kinds(files: dict[str, str]) -> set[tuple[str, str]]:
     return {(t.origin.path, t.kind) for t in facts_of(files).of(TestFile)}
 
 
+FUZZ_TESTER_REGISTRATION = "add_test(NAME fuzz_tester_run COMMAND fuzz_tester -max_total_time=10)\n"
+
+
 class CFuzzingTests(unittest.TestCase):
     def test_llvm_fuzzer_entry_point_is_a_target(self) -> None:
         files = {
@@ -174,9 +177,11 @@ class CFuzzingTests(unittest.TestCase):
         run = LIBFUZZER.claims(command("./build/fuzz_tester -max_total_time=30"), facts)
         self.assertTrue(run is not None and run.heuristic)
         self.assertIsNotNone(LIBFUZZER.claims(command("build/fuzz_tester corpus/ -runs=1000"), facts))
+        self.assertIsNone(LIBFUZZER.claims(command("fuzz_tester -runs=1000"), facts))
         self.assertIsNone(LIBFUZZER.claims(command("./build/fuzz_tester"), facts))
         self.assertIsNone(LIBFUZZER.claims(command("pytest -runs=3"), facts))
         self.assertIsNone(LIBFUZZER.claims(command("cargo fuzz run parse -- -max_total_time=30"), facts))
+        self.assertIsNone(LIBFUZZER.claims(command("./bin/jazzer app.jar -runs=100"), facts))
 
     def test_afl_fuzz_is_a_run(self) -> None:
         self.assertIsNotNone(AFL.claims(command("afl-fuzz -i in -o out -- ./target"), Facts([])))
@@ -185,19 +190,71 @@ class CFuzzingTests(unittest.TestCase):
     def test_a_ctest_registered_fuzz_target_runs(self) -> None:
         files = {
             **fixture_files("well_configured_c_cpp"),
-            "fuzz_test/CMakeLists.txt": "add_test(NAME other_run COMMAND other_tool -max_total_time=10)\n",
+            "fuzz_test/CMakeLists.txt": "add_test(NAME other_run COMMAND other_tool crashes/crash-1)\n",
         }
         self.assertEqual(_ctest_entries(files), ())
-        files["fuzz_test/CMakeLists.txt"] = "add_test(NAME fuzz_tester_run COMMAND fuzz_tester)\n"
+        files["fuzz_test/CMakeLists.txt"] = "add_test(NAME fuzz_tester_run COMMAND fuzz_tester -max_total_time=10)\n"
         self.assertEqual(_ctest_entries(files), ("CTest (fuzz_test/CMakeLists.txt): fuzz_tester_run",))
+
+    def test_only_a_registration_with_a_libfuzzer_option_is_a_fuzz_run(self) -> None:
+        for registration, counted in (
+            ("add_test(NAME fuzz_regression COMMAND parse_fuzzer crashes/crash-1)", False),
+            ("add_test(NAME fuzzy_math_test COMMAND math_test)", False),
+            ("add_test(NAME fuzz_tester_run COMMAND fuzz_tester -max_total_time=10)", True),
+            ("add_test(NAME t COMMAND fuzz_tester -runs=1000 corpus)", True),
+            ("add_test(NAME t COMMAND fuzz_tester -max_total_time=${FUZZ_SECONDS})", True),
+            ("add_test(NAME t COMMAND fuzz_tester ${FUZZ_ARGS})", False),
+            ("add_test(NAME t_max_total_time=10 COMMAND fuzz_tester)", False),
+        ):
+            with self.subTest(registration=registration):
+                files = {**fixture_files("well_configured_c_cpp"), "fuzz_test/CMakeLists.txt": registration + "\n"}
+                self.assertEqual(bool(_ctest_entries(files)), counted)
 
     def test_a_ctest_fuzz_test_does_not_run_without_a_ctest_run(self) -> None:
         files = {
             **fixture_files("well_configured_c_cpp"),
             **github_job("ubuntu-latest", "cmake --build build"),
-            "fuzz_test/CMakeLists.txt": "add_test(NAME fuzz_tester_run COMMAND fuzz_tester)\n",
+            "fuzz_test/CMakeLists.txt": "add_test(NAME fuzz_tester_run COMMAND fuzz_tester -max_total_time=10)\n",
         }
         self.assertEqual(_ctest_entries(files), ())
+
+    def test_ctest_regexes_choose_the_tests_it_runs(self) -> None:
+        for line, counted in (
+            ("ctest --test-dir build", True),
+            ("cmake --build build --target test", True),
+            ("ctest -E fuzz", False),
+            ("ctest --exclude-regex fuzz_tester", False),
+            ("ctest -LE fuzz", False),
+            ("ctest -E unit", True),
+            ("ctest -R fuzz_tester", True),
+            ("ctest --tests-regex=fuzz", True),
+            ("ctest -R unit", False),
+            ("ctest -L unit", False),
+            ("ctest -L fuzz", True),
+            ("ctest -R fuzz -E fuzz_tester", False),
+            ("ctest -R fuzz -R unit", False),
+            ("ctest -R fuzz_tester -E unit", True),
+            ("ctest -R ${TESTS}", True),
+            ("ctest -R '['", True),
+            ("ctest -E unit && ctest -R fuzz", True),
+        ):
+            with self.subTest(line=line):
+                files = {
+                    **fixture_files("well_configured_c_cpp"),
+                    **github_job("ubuntu-latest", line),
+                    "fuzz_test/CMakeLists.txt": FUZZ_TESTER_REGISTRATION,
+                }
+                self.assertEqual(bool(_ctest_entries(files)), counted)
+
+    def test_a_replay_only_ctest_registration_is_a_warning(self) -> None:
+        files = {
+            **MIXED_FILES,
+            "CMakeLists.txt": "project(x LANGUAGES CXX)\nenable_testing()\n"
+            "add_test(NAME fuzz_regression COMMAND parse_fuzzer crashes/crash-1)\n",
+        }
+        [answer] = fuzzing("C++", facts_of(files)).units
+        self.assertEqual(answer.other_runs, ())
+        self.assertIn("no CI configuration runs", judge_fuzzing(answer).message)
 
 
 def _ctest_entries(files: dict[str, str]) -> tuple[str, ...]:
@@ -334,12 +391,11 @@ class DotnetFuzzingTests(unittest.TestCase):
         prop = "[Property] public void P() { Prop.ForAll(g, f); }\n"
         self.assertEqual(_marks("tests/P.cs", prop, DOTNET_FUZZ_TARGETS, DOTNET_PROPERTY_TESTS), [False, True])
 
-    def test_sharpfuzz_runs_by_libfuzzer_dotnet_sharpfuzz_or_afl(self) -> None:
+    def test_sharpfuzz_runs_by_libfuzzer_dotnet_or_afl_on_a_dotnet_target(self) -> None:
         facts = Facts([])
         for line in (
             "libfuzzer-dotnet --target_path=x -max_total_time=30",
-            "sharpfuzz a.dll",
-            "afl-fuzz -i in -o out x",
+            "afl-fuzz -i in -o out -- dotnet bin/App.Fuzz.dll",
         ):
             with self.subTest(line=line):
                 self.assertIsNotNone(SHARPFUZZ.claims(command(line), facts))
@@ -363,3 +419,89 @@ class SwiftFuzzingTests(unittest.TestCase):
         self.assertIsNone(SWIFT_LIBFUZZER.claims(command("./other/AppFuzz -max_total_time=30"), facts))
         build = "swift build -Xswiftc -sanitize=fuzzer --product AppFuzz"
         self.assertIsNone(SWIFT_LIBFUZZER.claims(command(build), facts))
+
+
+def _verdicts(files: dict[str, str], *languages: str) -> dict[str, str]:
+    """What the fuzz-testing policy says for each of `languages`, as its message."""
+    facts = facts_of(files)
+    return {language: judge_fuzzing(_only_unit(language, facts)).message for language in languages}
+
+
+JAVA_TARGET = {
+    "src/test/java/T.java": "class T { @FuzzTest void f(FuzzedDataProvider d) {} }\n",
+    "pom.xml": "<project/>\n",
+}
+JS_TARGET = {"fuzz/a.fuzz.js": "module.exports.fuzz = (d) => {};\n", "package.json": "{}\n"}
+CPP_TARGET = {
+    "fuzz/t.cpp": 'extern "C" int LLVMFuzzerTestOneInput(const unsigned char*, unsigned long) { return 0; }\n',
+    "CMakeLists.txt": "project(x LANGUAGES CXX)\n",
+}
+DOTNET_TARGET = {
+    "fuzz/Program.cs": "Fuzzer.LibFuzzer.Run(x => {});\n",
+    "App.csproj": "<Project/>\n",
+}
+
+
+class MixedProjectFuzzingTests(unittest.TestCase):
+    """A run of one language's fuzzer is not credited to another language's."""
+
+    def assert_runs(self, files: dict[str, str], line: str, runs: str, never: str) -> None:
+        files = {**files, **github_job("ubuntu-latest", line)}
+        found = _verdicts(files, runs, never)
+        self.assertTrue(found[runs].startswith("fuzz targets in 1 file(s), run by "), found[runs])
+        self.assertIn("no CI configuration runs", found[never])
+
+    def test_jazzer_js_is_not_a_jvm_jazzer_run(self) -> None:
+        self.assert_runs({**JAVA_TARGET, **JS_TARGET}, "npx jazzer fuzz/a.fuzz.js", "JavaScript", "Java")
+
+    def test_a_jvm_jazzer_run_names_a_class_or_a_jar(self) -> None:
+        facts = Facts([])
+        for line in (
+            "jazzer --cp=a.jar --target_class=T",
+            "jazzer -cp a.jar T",
+            "jazzer app.jar",
+            "jazzer --classpath x",
+        ):
+            with self.subTest(line=line):
+                self.assertIsNotNone(JAZZER.claims(command(line), facts))
+                self.assertIsNone(JAZZER_JS.claims(command(line), facts))
+        self.assertIsNone(JAZZER.claims(command("jazzer fuzz/a.fuzz.js"), facts))
+        self.assertIsNone(JAZZER_JS.claims(command("jazzer"), facts))
+        self.assertIsNotNone(JAZZER_JS.claims(command("jazzer fuzz/a.mts"), facts))
+
+    def test_a_gradle_build_with_jazzer_fuzz_runs_the_fuzz_tests(self) -> None:
+        self.assertIsNotNone(JAZZER.claims(command("./gradlew build", {"JAZZER_FUZZ": "1"}), Facts([])))
+
+    def test_an_afl_run_of_a_native_target_is_not_a_dotnet_run(self) -> None:
+        self.assert_runs({**CPP_TARGET, **DOTNET_TARGET}, "afl-fuzz -i in -o out -- ./build/t", "C++", "C#")
+
+    def test_an_afl_run_of_a_dotnet_target_is_not_a_native_run(self) -> None:
+        self.assert_runs(
+            {**CPP_TARGET, **DOTNET_TARGET}, "afl-fuzz -i in -o out -- dotnet bin/App.Fuzz.dll", "C#", "C++"
+        )
+        self.assert_runs({**CPP_TARGET, **DOTNET_TARGET}, "afl-fuzz -i in -o out -- bin/App.Fuzz.dll", "C#", "C++")
+
+    def test_sharpfuzz_and_dotnet_fuzz_are_not_runs(self) -> None:
+        facts = Facts([])
+        for line in ("sharpfuzz a.dll", "dotnet fuzz", "afl-fuzz -i in -o out"):
+            with self.subTest(line=line):
+                self.assertIsNone(SHARPFUZZ.claims(command(line), facts))
+
+    def test_a_swift_product_is_not_a_native_libfuzzer_run(self) -> None:
+        files = {
+            **CPP_TARGET,
+            "Package.swift": "// swift-tools-version:5.9\n",
+            "Sources/AFuzz/main.swift": '@_cdecl("LLVMFuzzerTestOneInput")\npublic func f() {}\n',
+        }
+        files = {**files, **github_job("ubuntu-latest", ".build/debug/AFuzz -max_total_time=30")}
+        found = _verdicts(files, "Swift", "C++")
+        self.assertTrue(found["Swift"].startswith("fuzz targets in 1 file(s), run by "), found["Swift"])
+        self.assertIn("no CI configuration runs", found["C++"])
+
+    def test_a_launched_command_is_not_a_native_libfuzzer_run(self) -> None:
+        facts = Facts([])
+        for line in ("npx jazzer fuzz/a.fuzz.js -- -max_total_time=30", "uv run fuzz -max_total_time=30"):
+            with self.subTest(line=line):
+                self.assertIsNone(LIBFUZZER.claims(command(line), facts))
+        self.assertIsNone(LIBFUZZER.claims(command(".build/debug/AFuzz -max_total_time=30"), facts))
+        self.assertIsNone(LIBFUZZER.claims(command("python fuzz.py -max_total_time=30"), facts))

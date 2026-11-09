@@ -37,5 +37,12 @@ class FuzzTargetTests(unittest.TestCase):
                 module.TestOneInput(b"")
                 module.TestOneInput(b"{[(" * 50)
 
+    def test_the_json_target_agrees_with_json_loads_on_non_finite_numbers_and_huge_integers(self) -> None:
+        with mock.patch.dict(sys.modules, {"atheris": stubbed_atheris()}):
+            module = load_module(FUZZ_DIRECTORY / "fuzz_json.py")
+        for text in ("NaN", "[NaN, -Infinity]", "9" * 5000, "Infinity"):
+            with self.subTest(text=text[:20]):
+                module.TestOneInput(text.encode())
+
     def test_unittest_discovers_nothing_under_tests_fuzz(self) -> None:
         self.assertEqual(unittest.defaultTestLoader.discover(str(FUZZ_DIRECTORY)).countTestCases(), 0)

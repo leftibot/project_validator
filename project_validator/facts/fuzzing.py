@@ -13,7 +13,8 @@ from dataclasses import dataclass
 from functools import partial
 
 from project_validator.components import known
-from project_validator.facts import Command, Facts, Setting
+from project_validator.facts import Command, Facts, Setting, resolved
+from project_validator.facts.arguments import program
 from project_validator.facts.testing import TestFile, TestFiles
 from project_validator.facts.tools import Claim, Definition, Run, Tool, provided
 
@@ -94,6 +95,14 @@ def env_enabled(command: Command, name: str) -> bool:
     return command.env.get(name, "0").strip().lower() not in _FALSE
 
 
+def dotnet_target(command: Command) -> bool:
+    """Whether the words after `--` in a command (`afl-fuzz -i in -o out -- dotnet bin/App.Fuzz.dll`) run `dotnet` or
+    name a `.dll`: the fuzzed target is a .NET program, not a native one."""
+    argv = resolved(command)
+    words = argv[argv.index("--") + 1 :] if "--" in argv else ()
+    return program(words) == "dotnet" or any(word.lower().endswith(".dll") for word in words)
+
+
 def fuzzed(*, read: Iterable[Setting | str] = (), heuristic: bool = False) -> Run:
     return provided(FUZZ, RUNS, read=read, heuristic=heuristic)
 
@@ -103,6 +112,7 @@ __all__ = [
     "RUNS",
     "FuzzTargets",
     "PropertyTests",
+    "dotnet_target",
     "env_enabled",
     "fuzz_kinds",
     "fuzzed",

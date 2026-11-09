@@ -14,7 +14,10 @@ def _no_targets(answer: FuzzAnswer) -> Result:
     kinds = dict.fromkeys(tool.describe for tool in answer.tools.known if tool.describe)
     ran = (*answer.tools.providing(), *answer.other_runs)
     if ran:
-        return Result.warned(f"CI runs {both(ran)}, but no fuzz targets were recognised ({either(kinds)})", hint)
+        return Result.warned(
+            f"CI runs {both(ran)}, but no fuzz targets were recognised ({either(kinds)})",
+            f"consider adding a fuzz target ({either(kinds)})",
+        )
     if answer.property_files:
         return Result.warned(f"only property-based tests ({files(answer.property_files)}); no fuzz targets", hint)
     return Result.failed(f"no fuzz targets found ({either(kinds)})" if kinds else "no fuzz targets found", hint)
