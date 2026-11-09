@@ -3,21 +3,10 @@ and a type checker; strict type checking is a bonus."""
 
 from project_validator.core import Result
 from project_validator.facts.analysis import CHECKS, Strictness
-from project_validator.policy import both, either, skipped_or_unknown
+from project_validator.policy import both, either, skipped_or_unknown, tools_ran
 from project_validator.policy import files as files_listed
 from project_validator.questions import Answer
 from project_validator.questions.tooling import ToolAnswer
-
-
-def _named(answer: ToolAnswer, tool: str) -> str:
-    """A tool, with the files that define it."""
-    files = answer.definitions((tool,))
-    return f"{tool} ({files_listed(files)})" if files else tool
-
-
-def _ran(answer: ToolAnswer) -> str:
-    running = [_named(answer, tool) for tool in answer.providing()]
-    return f"{both(running)} {'runs' if len(running) == 1 else 'run'}"
 
 
 def _idle(answer: ToolAnswer, tools: tuple[str, ...]) -> list[str]:
@@ -55,8 +44,8 @@ def judge_analysis(answer: ToolAnswer, *, allow_unknown: bool = False) -> Result
         defaults = (f"{tool} has no configuration of its checks, so it runs only its defaults" for tool in undefined)
         problems = [*_idle(answer, answer.required_idle()), *defaults]
         if problems:
-            return Result.warned(f"{_ran(answer)}, but {'; '.join(problems)}", hint)
-        return Result.passed(_ran(answer))
+            return Result.warned(f"{tools_ran(answer)}, but {'; '.join(problems)}", hint)
+        return Result.passed(tools_ran(answer))
     if configured := [name for name, _ in answer.defined]:
         return Result.warned("; ".join(_idle(answer, tuple(configured))), hint)
     return Result.failed("no static analyzer runs", hint)
@@ -79,8 +68,10 @@ def judge_type_checking(answer: ToolAnswer, *, allow_unknown: bool = False) -> R
     if answer.answer is Answer.YES:
         if strict := answer.providing(Strictness.STRICT):
             where = (f"{tool} ({files_listed(read)})" if (read := answer.read_by(tool)) else tool for tool in strict)
-            return Result.passed(f"{_ran(answer)}; strict mode bonus: {', '.join(where)}")
-        return Result.passed(_ran(answer), f"consider enabling strict mode: {either(answer.how(Strictness.STRICT))}")
+            return Result.passed(f"{tools_ran(answer)}; strict mode bonus: {', '.join(where)}")
+        return Result.passed(
+            tools_ran(answer), f"consider enabling strict mode: {either(answer.how(Strictness.STRICT))}"
+        )
     if configured := [name for name, _ in answer.defined]:
         return Result.warned("; ".join(_idle(answer, tuple(configured))), hint)
     return Result.failed("no type checker runs", hint)

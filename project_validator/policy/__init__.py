@@ -10,6 +10,7 @@ from typing import Protocol
 
 from project_validator.core import Result, Status
 from project_validator.questions import Answer
+from project_validator.questions.tooling import ToolAnswer
 
 _ALLOW_UNKNOWN = "--allow-unknown judges only what could be read"
 
@@ -73,4 +74,26 @@ def alternatives(ways: Iterable[str]) -> str:
     return ways[0] + (f" (or {either(ways[1:])})" if len(ways) > 1 else "") if ways else ""
 
 
-__all__ = ["Judge", "alternatives", "both", "either", "files", "skipped_or_unknown", "unknown"]
+def named_tool(answer: ToolAnswer, tool: str) -> str:
+    """A tool, with the files that define it."""
+    defined = answer.definitions((tool,))
+    return f"{tool} ({files(defined)})" if defined else tool
+
+
+def tools_ran(answer: ToolAnswer) -> str:
+    """`a runs`, `a and b run`: the tools CI runs, each with the files that define it."""
+    running = [named_tool(answer, tool) for tool in answer.providing()]
+    return f"{both(running)} {'runs' if len(running) == 1 else 'run'}"
+
+
+__all__ = [
+    "Judge",
+    "alternatives",
+    "both",
+    "either",
+    "files",
+    "named_tool",
+    "skipped_or_unknown",
+    "tools_ran",
+    "unknown",
+]

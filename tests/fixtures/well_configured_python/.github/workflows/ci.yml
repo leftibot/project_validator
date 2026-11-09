@@ -18,3 +18,4 @@ jobs:
       - run: mypy src
       - run: lizard --length 30 --warnings_only .
       - run: python -W error -m coverage run -m pytest
+      - run: mutmut run

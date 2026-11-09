@@ -8,3 +8,6 @@ branch = true
 
 [tool.mypy]
 strict = true
+
+[tool.mutmut]
+source_paths = ['src']
