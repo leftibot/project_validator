@@ -46,7 +46,7 @@ python3 -m project_validator --only coverage,platform-matrix --format json path/
 | `--facts` | print the facts found about the project as JSON, each with where it was found: the source and build files with their languages, the settings the configuration files hold (per tool), the CI jobs (one per matrix combination), the commands and actions each runs, the commands those run in turn (package scripts, Deno tasks, Composer scripts, Make targets, pre-commit hooks), what the coverage tools CI runs measure, and what could not be read (see [docs/architecture.md](docs/architecture.md)) |
 | `--answers` | print the answers to the questions about the project as JSON, per language in each unit of the project: for now, what coverage CI reports at each granularity (line, statement, region, branch, path), each `yes`, `no`, `unknown` (something that could report it was not read) or `impossible` (no known tool measures it for the language), with the tools that report it and how the known tools would |
 | `--only CHECKS` / `--skip CHECKS` | comma separated check names to run / not run |
-| `--format text\|json` | output format |
+| `--format text\|json\|markdown` | output format; `markdown` is a grid of checks against the ecosystems in each unit of the project, each cell its status and the tools that ran, for a CI job summary |
 | `--color auto\|always\|never` | color the text output (needs rich); `auto` colors only on a terminal when `NO_COLOR` is unset |
 | `--exclude DIR` | leave `DIR`, relative to the project, out of the validation (e.g. test fixtures); may be repeated |
 | `--build` | configure and build the project in a temporary directory and ask `ctest` for its tests; a build that cannot run makes whether there are tests unknown |
@@ -213,6 +213,8 @@ The project validates itself; CI runs the same command:
 ```sh
 python3 -m project_validator --strict --exclude tests/fixtures .
 ```
+
+CI also appends `--format markdown` output to the job summary, a grid of every check against the ecosystems in the project.
 
 Each quality gate is its own CI job, so a pull request shows which one failed.
 To run them locally:

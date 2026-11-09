@@ -10,6 +10,7 @@ from pathlib import Path, PurePosixPath
 from project_validator import pretty, yaml_support
 from project_validator.core import DEFAULT_MAX_FILE_SIZE, Check, Context, Options, Project
 from project_validator.ecosystems import applies_to
+from project_validator.grid import render_grid
 from project_validator.plugins import PluginError, discover
 from project_validator.questions.answers import answers
 from project_validator.runner import Report, SelectionError, run_checks, select, succeeded
@@ -56,10 +57,7 @@ def _parser() -> argparse.ArgumentParser:
         parser.add_argument(f"--{name}", action="store_true", help=f"print {what} as JSON and exit")
     parser.add_argument("--only", action="append", default=[], metavar="CHECKS", help="run only these checks")
     parser.add_argument("--skip", action="append", default=[], metavar="CHECKS", help="do not run these checks")
-    parser.add_argument("--format", choices=("text", "json"), default="text", help="output format")
-    parser.add_argument(
-        "--color", choices=("auto", "always", "never"), default="auto", help="color the text output (needs rich)"
-    )
+    _add_output_options(parser)
     parser.add_argument(
         "--exclude",
         action="append",
@@ -74,6 +72,19 @@ def _parser() -> argparse.ArgumentParser:
     )
     _add_check_options(parser)
     return parser
+
+
+def _add_output_options(parser: argparse.ArgumentParser) -> None:
+    """The options that choose how the results are printed."""
+    parser.add_argument(
+        "--format",
+        choices=("text", "json", "markdown"),
+        default="text",
+        help="output format (markdown: a grid of checks by ecosystem, for a job summary)",
+    )
+    parser.add_argument(
+        "--color", choices=("auto", "always", "never"), default="auto", help="color the text output (needs rich)"
+    )
 
 
 def _add_check_options(parser: argparse.ArgumentParser) -> None:
@@ -165,6 +176,8 @@ def _usage_error(parser: argparse.ArgumentParser, message: str) -> int:
 def _print_reports(reports: list[Report], arguments: argparse.Namespace) -> None:
     if arguments.format == "json":
         print(_format_json(reports))
+    elif arguments.format == "markdown":
+        print(render_grid(reports), end="")
     else:
         _print_text(reports, _use_color(arguments.color))
 

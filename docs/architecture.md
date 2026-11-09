@@ -111,6 +111,8 @@ only scans heuristically, or a matrix computed by an expression), not a finding 
 `ERROR`, which fails the run and names what was not read, unless the user passes `--allow-unknown`; then the answer
 is judged by what could be read, as a no.
 
+A folded result keeps the places it was folded from (`Result.places`: one ecosystem in one unit, with the tools that ran), so `--format markdown` can lay the results out as a grid without re-judging.
+
 ### Worked example: branch coverage in this repository
 
 1. The GitHub Actions extractor records the job `coverage` and its command

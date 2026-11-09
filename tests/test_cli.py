@@ -240,6 +240,13 @@ class ListTests(unittest.TestCase):
         self.assertIn("CiJob", {fact["kind"] for fact in facts})
         self.assertTrue(all("origin" in fact for fact in facts))
 
+    def test_markdown_format_is_the_grid(self) -> None:
+        code, output, _ = run_cli("--format", "markdown", str(FIXTURES / "well_configured_python"))
+        self.assertEqual(code, EXIT_SUCCESS)
+        self.assertTrue(output.startswith("## Results by ecosystem\n\n| Check | Python |\n"))
+        self.assertIn("| `code-formatting` | ✅ ruff format |", output)
+        self.assertIn("\n## Whole project\n", output)
+
     def test_list_as_json_is_the_support_matrix(self) -> None:
         code, output, _ = run_cli("--list", "--format", "json")
         self.assertEqual(code, EXIT_SUCCESS)
