@@ -278,6 +278,40 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Go",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "go-mutesting": {
+                "can": {
+                  "runs": "go-mutesting ./..."
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "gremlins": {
+                "can": {
+                  "incremental": "gremlins unleash --diff <branch>",
+                  "runs": "gremlins unleash"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Go",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Go",
@@ -673,6 +707,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running gremlins unleash or go-mutesting ./... in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

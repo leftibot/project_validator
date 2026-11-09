@@ -285,6 +285,33 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "PHP",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "Infection": {
+                "can": {
+                  "incremental": "vendor/bin/infection --git-diff-lines",
+                  "runs": "vendor/bin/infection"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "PHP",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "PHP",
@@ -725,6 +752,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running vendor/bin/infection in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

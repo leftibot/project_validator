@@ -257,6 +257,39 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "C",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "Mull": {
+                "can": {
+                  "runs": "mull-runner"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "dextool mutate": {
+                "can": {
+                  "runs": "dextool mutate"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "C",
@@ -639,6 +672,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running mull-runner or dextool mutate in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

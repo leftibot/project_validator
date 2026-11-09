@@ -278,6 +278,33 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Java",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "PIT": {
+                "can": {
+                  "incremental": "pitest:scmMutationCoverage",
+                  "runs": "pitest:mutationCoverage or the pitest Gradle task"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Java",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Java",
@@ -715,6 +742,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running pitest:mutationCoverage or the pitest Gradle task in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

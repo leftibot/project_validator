@@ -358,6 +358,45 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "Stryker.NET": [
+                "stryker-config.json"
+              ]
+            },
+            "known": {
+              "Stryker.NET": {
+                "can": {
+                  "incremental": "dotnet stryker --since",
+                  "runs": "dotnet stryker"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "runs",
+            "runs": {
+              "Stryker.NET": {
+                "levels": [
+                  "incremental",
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "C#",
@@ -918,6 +957,21 @@
       "via": []
     },
     {
+      "argv": [
+        "dotnet",
+        "stryker",
+        "--since"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "dotnet stryker --since",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1042,6 +1096,21 @@
       "kind": "Command",
       "line": "dotnet test --no-build --collect:\"XPlat Code Coverage\"",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "dotnet",
+        "stryker",
+        "--since"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "dotnet stryker --since",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -1172,6 +1241,21 @@
       "via": []
     },
     {
+      "argv": [
+        "dotnet",
+        "stryker",
+        "--since"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "dotnet stryker --since",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1296,6 +1380,21 @@
       "kind": "Command",
       "line": "dotnet test --no-build --collect:\"XPlat Code Coverage\"",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "dotnet",
+        "stryker",
+        "--since"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "dotnet stryker --since",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -1426,6 +1525,21 @@
       "via": []
     },
     {
+      "argv": [
+        "dotnet",
+        "stryker",
+        "--since"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "dotnet stryker --since",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1550,6 +1664,21 @@
       "kind": "Command",
       "line": "dotnet test --no-build --collect:\"XPlat Code Coverage\"",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "dotnet",
+        "stryker",
+        "--since"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "dotnet stryker --since",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -2135,6 +2264,11 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": "stryker-config.json",
+      "reader": "Stryker.NET"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": "tests/App.Tests/App.Tests.csproj",
       "reader": "NuGet package references"
     },
@@ -2488,6 +2622,28 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Stryker.NET",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -2750,6 +2906,28 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Stryker.NET",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -3012,6 +3190,28 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Stryker.NET",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -3274,6 +3474,28 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Stryker.NET",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -3536,6 +3758,28 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Stryker.NET",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -3794,6 +4038,28 @@
         "."
       ],
       "tool": ".NET security analyzers",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Stryker.NET",
       "via": []
     },
     {
@@ -4246,7 +4512,7 @@
     },
     "data-wellformed": {
       "details": [],
-      "message": "6 data files parse (JSON: 1, YAML: 5)",
+      "message": "7 data files parse (JSON: 2, YAML: 5)",
       "status": "PASS"
     },
     "dependency-audit": {
@@ -4286,6 +4552,11 @@
         "LICENSE"
       ],
       "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "mutation-testing": {
+      "details": [],
+      "message": "Stryker.NET (stryker-config.json) runs; on the pull request's changes only (bonus)",
       "status": "PASS"
     },
     "platform-matrix": {

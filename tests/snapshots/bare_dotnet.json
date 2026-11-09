@@ -272,6 +272,33 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "Stryker.NET": {
+                "can": {
+                  "incremental": "dotnet stryker --since",
+                  "runs": "dotnet stryker"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "C#",
+            "level": "runs",
+            "runs": {},
+            "unit": "src/App",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "C#",
@@ -702,6 +729,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running dotnet stryker in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

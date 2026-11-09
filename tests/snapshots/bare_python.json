@@ -270,6 +270,47 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Python",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "cosmic-ray": {
+                "can": {
+                  "runs": "cosmic-ray exec"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "mutatest": {
+                "can": {
+                  "runs": "mutatest"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "mutmut": {
+                "can": {
+                  "incremental": "mutmut run <module>.* for the changed modules",
+                  "runs": "mutmut run"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Python",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Python",
@@ -751,6 +792,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running mutmut run, cosmic-ray exec or mutatest in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

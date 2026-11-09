@@ -351,6 +351,58 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Python",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "mutmut": [
+                "pyproject.toml"
+              ]
+            },
+            "known": {
+              "cosmic-ray": {
+                "can": {
+                  "runs": "cosmic-ray exec"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "mutatest": {
+                "can": {
+                  "runs": "mutatest"
+                },
+                "needs_definition": false,
+                "required": false
+              },
+              "mutmut": {
+                "can": {
+                  "incremental": "mutmut run <module>.* for the changed modules",
+                  "runs": "mutmut run"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Python",
+            "level": "runs",
+            "runs": {
+              "mutmut": {
+                "levels": [
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Python",
@@ -1029,6 +1081,20 @@
       ]
     },
     {
+      "argv": [
+        "mutmut",
+        "run"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "mutmut run",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1245,6 +1311,20 @@
         ".github/workflows/ci.yml:jobs.test.steps[9].run",
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "argv": [
+        "mutmut",
+        "run"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "mutmut run",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
     },
     {
       "builds": true,
@@ -1465,6 +1545,20 @@
       ]
     },
     {
+      "argv": [
+        "mutmut",
+        "run"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "mutmut run",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1681,6 +1775,20 @@
         ".github/workflows/ci.yml:jobs.test.steps[9].run",
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "argv": [
+        "mutmut",
+        "run"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "mutmut run",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
     },
     {
       "builds": true,
@@ -1901,6 +2009,20 @@
       ]
     },
     {
+      "argv": [
+        "mutmut",
+        "run"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "mutmut run",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -2117,6 +2239,20 @@
         ".github/workflows/ci.yml:jobs.test.steps[9].run",
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "argv": [
+        "mutmut",
+        "run"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "mutmut run",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
     },
     {
       "kind": "StepReference",
@@ -2562,6 +2698,16 @@
       "reader": "mutmut"
     },
     {
+      "heuristic": false,
+      "key": "source_paths",
+      "kind": "Setting",
+      "origin": "pyproject.toml:source_paths",
+      "tool": "mutmut",
+      "value": [
+        "src"
+      ]
+    },
+    {
       "kind": "ConfigurationFile",
       "origin": "uv.lock",
       "reader": "Python packages lockfile"
@@ -2958,6 +3104,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutmut",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -3343,6 +3509,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutmut",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -3728,6 +3914,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutmut",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -4113,6 +4319,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutmut",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -4498,6 +4724,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutmut",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -4880,6 +5126,26 @@
         ".github/workflows/ci.yml:jobs.test.steps[9].run",
         ".github/workflows/ci.yml:jobs.test.steps[9].run"
       ]
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutmut",
+      "via": []
     },
     {
       "heuristic": false,
@@ -5318,6 +5584,13 @@
         "LICENSE"
       ],
       "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running it on the pull request's changes only: mutmut run <module>.* for the changed modules"
+      ],
+      "message": "mutmut (pyproject.toml) runs",
       "status": "PASS"
     },
     "platform-matrix": {

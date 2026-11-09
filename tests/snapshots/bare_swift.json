@@ -285,6 +285,32 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Swift",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "Muter": {
+                "can": {
+                  "runs": "muter"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Swift",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Swift",
@@ -687,6 +713,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running muter in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

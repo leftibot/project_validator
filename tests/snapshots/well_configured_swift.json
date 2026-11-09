@@ -377,6 +377,43 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Swift",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "Muter": [
+                "muter.conf.yml"
+              ]
+            },
+            "known": {
+              "Muter": {
+                "can": {
+                  "runs": "muter"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Swift",
+            "level": "runs",
+            "runs": {
+              "Muter": {
+                "levels": [
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Swift",
@@ -953,6 +990,19 @@
       "via": []
     },
     {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1085,6 +1135,19 @@
       "via": []
     },
     {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1212,6 +1275,19 @@
       "kind": "Command",
       "line": "osv-scanner scan --lockfile Package.resolved",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -1347,6 +1423,19 @@
       "via": []
     },
     {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1474,6 +1563,19 @@
       "kind": "Command",
       "line": "osv-scanner scan --lockfile Package.resolved",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -1609,6 +1711,19 @@
       "via": []
     },
     {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1736,6 +1851,19 @@
       "kind": "Command",
       "line": "osv-scanner scan --lockfile Package.resolved",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[6]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -1871,6 +1999,19 @@
       "via": []
     },
     {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[7]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1998,6 +2139,19 @@
       "kind": "Command",
       "line": "osv-scanner scan --lockfile Package.resolved",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[8]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -2133,6 +2287,19 @@
       "via": []
     },
     {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[9]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -2260,6 +2427,19 @@
       "kind": "Command",
       "line": "osv-scanner scan --lockfile Package.resolved",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[10]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -2392,6 +2572,19 @@
       "kind": "Command",
       "line": "osv-scanner scan --lockfile Package.resolved",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "muter"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[11]",
+      "kind": "Command",
+      "line": "muter",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
       "via": []
     },
     {
@@ -3153,6 +3346,11 @@
       "origin": "Package.swift"
     },
     {
+      "kind": "ConfigurationFile",
+      "origin": "muter.conf.yml",
+      "reader": "Muter"
+    },
+    {
       "heuristic": false,
       "job": ".github/workflows/ci.yml:test[0]",
       "kind": "ToolRun",
@@ -3459,6 +3657,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -3764,6 +3982,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -4069,6 +4307,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -4374,6 +4632,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -4679,6 +4957,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -4984,6 +5282,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[6]",
       "kind": "ToolRun",
       "languages": [
@@ -5289,6 +5607,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[6]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[7]",
       "kind": "ToolRun",
       "languages": [
@@ -5594,6 +5932,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[7]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[8]",
       "kind": "ToolRun",
       "languages": [
@@ -5899,6 +6257,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[8]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[9]",
       "kind": "ToolRun",
       "languages": [
@@ -6204,6 +6582,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[9]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[10]",
       "kind": "ToolRun",
       "languages": [
@@ -6509,6 +6907,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[10]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[11]",
       "kind": "ToolRun",
       "languages": [
@@ -6810,6 +7228,26 @@
         "."
       ],
       "tool": "osv-scanner",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[11]",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Muter",
       "via": []
     },
     {
@@ -7584,7 +8022,7 @@
     },
     "data-wellformed": {
       "details": [],
-      "message": "7 data files parse (YAML: 7)",
+      "message": "8 data files parse (YAML: 8)",
       "status": "PASS"
     },
     "dependency-audit": {
@@ -7624,6 +8062,11 @@
         "LICENSE"
       ],
       "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "mutation-testing": {
+      "details": [],
+      "message": "Muter (muter.conf.yml) runs",
       "status": "PASS"
     },
     "platform-matrix": {
