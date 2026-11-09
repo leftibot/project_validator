@@ -9,7 +9,7 @@ a unit, the unknowns that matter to some tools) is here, once.
 import enum
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from project_validator.components import known
 from project_validator.facts import Facts, Unknown
@@ -30,6 +30,13 @@ class Answer(enum.StrEnum):
 
 class Answered(Protocol):
     def as_dict(self) -> dict[str, object]: ...
+
+
+@runtime_checkable
+class RanTools(Protocol):
+    def tools_ran(self) -> tuple[str, ...]:
+        """The names of every tool CI ran for the practice in this unit, each once, in order."""
+        ...
 
 
 class UnitAnswer(Answered, Protocol):
@@ -133,6 +140,7 @@ __all__ = [
     "Answered",
     "LanguageAnswers",
     "Question",
+    "RanTools",
     "UnitAnswer",
     "answer_dict",
     "known_questions",

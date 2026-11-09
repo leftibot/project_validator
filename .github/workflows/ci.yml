@@ -182,9 +182,12 @@ jobs:
       - name: Install project_validator
         run: python -m pip install .
 
-      # --strict: a warning fails the build, so every check this project is judged by must pass.
+      # --strict: a warning fails the build, so every check this project is judged by must pass. The grid goes to
+      # the job summary first; the strict run decides the step.
       - name: Validate project_validator with itself
-        run: project-validator --strict --exclude tests/fixtures .
+        run: |
+          project-validator --format markdown --exclude tests/fixtures . >> "$GITHUB_STEP_SUMMARY" || true
+          project-validator --strict --exclude tests/fixtures .
 
   coverage:
     name: coverage

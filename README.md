@@ -9,9 +9,12 @@ It recognises a project's languages and build systems, and judges each language 
 ecosystem's tools: a C++ project needs branch coverage from gcovr or llvm-cov, a Python project from coverage.py, a
 Rust project from cargo-llvm-cov. [docs/ecosystems](docs/ecosystems) has a page for each supported ecosystem, saying
 how it is recognised and what each check accepts for it; `project-validator --list` shows which checks apply to which
-ecosystems. Checks that do not apply to any of the project's languages are reported as `SKIP`. A project using
-several languages is judged for each of them and gets the worst result. In a project of no recognised language, only
-the checks that apply to every project run.
+ecosystems, and `--format markdown` lays a project's results out as a grid of checks against ecosystems, each
+cell naming the tools that ran. The grid for project_validator itself is in the job summary of every
+[CI run](https://github.com/cpp-best-practices/project_validator/actions/workflows/ci.yml?query=branch%3Amain).
+Checks that do not apply to any of the project's languages are reported as `SKIP`. A project using several languages
+is judged for each of them and gets the worst result. In a project of no recognised language, only the checks that
+apply to every project run.
 More ecosystems can be added with plugins (see [Adding an ecosystem](#adding-an-ecosystem)).
 
 The validator itself is pure Python and has no build step; it only inspects
@@ -47,7 +50,7 @@ python3 -m project_validator --only coverage,platform-matrix --format json path/
 | `--facts` | print the facts found about the project as JSON, each with where it was found: the source and build files with their languages, the settings the configuration files hold (per tool), the CI jobs (one per matrix combination), the commands and actions each runs, the commands those run in turn (package scripts, Deno tasks, Composer scripts, Make targets, pre-commit hooks), what the coverage tools CI runs measure, and what could not be read (see [docs/architecture.md](docs/architecture.md)) |
 | `--answers` | print the answers to the questions about the project as JSON, per language in each unit of the project: for now, what coverage CI reports at each granularity (line, statement, region, branch, path), each `yes`, `no`, `unknown` (something that could report it was not read) or `impossible` (no known tool measures it for the language), with the tools that report it and how the known tools would |
 | `--only CHECKS` / `--skip CHECKS` | comma separated check names to run / not run |
-| `--format text\|json` | output format |
+| `--format text\|json\|markdown` | output format; `markdown` is a grid of checks against the ecosystems in each unit of the project, each cell its status and the tools that ran, for a CI job summary |
 | `--color auto\|always\|never` | color the text output (needs rich); `auto` colors only on a terminal when `NO_COLOR` is unset |
 | `--exclude DIR` | leave `DIR`, relative to the project, out of the validation (e.g. test fixtures); may be repeated |
 | `--build` | configure and build the project in a temporary directory and ask `ctest` for its tests; a build that cannot run makes whether there are tests unknown |
@@ -216,6 +219,9 @@ The project validates itself; CI runs the same command:
 ```sh
 python3 -m project_validator --strict --exclude tests/fixtures .
 ```
+
+CI also appends `--format markdown` output to the job summary, a grid of every check against the ecosystems in the
+project: open the latest [CI run on main](https://github.com/cpp-best-practices/project_validator/actions/workflows/ci.yml?query=branch%3Amain) to see it.
 
 Each quality gate is its own CI job, so a pull request shows which one failed.
 To run them locally:

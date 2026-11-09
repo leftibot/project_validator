@@ -3,12 +3,18 @@
 import unittest
 from collections.abc import Callable
 
-from project_validator.core import Check, Result, Status
+from project_validator.core import Check, Placed, Result, Status
+from project_validator.ecosystems.c_cpp import C_AND_CXX
+from project_validator.ecosystems.python import PYTHON
+from project_validator.facts import Facts
+from project_validator.facts.coverage import Granularity
 from project_validator.facts.tools import handling
-from project_validator.judging import answered_check, combined
+from project_validator.judging import answered_check, by_ecosystem, combined, judged
 from project_validator.policy import skipped_or_unknown, unknown
-from project_validator.questions import Answer
-from project_validator.questions.tooling import ToolAnswer, aspect_answers
+from project_validator.questions import Answer, LanguageAnswers
+from project_validator.questions.coverage import CoverageAnswer, GranularityAnswer
+from project_validator.questions.tooling import Ran, ToolAnswer, aspect_answers
+from tests.support import make_context, temp_project
 
 
 class ResultTests(unittest.TestCase):
@@ -116,3 +122,86 @@ class AnsweredCheckTests(unittest.TestCase):
     def test_an_aspect_or_languages_is_required(self) -> None:
         with self.assertRaisesRegex(TypeError, "aspect or languages"):
             self._check()
+
+
+def _answer(language: str, unit: str, *tools: str) -> ToolAnswer:
+    return ToolAnswer(
+        aspect="format",
+        language=language,
+        unit=unit,
+        level="check",
+        answer=Answer.YES,
+        runs=tuple(Ran(name=tool, levels=frozenset({"check"})) for tool in tools),
+    )
+
+
+class PlacesTests(unittest.TestCase):
+    def _judged(
+        self, answers_by_place: dict[tuple[str, str], ToolAnswer], statuses: dict[tuple[str, str], Result]
+    ) -> Result:
+        def answers(language: str, facts: Facts) -> LanguageAnswers[ToolAnswer]:
+            return LanguageAnswers(
+                language=language, units=tuple(a for (lang, _), a in answers_by_place.items() if lang == language)
+            )
+
+        def judge(answer: ToolAnswer, /, *, allow_unknown: bool = False) -> Result:
+            return statuses[(answer.language, answer.unit)]
+
+        with temp_project({"a.c": "", "b.cpp": ""}) as root:
+            return judged(frozenset({"C", "C++"}), make_context(root), answers, judge)
+
+    def test_one_place_per_unit_with_the_tools_that_ran(self) -> None:
+        result = self._judged(
+            {("C", "."): _answer("C", ".", "clang-format"), ("C++", "."): _answer("C++", ".", "clang-format", "other")},
+            {("C", "."): Result.passed("fine"), ("C++", "."): Result.failed("bad")},
+        )
+        self.assertEqual(result, Result(status=Status.FAIL, message="C: fine; C++: bad"))
+        self.assertEqual(
+            result.places,
+            (
+                Placed(
+                    ecosystem="",
+                    unit=".",
+                    result=Result(status=Status.FAIL, message="C: fine; C++: bad"),
+                    tools=("clang-format", "other"),
+                ),
+            ),
+        )
+
+    def test_coverage_places_name_the_tools_of_every_granularity_once(self) -> None:
+        answer = CoverageAnswer(
+            language="C",
+            granularities={
+                Granularity.LINE: GranularityAnswer(answer=Answer.YES, tools=("gcovr",)),
+                Granularity.BRANCH: GranularityAnswer(answer=Answer.YES, tools=("gcovr", "lcov")),
+            },
+        )
+
+        def answers(language: str, facts: Facts) -> LanguageAnswers[CoverageAnswer]:
+            return LanguageAnswers(language=language, units=(answer,))
+
+        with temp_project({"a.c": ""}) as root:
+            result = judged(frozenset({"C"}), make_context(root), answers, lambda found, /, **_: Result.passed("ok"))
+        self.assertEqual([placed.tools for placed in result.places], [("gcovr", "lcov")])
+
+    def test_places_do_not_take_part_in_equality_and_survive_with_details(self) -> None:
+        placed = Placed(ecosystem="X", unit=".", result=Result.passed("ok"))
+        with_places = Result(status=Status.PASS, message="ok", places=(placed,))
+        self.assertEqual(with_places, Result.passed("ok"))
+        self.assertEqual(with_places.with_details("more").places, (placed,))
+
+    def test_by_ecosystem_names_the_places_and_makes_one_of_a_plain_result(self) -> None:
+        inner = Result(
+            status=Status.PASS,
+            message="ok",
+            places=(Placed(ecosystem="", unit="lib", result=Result.passed("ok"), tools=("t",)),),
+        )
+        result = by_ecosystem({C_AND_CXX: inner, PYTHON: Result.skipped("n/a")})
+        self.assertEqual(result, Result.passed("ok"))
+        self.assertEqual(
+            result.places,
+            (
+                Placed(ecosystem="C/C++", unit="lib", result=Result.passed("ok"), tools=("t",)),
+                Placed(ecosystem="Python", unit="", result=Result.skipped("n/a")),
+            ),
+        )

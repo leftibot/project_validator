@@ -6,13 +6,14 @@ said once when all agree, and otherwise each is labelled and the worst status wi
 """
 
 from collections.abc import Callable, Mapping
+from dataclasses import replace
 
-from project_validator.core import Check, Context, Result, Status
+from project_validator.core import Check, Context, Placed, Result, Status
 from project_validator.ecosystems import Ecosystem, ecosystems_for, registered
 from project_validator.facts import Facts
 from project_validator.facts.tools import handling
 from project_validator.policy import Judge
-from project_validator.questions import LanguageAnswers, UnitAnswer
+from project_validator.questions import LanguageAnswers, RanTools, UnitAnswer
 
 
 def labelled(results: Mapping[str, Result]) -> Result:
@@ -40,7 +41,15 @@ def combined[K](results: Mapping[K, Result], *, label: Callable[[K, tuple[K, ...
 
 def by_ecosystem(results: Mapping[Ecosystem, Result]) -> Result:
     """One result for several ecosystems, labelled by ecosystem where they differ."""
-    return combined(results, label=lambda ecosystem, _: ecosystem.label, none="no recognised ecosystem in the project")
+    folded = combined(
+        results, label=lambda ecosystem, _: ecosystem.label, none="no recognised ecosystem in the project"
+    )
+    places = tuple(
+        replace(place, ecosystem=ecosystem.label)
+        for ecosystem, result in results.items()
+        for place in result.places or (Placed(ecosystem="", unit="", result=result),)
+    )
+    return replace(folded, places=places)
 
 
 def check_each_ecosystem[Rules](
@@ -71,7 +80,8 @@ def judged[A: UnitAnswer](
     judge: Judge[A],
 ) -> Result:
     """The policy's judgement of each of `languages` the project uses, in each unit that has it; one result when they
-    agree. A language the practice does not apply to (C in a C++ project) says nothing beside those it does."""
+    agree. A language the practice does not apply to (C in a C++ project) says nothing beside those it does.
+    Places are named by `by_ecosystem`; a result returned from here alone has unnamed places."""
     found = [
         answer
         for language in sorted(languages & context.structure.languages)
@@ -80,7 +90,27 @@ def judged[A: UnitAnswer](
     results = {
         (answer.language, answer.unit): judge(answer, allow_unknown=context.options.allow_unknown) for answer in found
     }
-    return combined(results, label=_label, none="only the docs, tooling, examples or test fixtures use these languages")
+    folded = combined(
+        results, label=_label, none="only the docs, tooling, examples or test fixtures use these languages"
+    )
+    units = dict.fromkeys(unit for _, unit in results)
+    return replace(folded, places=tuple(_placed(unit, results, found) for unit in units))
+
+
+def _tools_ran(answer: object) -> tuple[str, ...]:
+    """The tools CI ran for an answer, when it says (not every answer is about tools)."""
+    return answer.tools_ran() if isinstance(answer, RanTools) else ()
+
+
+def _placed[A: UnitAnswer](unit: str, results: Mapping[_Place, Result], found: list[A]) -> Placed:
+    """One unit's result across the languages judged there, with the tools that ran for the practice in it."""
+    here = {language: result for (language, where), result in results.items() if where == unit}
+    return Placed(
+        ecosystem="",
+        unit=unit,
+        result=combined(here, label=lambda language, _: language, none=""),
+        tools=tuple(dict.fromkeys(tool for answer in found if answer.unit == unit for tool in _tools_ran(answer))),
+    )
 
 
 def answered_check[A: UnitAnswer](
