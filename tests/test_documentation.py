@@ -6,6 +6,7 @@ from pathlib import Path
 
 from project_validator.ecosystems import PROFILES, applies_to, isolated_registry, registered
 from project_validator.plugins import discover
+from project_validator.support_matrix import REGENERATE, render, support_matrix
 from tests.support import temp_project
 
 ROOT = Path(__file__).parent.parent
@@ -58,3 +59,13 @@ class ReadmeExampleTests(unittest.TestCase):
             self.assertEqual(registered()[-1].label, "Zig")
             formatting = next(found for found in plugins.checks if found.name == "code-formatting")
             self.assertIn("Zig", applies_to(formatting))
+
+
+class SupportMatrixTests(unittest.TestCase):
+    def test_the_committed_matrix_is_current(self) -> None:
+        expected = render(support_matrix(discover().checks))
+        actual = (ROOT / "docs" / "support-matrix.md").read_text(encoding="utf-8")
+        self.assertEqual(actual, expected, f"docs/support-matrix.md is stale: run `{REGENERATE}`")
+
+    def test_the_readme_links_the_matrix(self) -> None:
+        self.assertIn("(docs/support-matrix.md)", README.read_text(encoding="utf-8"))

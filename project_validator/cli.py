@@ -13,6 +13,7 @@ from project_validator.ecosystems import applies_to
 from project_validator.plugins import PluginError, discover
 from project_validator.questions.answers import answers
 from project_validator.runner import Report, SelectionError, run_checks, select, succeeded
+from project_validator.support_matrix import as_dict, render, support_matrix
 
 EXIT_SUCCESS = 0
 EXIT_FAILURE = 1
@@ -51,9 +52,7 @@ def _parser() -> argparse.ArgumentParser:
         prog="project_validator", description="Validate a project's build, CI and tooling against best practices."
     )
     parser.add_argument("path", nargs="?", default=".", type=Path, help="project to validate (default: .)")
-    parser.add_argument("--list", action="store_true", help="list the checks (as JSON: with what each applies to)")
-    for name, what in _DUMPS.items():
-        parser.add_argument(f"--{name}", action="store_true", help=f"print {what} as JSON and exit")
+    _add_listing_options(parser)
     parser.add_argument("--only", action="append", default=[], metavar="CHECKS", help="run only these checks")
     parser.add_argument("--skip", action="append", default=[], metavar="CHECKS", help="do not run these checks")
     parser.add_argument("--format", choices=("text", "json"), default="text", help="output format")
@@ -74,6 +73,18 @@ def _parser() -> argparse.ArgumentParser:
     )
     _add_check_options(parser)
     return parser
+
+
+def _add_listing_options(parser: argparse.ArgumentParser) -> None:
+    """The options that print information about the validator or the project and exit."""
+    parser.add_argument(
+        "--support-matrix",
+        action="store_true",
+        help="print what each check recognises for each ecosystem (markdown; as JSON with --format json) and exit",
+    )
+    parser.add_argument("--list", action="store_true", help="list the checks (as JSON: with what each applies to)")
+    for name, what in _DUMPS.items():
+        parser.add_argument(f"--{name}", action="store_true", help=f"print {what} as JSON and exit")
 
 
 def _add_check_options(parser: argparse.ArgumentParser) -> None:
@@ -152,9 +163,19 @@ def _format_list(checks: Sequence[Check]) -> str:
     return "\n".join(f"{c.name:<{width}}  {c.description}" for c in checks)
 
 
-def support_matrix(checks: Sequence[Check]) -> list[dict[str, object]]:
+def check_list(checks: Sequence[Check]) -> list[dict[str, object]]:
     """Each check and the ecosystems it judges; an empty `applies_to` means every project."""
     return [{"check": c.name, "description": c.description, "applies_to": list(applies_to(c))} for c in checks]
+
+
+def _print_listing(checks: Sequence[Check], arguments: argparse.Namespace) -> None:
+    """What --list or --support-matrix prints."""
+    as_json = arguments.format == "json"
+    if arguments.list:
+        print(json.dumps(check_list(checks), indent=2) if as_json else _format_list(checks))
+        return
+    matrix = support_matrix(checks)
+    print(json.dumps(as_dict(matrix), indent=2) if as_json else render(matrix), end="\n" if as_json else "")
 
 
 def _usage_error(parser: argparse.ArgumentParser, message: str) -> int:
@@ -188,11 +209,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         parser.print_usage(sys.stderr)
         return _usage_error(parser, str(error))
 
-    if arguments.list:
-        if arguments.format == "json":
-            print(json.dumps(support_matrix(plugins.checks), indent=2))
-        else:
-            print(_format_list(plugins.checks))
+    if arguments.list or arguments.support_matrix:
+        _print_listing(plugins.checks, arguments)
         return EXIT_SUCCESS
     if not yaml_support.available():
         return _usage_error(parser, yaml_support.MISSING_MESSAGE)

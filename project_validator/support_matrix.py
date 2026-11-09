@@ -40,7 +40,8 @@ class SupportMatrix:
 def _cell(check: Check, ecosystem: Ecosystem) -> Cell:
     if ecosystem.label not in applies_to(check):
         return None
-    return tuple(tool.name for tool in known(Tool) if check.aspect in tool.can and tool.languages & ecosystem.languages)
+    names = (tool.name for tool in known(Tool) if check.aspect in tool.can and tool.languages & ecosystem.languages)
+    return tuple(dict.fromkeys(names))
 
 
 def support_matrix(checks: Sequence[Check]) -> SupportMatrix:
