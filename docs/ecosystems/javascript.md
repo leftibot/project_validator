@@ -33,6 +33,12 @@ A lint warning fails CI: `eslint --max-warnings 0`, `biome ci` or `--error-on-wa
 CI runs. Strict mode is a bonus: `"strict": true` or `@tsconfig/strictest` in a `tsconfig.json`, or Deno, strict by
 default.
 
+## `mutation-testing`
+
+StrykerJS (`stryker run`, also as `npx stryker run` or a package script; settings in `stryker.config.json`,
+`.js`, `.mjs` or `.cjs`, or `stryker.conf.json` or `.js`). `stryker run --incremental` or `--since <branch>` counts as
+running on the changes only.
+
 ## `code-formatting`
 
 `prettier --check` (or `-l`; settings in a `.prettierrc*`, `prettier.config.*` or the `prettier` key of

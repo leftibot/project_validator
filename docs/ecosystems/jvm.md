@@ -26,6 +26,13 @@ javac's `-Xlint:all`; a Kotlin-only project passes on Kotlin's default warnings.
 
 `-Werror` for javac or kotlinc, or Kotlin's `allWarningsAsErrors`.
 
+## `mutation-testing`
+
+PIT, run by `mvn pitest:mutationCoverage` or the `pitest` Gradle task, or by a verification (`mvn verify`,
+`gradle check`) that brings in the `pitest-maven` plugin (with a `mutationCoverage` goal bound) or the
+`info.solidsoft.pitest` Gradle plugin. `pitest:scmMutationCoverage`, or `-DwithHistory` (Maven) or
+`--features=+history` (Gradle), counts as running on the changes only.
+
 ## `code-formatting`
 
 Spotless (`spotless:check` or `spotlessCheck`, or the plugin bound to `check` in pom.xml or applied in a Gradle

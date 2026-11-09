@@ -3,14 +3,20 @@ import unittest
 from project_validator.checks.mutation_testing import mutation_testing
 from project_validator.core import Options, Result, Status
 from project_validator.ecosystems.c_cpp import C_AND_CXX
+from project_validator.ecosystems.dotnet import DOTNET
 from project_validator.ecosystems.go import GO
+from project_validator.ecosystems.javascript import JAVASCRIPT_AND_TYPESCRIPT
+from project_validator.ecosystems.jvm import JVM
 from project_validator.ecosystems.python import PYTHON
 from project_validator.ecosystems.rust import RUST
 from tests.support import (
     FIXTURES,
     UNSTRUCTURED_CI_FILES,
     WELL_CONFIGURED,
+    WELL_CONFIGURED_DOTNET,
     WELL_CONFIGURED_GO,
+    WELL_CONFIGURED_JAVASCRIPT,
+    WELL_CONFIGURED_JVM,
     WELL_CONFIGURED_PYTHON,
     WELL_CONFIGURED_RUST,
     ci_running,
@@ -39,7 +45,7 @@ class MutationTestingTests(unittest.TestCase):
         )
         self.assertEqual(self._run(WELL_CONFIGURED_PYTHON), expected)
 
-    def test_the_well_configured_c_cpp_rust_and_go_projects_pass(self) -> None:
+    def test_the_well_configured_compiled_and_scripted_projects_pass(self) -> None:
         cases = (
             (C_AND_CXX, WELL_CONFIGURED, "Mull runs"),
             (
@@ -48,10 +54,27 @@ class MutationTestingTests(unittest.TestCase):
                 "cargo-mutants (.cargo/mutants.toml) runs; on the pull request's changes only (bonus)",
             ),
             (GO, WELL_CONFIGURED_GO, "gremlins runs; on the pull request's changes only (bonus)"),
+            (
+                JAVASCRIPT_AND_TYPESCRIPT,
+                WELL_CONFIGURED_JAVASCRIPT,
+                "StrykerJS (stryker.config.json) runs; on the pull request's changes only (bonus)",
+            ),
+            (
+                DOTNET,
+                WELL_CONFIGURED_DOTNET,
+                "Stryker.NET (stryker-config.json) runs; on the pull request's changes only (bonus)",
+            ),
         )
         for ecosystem, files, message in cases:
             with self.subTest(ecosystem=ecosystem.label):
                 self.assertEqual(run_as(self, mutation_testing, files, ecosystem), Result.passed(message))
+
+    def test_pit_wired_into_verify_passes_without_the_bonus(self) -> None:
+        expected = Result.passed(
+            "PIT (pom.xml) runs",
+            "consider running it on the pull request's changes only: pitest:scmMutationCoverage",
+        )
+        self.assertEqual(run_as(self, mutation_testing, WELL_CONFIGURED_JVM, JVM), expected)
 
     def test_an_incremental_run_passes_with_the_bonus(self) -> None:
         files = {**WELL_CONFIGURED_PYTHON, **github_job("ubuntu-latest", "mutmut run 'app.*'")}

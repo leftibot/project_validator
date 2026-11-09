@@ -16,7 +16,7 @@ from project_validator.facts.dependencies import PackageManager, lockfile_reader
 from project_validator.facts.expansion import Action, CommandExpander, Expansion, Launched
 from project_validator.facts.formatting import Enforcement, flagged, format_tool, formatted
 from project_validator.facts.limits import Rule, limiter
-from project_validator.facts.mutation import mutated, mutation_tool
+from project_validator.facts.mutation import incremental_when, mutated, mutation_tool
 from project_validator.facts.outputs import BuildOutput, directories, ignored_at_top_level
 from project_validator.facts.practices import Practice, PracticeName, Wording, always, required, requirement_reader
 from project_validator.facts.security import scanned, scanner
@@ -313,19 +313,16 @@ FUNCTION_LENGTH_LIMITERS = (FUNLEN, *function_length_limiters(GO_LANGUAGE))
 GREMLINS_SETTINGS = file_reader("gremlins", (".gremlins.yaml",))
 
 
-def _gremlins(command: Command, _facts: Facts) -> Run | None:
-    """`gremlins unleash` (also as `go run github.com/go-gremlins/gremlins/cmd/gremlins@v0.5.0 unleash`), which mutates
-    only the changes since a branch when given `--diff`."""
-    if not starts(("gremlins", "unleash"))(command):
-        return None
-    return mutated(incremental=has_option(resolved(command), "--diff"))
+# `gremlins unleash` (also as `go run github.com/go-gremlins/gremlins/cmd/gremlins@v0.5.0 unleash`) mutates only the
+# changes since a branch when given `--diff`.
+_GREMLINS = incremental_when("gremlins", "unleash", options=("--diff",))
 
 
 GREMLINS = mutation_tool(
     name="gremlins",
     languages=GO_LANGUAGE,
     how="gremlins unleash",
-    runs=_gremlins,
+    runs=_GREMLINS,
     defined=defined_by(files=(GREMLINS_SETTINGS.name,)),
     incremental_how="gremlins unleash --diff <branch>",
 )

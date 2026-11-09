@@ -16,3 +16,4 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm audit --audit-level=moderate
+      - run: npx stryker run --incremental

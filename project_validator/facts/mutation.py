@@ -4,8 +4,9 @@ tests against the mutants, and incrementally when it can run only the code that 
 
 from collections.abc import Iterable
 
-from project_validator.facts import NOTHING, Setting
-from project_validator.facts.tools import Claim, Definition, Run, Tool, provided
+from project_validator.facts import NOTHING, Command, Facts, Setting, resolved
+from project_validator.facts.arguments import has_option
+from project_validator.facts.tools import Claim, Definition, Run, Tool, provided, starts
 
 MUTATION = "mutation"
 RUNS = "runs"
@@ -38,4 +39,20 @@ def mutated(*, incremental: bool = False, read: Iterable[Setting | str] = (), he
     return provided(MUTATION, RUNS, INCREMENTAL if incremental else None, read=read, heuristic=heuristic)
 
 
-__all__ = ["INCREMENTAL", "MUTATION", "RUNS", "mutated", "mutation_tool"]
+def incremental_when(*prefix: str, options: tuple[str, ...]) -> Claim:
+    """A claim of the commands that start with `prefix`: a run, incrementally when one of `options` is given, alone,
+    with a value (`--name=value`) or as `--name:value`."""
+    starting = starts(prefix)
+
+    def claim(command: Command, _facts: Facts) -> Run | None:
+        if not starting(command):
+            return None
+        argv = resolved(command)
+        return mutated(
+            incremental=has_option(argv, *options) or any(word.partition(":")[0] in options for word in argv)
+        )
+
+    return claim
+
+
+__all__ = ["INCREMENTAL", "MUTATION", "RUNS", "incremental_when", "mutated", "mutation_tool"]

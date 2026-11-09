@@ -5,12 +5,15 @@ import unittest
 from collections.abc import Mapping
 
 from project_validator.ecosystems.c_cpp.mutation import DEXTOOL, MULL
+from project_validator.ecosystems.dotnet.mutation import STRYKER_NET
 from project_validator.ecosystems.go import GO_MUTESTING, GREMLINS
+from project_validator.ecosystems.javascript.mutation import STRYKER_JS
+from project_validator.ecosystems.jvm.mutation import PIT
 from project_validator.ecosystems.python.mutation import COSMIC_RAY, MUTATEST, MUTMUT
 from project_validator.ecosystems.rust.mutation import CARGO_MUTANTS
 from project_validator.facts import Facts, Origin
 from project_validator.facts.build import Applies, CompilerOption
-from project_validator.facts.mutation import INCREMENTAL, MUTATION, RUNS, mutated, mutation_tool
+from project_validator.facts.mutation import INCREMENTAL, MUTATION, RUNS, incremental_when, mutated, mutation_tool
 from project_validator.facts.tools import Run, ToolRun
 from tests.support import command, github_job, make_context, temp_project
 
@@ -36,6 +39,21 @@ class MutationAspectTests(unittest.TestCase):
         self.assertEqual(mutated().provides, {MUTATION: frozenset({RUNS})})
         self.assertEqual(mutated(incremental=True).provides, {MUTATION: frozenset({RUNS, INCREMENTAL})})
         self.assertTrue(mutated(heuristic=True).heuristic)
+
+
+class IncrementalWhenTests(unittest.TestCase):
+    def test_a_claim_of_a_prefix_incremental_when_an_option_is_given(self) -> None:
+        claim = incremental_when("tool", "go", options=("--since", "--diff"))
+        for line, incremental in (
+            ("tool go", False),
+            ("tool go --since main", True),
+            ("tool go --diff=main", True),
+            ("tool go --since:main", True),
+            ("tool go --sincere", False),
+        ):
+            expected = {MUTATION: frozenset({RUNS, INCREMENTAL} if incremental else {RUNS})}
+            self.assertEqual(provided(claim(command(line), Facts())), expected, line)
+        self.assertIsNone(claim(command("tool stop"), Facts()))
 
 
 def ci_tool_runs(files: dict[str, str]) -> tuple[ToolRun, ...]:
@@ -150,3 +168,74 @@ class GoMutationTests(unittest.TestCase):
     def test_go_mutesting_is_a_run(self) -> None:
         self.assertIsNotNone(GO_MUTESTING.claims(command("go-mutesting ./..."), Facts()))
         self.assertIsNone(GO_MUTESTING.claims(command("go test ./..."), Facts()))
+
+
+def _pom(plugin: str = "") -> dict[str, str]:
+    return {"pom.xml": f"<project><build><plugins>{plugin}</plugins></build></project>\n"}
+
+
+PIT_PLUGIN = (
+    "<plugin><groupId>org.pitest</groupId><artifactId>pitest-maven</artifactId>"
+    "<executions><execution><goals><goal>mutationCoverage</goal></goals></execution></executions></plugin>"
+)
+RUN_ONLY = {MUTATION: frozenset({RUNS})}
+RUN_INCREMENTALLY = {MUTATION: frozenset({RUNS, INCREMENTAL})}
+
+
+class JavaScriptMutationTests(unittest.TestCase):
+    def test_stryker_run_is_a_run(self) -> None:
+        self.assertEqual(provided(STRYKER_JS.claims(command("stryker run"), Facts())), RUN_ONLY)
+        runs = ci_tool_runs(github_job("ubuntu-latest", "npx stryker run"))
+        self.assertIn("StrykerJS", {run.tool for run in runs})
+        self.assertIsNone(STRYKER_JS.claims(command("stryker init"), Facts()))
+
+    def test_incremental_or_since_is_incremental(self) -> None:
+        for line in ("stryker run --incremental", "stryker run --since main"):
+            self.assertEqual(provided(STRYKER_JS.claims(command(line), Facts())), RUN_INCREMENTALLY, line)
+
+    def test_defined_by_its_config_file(self) -> None:
+        for name in ("stryker.config.json", "stryker.config.mjs", "stryker.config.js", "stryker.config.cjs"):
+            self.assertEqual(STRYKER_JS.defined(MUTATION, settings_facts_of({name: "{}"})), (name,), name)
+        facts = settings_facts_of({"stryker.conf.json": "{}"})
+        self.assertEqual(STRYKER_JS.defined(MUTATION, facts), ("stryker.conf.json",))
+
+
+class JvmMutationTests(unittest.TestCase):
+    def _claim(self, line: str, files: dict[str, str]) -> Run | None:
+        return PIT.claims(command(line), settings_facts_of(files))
+
+    def test_the_goal_on_the_command_line_is_a_run(self) -> None:
+        for line in ("mvn org.pitest:pitest-maven:mutationCoverage", "mvn pitest:mutationCoverage"):
+            self.assertEqual(provided(self._claim(line, _pom())), RUN_ONLY, line)
+
+    def test_pit_bound_to_verify_runs(self) -> None:
+        run = self._claim("mvn verify", _pom(PIT_PLUGIN))
+        self.assertEqual(provided(run), RUN_ONLY)
+        self.assertEqual(PIT.defined(MUTATION, settings_facts_of(_pom(PIT_PLUGIN))), ("pom.xml",))
+
+    def test_verify_without_the_plugin_is_not_a_run(self) -> None:
+        self.assertIsNone(self._claim("mvn verify", _pom()))
+
+    def test_scm_mutation_coverage_is_incremental(self) -> None:
+        for line in ("mvn pitest:scmMutationCoverage", "mvn pitest:mutationCoverage -DwithHistory"):
+            self.assertEqual(provided(self._claim(line, _pom())), RUN_INCREMENTALLY, line)
+
+    def test_gradle_pitest_task_is_a_run(self) -> None:
+        files = {"build.gradle.kts": 'plugins {\n    id("info.solidsoft.pitest") version "1.15.0"\n}\n'}
+        self.assertEqual(provided(self._claim("./gradlew pitest", {})), RUN_ONLY)
+        self.assertEqual(provided(self._claim("./gradlew check", files)), RUN_ONLY)
+        self.assertIsNone(self._claim("./gradlew check", {}))
+
+
+class DotnetMutationTests(unittest.TestCase):
+    def test_dotnet_stryker_is_a_run(self) -> None:
+        self.assertEqual(provided(STRYKER_NET.claims(command("dotnet stryker"), Facts())), RUN_ONLY)
+        self.assertIsNone(STRYKER_NET.claims(command("dotnet test"), Facts()))
+
+    def test_since_is_incremental(self) -> None:
+        for line in ("dotnet stryker --since", "dotnet stryker --since:main"):
+            self.assertEqual(provided(STRYKER_NET.claims(command(line), Facts())), RUN_INCREMENTALLY, line)
+
+    def test_defined_by_stryker_config_json(self) -> None:
+        facts = settings_facts_of({"stryker-config.json": "{}"})
+        self.assertEqual(STRYKER_NET.defined(MUTATION, facts), ("stryker-config.json",))
