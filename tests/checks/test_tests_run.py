@@ -47,7 +47,7 @@ class CtestRunsTests(unittest.TestCase):
         self.assertIn("ctest-runs", tests_run.aliases)
 
     def test_passes_when_tests_are_registered_and_run_in_ci(self) -> None:
-        self.assertEqual(self._run(WELL_CONFIGURED), Result.passed("tests found in 1 file(s)"))
+        self.assertEqual(self._run(WELL_CONFIGURED), Result.passed("tests found in 2 file(s)"))
 
     def test_a_project_without_a_build_system_has_no_registered_tests(self) -> None:
         layouts = tuple(layout for layout in NON_CMAKE_C_FAMILY_LAYOUTS if not layout.build_systems)
@@ -223,5 +223,5 @@ class MixedLanguageTestsRunTests(unittest.TestCase):
         result = run_as(self, tests_run, dict(WELL_CONFIGURED), C_AND_CXX, PYTHON)
         self.assertEqual(
             result,
-            Result.failed("C/C++: tests found in 1 file(s); Python: no tests found (test_*.py or *_test.py files)"),
+            Result.failed("C/C++: tests found in 2 file(s); Python: no tests found (test_*.py or *_test.py files)"),
         )

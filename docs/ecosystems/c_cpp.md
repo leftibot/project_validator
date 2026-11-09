@@ -11,6 +11,14 @@ With CMake: `enable_testing()` or `include(CTest)` is called, tests are register
 really configured and built, and `ctest` must list at least one test (a build that cannot run is unknown). With Meson:
 `test()` is called in a `meson.build` and CI runs `meson test` (or ninja's `test` target).
 
+## `fuzz-testing`
+
+libFuzzer targets (files defining `LLVMFuzzerTestOneInput`) and AFL++ targets (`__AFL_LOOP`), run by a CI step that
+passes a libFuzzer option to a binary (`./fuzz_tester -max_total_time=30`, a heuristic), by `afl-fuzz`, or by `ctest`
+when a CMake `add_test` names `fuzz` in its name or command (also a heuristic: ctest is not told which tests it runs,
+and the run is credited to the CMake files' unit). RapidCheck tests alone warn: they are property-based tests, not
+fuzz targets.
+
 ## `coverage`
 
 A coverage tool CI runs, reporting branches: gcovr with any report but the default text one (`--xml`, `--html`,

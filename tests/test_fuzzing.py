@@ -3,7 +3,19 @@
 import re
 import unittest
 
+from project_validator.ecosystems.c_cpp.fuzzing import (
+    AFL,
+    C_FUZZ_TARGETS,
+    C_PROPERTY_TESTS,
+    LIBFUZZER,
+)
+from project_validator.ecosystems.go import GO_FUZZ, GO_FUZZ_TARGETS, GO_PROPERTY_TESTS, GO_TEST_FILES
 from project_validator.ecosystems.python.fuzzing import ATHERIS, PYTHON_FUZZ_TARGETS, PYTHON_PROPERTY_TESTS
+from project_validator.ecosystems.rust.fuzzing import (
+    CARGO_FUZZ,
+    RUST_FUZZ_TARGETS,
+    RUST_PROPERTY_TESTS,
+)
 from project_validator.facts import Facts, Origin
 from project_validator.facts.fuzzing import (
     FUZZ,
@@ -20,7 +32,8 @@ from project_validator.facts.fuzzing import (
 from project_validator.facts.roles import role
 from project_validator.facts.testing import TestFile, TestFiles
 from project_validator.facts.tools import ToolRun
-from tests.support import command, github_job, make_context, temp_project
+from project_validator.questions.fuzzing import _other_runs
+from tests.support import command, fixture_files, github_job, make_context, temp_project
 
 
 def facts_of(files: dict[str, str]) -> Facts:
@@ -115,3 +128,98 @@ class PythonFuzzingTests(unittest.TestCase):
                 files = {**PYTHON_PROJECT, **github_job("ubuntu-latest", f"python {script}")}
                 runs = [run for run in facts_of(files).of(ToolRun) if run.tool == ATHERIS.name]
                 self.assertEqual([run.heuristic for run in runs], [True] if heuristic else [])
+
+
+def _kinds(files: dict[str, str]) -> set[tuple[str, str]]:
+    return {(t.origin.path, t.kind) for t in facts_of(files).of(TestFile)}
+
+
+class CFuzzingTests(unittest.TestCase):
+    def test_llvm_fuzzer_entry_point_is_a_target(self) -> None:
+        files = {
+            "fuzz_test/t.cpp": 'extern "C" int LLVMFuzzerTestOneInput(const unsigned char*, unsigned long);\n',
+            "src/a.cpp": "int main() {}\n",
+            "t/p.cpp": "RC_GTEST_PROP(A, b, ()) {}\n",
+        }
+        kinds = _kinds(files)
+        self.assertIn(("fuzz_test/t.cpp", C_FUZZ_TARGETS.name), kinds)
+        self.assertNotIn(("src/a.cpp", C_FUZZ_TARGETS.name), kinds)
+        self.assertIn(("t/p.cpp", C_PROPERTY_TESTS.name), kinds)
+
+    def test_a_libfuzzer_binary_run_in_ci_is_a_heuristic_run(self) -> None:
+        facts = Facts([])
+        run = LIBFUZZER.claims(command("./build/fuzz_tester -max_total_time=30"), facts)
+        self.assertTrue(run is not None and run.heuristic)
+        self.assertIsNotNone(LIBFUZZER.claims(command("build/fuzz_tester corpus/ -runs=1000"), facts))
+        self.assertIsNone(LIBFUZZER.claims(command("./build/fuzz_tester"), facts))
+        self.assertIsNone(LIBFUZZER.claims(command("pytest -runs=3"), facts))
+        self.assertIsNone(LIBFUZZER.claims(command("cargo fuzz run parse -- -max_total_time=30"), facts))
+
+    def test_afl_fuzz_is_a_run(self) -> None:
+        self.assertIsNotNone(AFL.claims(command("afl-fuzz -i in -o out -- ./target"), Facts([])))
+        self.assertIsNone(AFL.claims(command("afl-gcc a.c"), Facts([])))
+
+    def test_a_ctest_registered_fuzz_target_runs(self) -> None:
+        files = {
+            **fixture_files("well_configured_c_cpp"),
+            "fuzz_test/CMakeLists.txt": "add_test(NAME other_run COMMAND other_tool -max_total_time=10)\n",
+        }
+        self.assertEqual(_ctest_entries(files), ())
+        files["fuzz_test/CMakeLists.txt"] = "add_test(NAME fuzz_tester_run COMMAND fuzz_tester)\n"
+        self.assertEqual(_ctest_entries(files), ("CTest (fuzz_test/CMakeLists.txt): fuzz_tester_run",))
+
+    def test_a_ctest_fuzz_test_does_not_run_without_a_ctest_run(self) -> None:
+        files = {
+            **fixture_files("well_configured_c_cpp"),
+            **github_job("ubuntu-latest", "cmake --build build"),
+            "fuzz_test/CMakeLists.txt": "add_test(NAME fuzz_tester_run COMMAND fuzz_tester)\n",
+        }
+        self.assertEqual(_ctest_entries(files), ())
+
+
+def _ctest_entries(files: dict[str, str]) -> tuple[str, ...]:
+    facts = facts_of(files)
+    return tuple(entry for entry in _other_runs(facts, ".") if entry.startswith("CTest"))
+
+
+class RustFuzzingTests(unittest.TestCase):
+    def test_fuzz_target_macro_is_a_target(self) -> None:
+        files = {
+            "fuzz/fuzz_targets/parse.rs": "fuzz_target!(|data: &[u8]| {});\n",
+            "src/lib.rs": "pub fn f() {}\n",
+            "tests/p.rs": "proptest! { #[test] fn a() {} }\n",
+        }
+        kinds = _kinds(files)
+        self.assertIn(("fuzz/fuzz_targets/parse.rs", RUST_FUZZ_TARGETS.name), kinds)
+        self.assertNotIn(("src/lib.rs", RUST_FUZZ_TARGETS.name), kinds)
+        self.assertIn(("tests/p.rs", RUST_PROPERTY_TESTS.name), kinds)
+
+    def test_cargo_fuzz_run_is_a_run(self) -> None:
+        for line in (
+            "cargo fuzz run parse -- -max_total_time=30",
+            "cargo +nightly fuzz run parse",
+            "cargo afl fuzz -i in -o out target/debug/x",
+        ):
+            with self.subTest(line=line):
+                self.assertIsNotNone(CARGO_FUZZ.claims(command(line), Facts([])))
+        for line in ("cargo fuzz build", "cargo test", "cargo fuzz list"):
+            with self.subTest(line=line):
+                self.assertIsNone(CARGO_FUZZ.claims(command(line), Facts([])))
+
+
+class GoFuzzingTests(unittest.TestCase):
+    def test_fuzz_functions_are_targets_and_tests(self) -> None:
+        files = {
+            "app_test.go": "func FuzzParse(f *testing.F) {}\nfunc TestA(t *testing.T) {}\n",
+            "go.mod": "module a\n",
+        }
+        kinds = _kinds(files)
+        self.assertIn(("app_test.go", GO_FUZZ_TARGETS.name), kinds)
+        self.assertIn(("app_test.go", GO_TEST_FILES.name), kinds)
+        self.assertNotIn(("app_test.go", GO_PROPERTY_TESTS.name), kinds)
+        plain = _kinds({"b_test.go": "func TestA(t *testing.T) {}\n", "go.mod": "module a\n"})
+        self.assertNotIn(("b_test.go", GO_FUZZ_TARGETS.name), plain)
+
+    def test_plain_go_test_does_not_fuzz(self) -> None:
+        self.assertIsNone(GO_FUZZ.claims(command("go test ./..."), Facts([])))
+        self.assertIsNotNone(GO_FUZZ.claims(command("go test -fuzz=Fuzz -fuzztime=30s ."), Facts([])))

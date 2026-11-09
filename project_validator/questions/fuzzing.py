@@ -1,12 +1,13 @@
 """The fuzz-testing question: for each language, in each unit of the project that has it, are there fuzz targets, and
 does CI run them?"""
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 
-from project_validator.facts import ActionStep, Facts
+from project_validator.facts import ActionStep, Facts, Setting
 from project_validator.facts.fuzzing import FUZZ, RUNS, property_kinds
 from project_validator.facts.testing import TestFile
-from project_validator.facts.tools import known_tools, within
+from project_validator.facts.tools import ToolRun, known_tools, within
 from project_validator.questions import Answer, LanguageAnswers, Question, answer_dict, per_unit
 from project_validator.questions.tooling import ToolAnswer, tool_answer
 
@@ -47,11 +48,24 @@ class FuzzAnswer:
         )
 
 
+def _ctest_fuzz_tests(facts: Facts, unit: str) -> Iterator[str]:
+    """The CTest tests (registered by `add_test` in a CMake file of `unit`) whose name or command says `fuzz`, when
+    CI runs ctest. A heuristic: ctest is not told which tests it runs, and a test is taken to fuzz by its words."""
+    if not any(run.tool == "ctest" for run in facts.of(ToolRun)):
+        return
+    for setting in facts.where(Setting, tool="CTest", key="test"):
+        words = setting.value if isinstance(setting.value, tuple) else ()
+        if words and within(setting.origin.path, unit) and any("fuzz" in str(word).lower() for word in words):
+            yield f"CTest ({setting.origin.path}): {words[0]}"
+
+
 def _other_runs(facts: Facts, unit: str) -> tuple[str, ...]:
-    """The runs of fuzzers that are not tools: each ClusterFuzzLite step CI has. `unit` filters nothing: a step is
-    credited to every unit and language (Task 3 may refine this)."""
+    """The runs of fuzzers that are not tools, each as written where it runs: each ClusterFuzzLite step CI has (which
+    filters nothing: a step is credited to every unit and language), and each CTest fuzz test of `unit`'s CMake files
+    when CI runs ctest (credited to every language: the targets decide which languages have one)."""
     steps = (step for step in facts.of(ActionStep) if step.uses.startswith(_CLUSTERFUZZLITE))
-    return tuple(dict.fromkeys(f"CI ({step.origin.path}): {step.uses}" for step in steps))
+    found = (f"CI ({step.origin.path}): {step.uses}" for step in steps)
+    return tuple(dict.fromkeys((*found, *_ctest_fuzz_tests(facts, unit))))
 
 
 def _property_files(language: str, facts: Facts, unit: str) -> tuple[str, ...]:

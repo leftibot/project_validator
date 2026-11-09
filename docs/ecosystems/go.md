@@ -6,6 +6,12 @@ Recognised by `.go` sources and Go modules (`go.mod`).
 
 `Test` functions in `*_test.go` files run by `go test`.
 
+## `fuzz-testing`
+
+Fuzz functions (`func FuzzXxx(f *testing.F)` in `_test.go` files), run by a CI step `go test -fuzz=<pattern>`; a plain
+`go test` runs only their seed corpus, which is not fuzzing. rapid and gopter tests alone warn: they are
+property-based tests, not fuzz targets.
+
 ## `coverage`
 
 Go's tools measure statements only, so Go needs statement coverage: `go test` (or `go build`) with `-cover`,

@@ -2,7 +2,10 @@ import unittest
 
 from project_validator.checks.fuzz_testing import fuzz_testing
 from project_validator.core import Options, Result, Status
+from project_validator.ecosystems.c_cpp import C_AND_CXX
+from project_validator.ecosystems.go import GO
 from project_validator.ecosystems.python import PYTHON
+from project_validator.ecosystems.rust import RUST
 from tests.support import (
     FIXTURES,
     GITHUB_WORKFLOW,
@@ -36,6 +39,27 @@ class FuzzTestingTests(unittest.TestCase):
     def test_the_well_configured_python_project_passes(self) -> None:
         result = run_as(self, fuzz_testing, WELL_CONFIGURED_PYTHON, PYTHON)
         self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by atheris"))
+
+    def test_the_well_configured_c_cpp_project_passes_through_ctest(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("well_configured_c_cpp"), C_AND_CXX)
+        self.assertEqual(
+            result,
+            Result.passed("fuzz targets in 1 file(s), run by CTest (fuzz_test/CMakeLists.txt): fuzz_tester_run"),
+        )
+
+    def test_the_well_configured_rust_project_passes(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("well_configured_rust"), RUST)
+        self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by cargo-fuzz"))
+
+    def test_the_well_configured_go_project_passes(self) -> None:
+        result = run_as(self, fuzz_testing, fixture_files("well_configured_go"), GO)
+        self.assertEqual(result, Result.passed("fuzz targets in 1 file(s), run by go test -fuzz"))
+
+    def test_the_bare_projects_fail(self) -> None:
+        for name, ecosystem in (("bare_c_cpp", C_AND_CXX), ("bare_rust", RUST), ("bare_go", GO)):
+            with self.subTest(project=name):
+                files = {**fixture_files(name), **github_job("ubuntu-latest", "make")}
+                self.assertEqual(run_as(self, fuzz_testing, files, ecosystem).status, Status.FAIL)
 
     def test_fails_without_targets(self) -> None:
         files = {**fixture_files("bare_python"), **github_job("ubuntu-latest", "pytest")}

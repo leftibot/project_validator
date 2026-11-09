@@ -26,3 +26,7 @@ endif()
 
 include(CTest)
 add_subdirectory(test)
+
+if(NOT MSVC)
+  add_subdirectory(fuzz_test)
+endif()
