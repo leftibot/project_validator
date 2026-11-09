@@ -37,6 +37,8 @@ class Result:
     status: Status
     message: str
     details: tuple[str, ...] = ()
+    # The results this one was folded from, one per ecosystem in each unit; not compared, not printed as text or JSON.
+    places: tuple[Placed, ...] = field(default=(), compare=False)
 
     @classmethod
     def passed(cls, message: str, *details: str) -> Result:
@@ -56,7 +58,17 @@ class Result:
         return cls(status=Status.SKIP, message=message, details=details)
 
     def with_details(self, *details: str) -> Result:
-        return Result(status=self.status, message=self.message, details=self.details + details)
+        return Result(status=self.status, message=self.message, details=self.details + details, places=self.places)
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class Placed:
+    """One ecosystem's result in one unit ("." for the root), with the tools that ran for the practice there."""
+
+    ecosystem: str  # the label; "" until by_ecosystem names it
+    unit: str
+    result: Result
+    tools: tuple[str, ...] = ()
 
 
 DEFAULT_MAX_FILE_SIZE = 5 * 1024 * 1024
