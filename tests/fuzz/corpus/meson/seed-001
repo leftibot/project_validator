@@ -1,0 +1,13 @@
+project('demo', 'c', version : '1.0', default_options : ['warning_level=3', 'werror=true'])
+
+cc = meson.get_compiler('c')
+add_project_arguments(cc.get_supported_arguments('-Wshadow'), language : 'c')
+dep = dependency('zlib', required : false)
+lib = static_library('core', ['core.c', 'util.c'], dependencies : [dep])
+
+if get_option('buildtype') == 'debug'
+  add_project_arguments('-DDEBUG', language : 'c')
+endif
+
+exe = executable('demo', 'main.c', link_with : lib, install : true)
+test('basic', executable('check', 'check.c', link_with : lib), args : ['--fast'], timeout : 30)

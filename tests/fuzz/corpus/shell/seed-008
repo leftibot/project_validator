@@ -1,0 +1,5 @@
+set -euo pipefail
+for f in a b; do
+  echo "$f" | tee out.txt > /dev/null
+done
+cd build && cmake --build . --parallel $(nproc)

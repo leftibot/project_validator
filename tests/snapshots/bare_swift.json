@@ -244,6 +244,39 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Swift",
+        "units": [
+          {
+            "answer": "no",
+            "language": "Swift",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "libFuzzer": {
+                  "can": {
+                    "runs": "a product built with -sanitize=fuzzer, run as .build/debug/<product> -max_total_time=30"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Swift",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Swift",
@@ -693,6 +726,13 @@
         "consider running in CI: swiftlint --strict or lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding a product built with -sanitize=fuzzer, run as .build/debug/<product> -max_total_time=30"
+      ],
+      "message": "no fuzz targets found (libFuzzer fuzz targets (@_cdecl(\"LLVMFuzzerTestOneInput\")))",
       "status": "FAIL"
     },
     "hardening": {

@@ -251,6 +251,39 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Rust",
+        "units": [
+          {
+            "answer": "no",
+            "language": "Rust",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "cargo-fuzz": {
+                  "can": {
+                    "runs": "cargo fuzz run <target> -- -max_total_time=60"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Rust",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Rust",
@@ -724,6 +757,13 @@
         "consider running in CI: lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding cargo fuzz run <target> -- -max_total_time=60"
+      ],
+      "message": "no fuzz targets found (cargo-fuzz or AFL.rs fuzz targets (fuzz_target! or afl::fuzz!))",
       "status": "FAIL"
     },
     "hardening": {

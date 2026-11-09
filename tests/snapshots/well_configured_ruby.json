@@ -339,6 +339,31 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Ruby",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "Ruby",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "impossible",
+              "defined": {},
+              "known": {},
+              "language": "Ruby",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Ruby",
@@ -4048,6 +4073,11 @@
       "details": [],
       "message": "function length is limited with RuboCop's Metrics/MethodLength, lizard",
       "status": "PASS"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "not applicable to Ruby",
+      "status": "SKIP"
     },
     "hardening": {
       "details": [],

@@ -501,11 +501,23 @@ class CommandTests(unittest.TestCase):
             [
                 ("Setting", "CMakeLists.txt", True),
                 ("Setting", "CMakeLists.txt", "add_test"),
+                ("Setting", "CMakeLists.txt", ("a", "a")),
                 ("Declared", "CMakeLists.txt", "CPM"),
                 ("Setting", "test/CMakeLists.txt", True),
                 ("Setting", "test/CMakeLists.txt", "gtest_discover_tests"),
                 ("Declared", "test/CMakeLists.txt", "FetchContent"),
             ],
+        )
+
+    def test_add_test_records_name_and_command(self) -> None:
+        found = _listed(
+            "add_test(NAME fuzz_tester_run COMMAND fuzz_tester -max_total_time=10)",
+            "add_test(old_style old_tool --flag)",
+            "gtest_discover_tests(t)",
+        )
+        tests = [fact.value for fact in found if isinstance(fact, Setting) and fact.key == "test"]
+        self.assertEqual(
+            tests, [("fuzz_tester_run", "fuzz_tester", "-max_total_time=10"), ("old_style", "old_tool", "--flag")]
         )
 
 

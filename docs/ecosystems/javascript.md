@@ -8,6 +8,12 @@ Recognised by `.js`, `.ts` and related sources, `package.json` or `deno.json`. T
 `*.test.*`, `*.spec.*`, `*_test.*` or `__tests__/` files run by jest, vitest, mocha, ava, `node --test`,
 `deno test`, `bun test`, playwright or `npm test`.
 
+## `fuzz-testing`
+
+Jazzer.js fuzz targets (an exported `fuzz` function, or `it.fuzz(` tests, in `.js`, `.mjs`, `.cjs` or `.ts` files), run
+by a CI step `npx jazzer <target>` or by `jest` with `JAZZER_FUZZ=1` set in the step or job environment. fast-check
+tests alone warn: they are property-based tests, not fuzz targets.
+
 ## `coverage`
 
 c8, nyc, Jest (`--coverage`, or `collectCoverage: true` in the configuration it reads, or package.json's `jest`), Vitest

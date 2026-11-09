@@ -21,3 +21,5 @@ jobs:
       - run: cargo llvm-cov --branch --mcdc
       - run: git diff origin/main...HEAD > changes.diff
       - run: cargo mutants --in-diff changes.diff
+      - run: cargo fuzz run parse -- -max_total_time=30
+        if: matrix.toolchain == 'nightly'

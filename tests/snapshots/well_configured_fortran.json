@@ -290,6 +290,31 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Fortran",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "Fortran",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "impossible",
+              "defined": {},
+              "known": {},
+              "language": "Fortran",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Fortran",
@@ -6130,6 +6155,11 @@
       "details": [],
       "message": "function length is limited with lizard",
       "status": "PASS"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "not applicable to Fortran",
+      "status": "SKIP"
     },
     "hardening": {
       "details": [],

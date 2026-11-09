@@ -1,0 +1,19 @@
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        dotnet: ["9.0.x", "10.0.x"]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - run: dotnet restore --locked-mode
+      - run: dotnet format --verify-no-changes
+      - run: dotnet fantomas --check .
+      - run: dotnet fsharplint lint .
+      - run: dotnet build --no-restore
+      - run: dotnet test --no-build --collect:"XPlat Code Coverage"
+      - run: libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30

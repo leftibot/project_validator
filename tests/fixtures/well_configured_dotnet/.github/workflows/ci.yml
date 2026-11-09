@@ -17,3 +17,4 @@ jobs:
       - run: dotnet build --no-restore
       - run: dotnet test --no-build --collect:"XPlat Code Coverage"
       - run: dotnet stryker --since
+      - run: libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30

@@ -216,6 +216,46 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "C",
+        "units": [
+          {
+            "answer": "no",
+            "language": "C",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "AFL++": {
+                  "can": {
+                    "runs": "afl-fuzz -i <corpus> -o <findings> -- <target>"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                },
+                "libFuzzer": {
+                  "can": {
+                    "runs": "a fuzz target binary with -max_total_time= (or ClusterFuzzLite)"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "C",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "C",
@@ -531,6 +571,19 @@
       "origin": "CMakeLists.txt",
       "tool": "CTest",
       "value": "add_test"
+    },
+    {
+      "heuristic": false,
+      "key": "test",
+      "kind": "Setting",
+      "origin": "CMakeLists.txt",
+      "tool": "CTest",
+      "value": [
+        "always_passes",
+        "cmake",
+        "-E",
+        "true"
+      ]
     }
   ],
   "map": {
@@ -652,6 +705,13 @@
         "consider running in CI: clang-tidy with readability-function-size and a LineThreshold in .clang-tidy or lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding a fuzz target binary with -max_total_time= (or ClusterFuzzLite) or afl-fuzz -i <corpus> -o <findings> -- <target>"
+      ],
+      "message": "no fuzz targets found (libFuzzer or AFL++ fuzz targets (LLVMFuzzerTestOneInput, __AFL_LOOP))",
       "status": "FAIL"
     },
     "hardening": {

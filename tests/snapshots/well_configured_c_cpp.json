@@ -339,6 +339,55 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "C++",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "C++",
+            "other_runs": [
+              "CTest (fuzz_test/CMakeLists.txt): fuzz_tester_run"
+            ],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {
+                "AFL++": [
+                  "fuzz_test/fuzz_tester.cpp"
+                ],
+                "libFuzzer": [
+                  "fuzz_test/fuzz_tester.cpp"
+                ]
+              },
+              "known": {
+                "AFL++": {
+                  "can": {
+                    "runs": "afl-fuzz -i <corpus> -o <findings> -- <target>"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                },
+                "libFuzzer": {
+                  "can": {
+                    "runs": "a fuzz target binary with -max_total_time= (or ClusterFuzzLite)"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "C++",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "C++",
@@ -660,7 +709,8 @@
             "answer": "yes",
             "defined": {
               "ctest": [
-                "test/CMakeLists.txt"
+                "test/CMakeLists.txt",
+                "fuzz_test/CMakeLists.txt"
               ]
             },
             "known": {
@@ -788,7 +838,20 @@
       "build_system": "CMake",
       "kind": "BuildFile",
       "languages": [],
+      "origin": "fuzz_test/CMakeLists.txt"
+    },
+    {
+      "build_system": "CMake",
+      "kind": "BuildFile",
+      "languages": [],
       "origin": "test/CMakeLists.txt"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "C++",
+      "origin": "fuzz_test/fuzz_tester.cpp",
+      "role": "test"
     },
     {
       "ambiguous": true,
@@ -807,6 +870,11 @@
       ],
       "origin": ".",
       "role": "product"
+    },
+    {
+      "kind": "libFuzzer or AFL++ fuzz targets (LLVMFuzzerTestOneInput, __AFL_LOOP)",
+      "language": "C++",
+      "origin": "fuzz_test/fuzz_tester.cpp"
     },
     {
       "kind": "CiConfiguration",
@@ -4462,6 +4530,16 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": "fuzz_test/CMakeLists.txt",
+      "reader": "CMake"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz_test/CMakeLists.txt",
+      "reader": "Fortran programs"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": "test/CMakeLists.txt",
       "reader": "CMake"
     },
@@ -4745,6 +4823,59 @@
       "origin": "test/CMakeLists.txt",
       "tool": "CTest",
       "value": "add_test"
+    },
+    {
+      "heuristic": false,
+      "key": "test",
+      "kind": "Setting",
+      "origin": "test/CMakeLists.txt",
+      "tool": "CTest",
+      "value": [
+        "tests",
+        "tests"
+      ]
+    },
+    {
+      "applies": {
+        "compilers": "all but flang, gcc, intel, msvc"
+      },
+      "build_system": "CMake",
+      "kind": "CompilerOption",
+      "linking": false,
+      "option": "-fsanitize=fuzzer,undefined,address",
+      "origin": "fuzz_test/CMakeLists.txt:target_compile_options[3]",
+      "target": "fuzz_tester"
+    },
+    {
+      "applies": {
+        "compilers": "all but flang, gcc, intel, msvc"
+      },
+      "build_system": "CMake",
+      "kind": "CompilerOption",
+      "linking": true,
+      "option": "-fsanitize=fuzzer,undefined,address",
+      "origin": "fuzz_test/CMakeLists.txt:target_link_options[4]",
+      "target": "fuzz_tester"
+    },
+    {
+      "heuristic": false,
+      "key": "registers",
+      "kind": "Setting",
+      "origin": "fuzz_test/CMakeLists.txt",
+      "tool": "CTest",
+      "value": "add_test"
+    },
+    {
+      "heuristic": false,
+      "key": "test",
+      "kind": "Setting",
+      "origin": "fuzz_test/CMakeLists.txt",
+      "tool": "CTest",
+      "value": [
+        "fuzz_tester_run",
+        "fuzz_tester",
+        "-max_total_time=10"
+      ]
     },
     {
       "applies": {},
@@ -8525,7 +8656,8 @@
     },
     "ecosystems": {
       "C/C++": [
-        "build file CMakeLists.txt"
+        "build file CMakeLists.txt",
+        ".cpp files"
       ]
     },
     "languages": [
@@ -8628,6 +8760,11 @@
       "message": "function length is limited with clang-tidy's readability-function-size (.clang-tidy)",
       "status": "PASS"
     },
+    "fuzz-testing": {
+      "details": [],
+      "message": "fuzz targets in 1 file(s), run by CTest (fuzz_test/CMakeLists.txt): fuzz_tester_run",
+      "status": "PASS"
+    },
     "hardening": {
       "details": [],
       "message": "hardening options are enabled: _FORTIFY_SOURCE, -fstack-protector-strong, -fcf-protection, -fstack-clash-protection, _GLIBCXX_ASSERTIONS or _LIBCPP_HARDENING_MODE for clang and gcc; /sdl, /guard:cf, /DYNAMICBASE, /CETCOMPAT for msvc",
@@ -8707,7 +8844,7 @@
     },
     "tests-run": {
       "details": [],
-      "message": "tests found in 1 file(s)",
+      "message": "tests found in 2 file(s)",
       "status": "PASS"
     },
     "type-checking": {

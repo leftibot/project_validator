@@ -7,6 +7,13 @@ settings and schemes count as CI configuration.
 
 `XCTestCase` classes or Swift Testing `@Test` functions, run by `swift test` or `xcodebuild test`.
 
+## `fuzz-testing`
+
+libFuzzer targets (`.swift` files with `@_cdecl("LLVMFuzzerTestOneInput")`, built with `-sanitize=fuzzer`), run by a CI
+step that runs a product under `.build/` with a libFuzzer option (`.build/debug/AppFuzz -max_total_time=30`, a
+heuristic); the `swift build` step alone is not a run. SwiftCheck tests alone warn: they are property-based tests, not
+fuzz targets.
+
 ## `coverage`
 
 Swift's coverage counts regions, not branches, so Swift needs region coverage: `swift test --enable-code-coverage`,

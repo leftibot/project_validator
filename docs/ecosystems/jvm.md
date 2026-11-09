@@ -9,6 +9,14 @@ wired in.
 `@Test` methods or Kotest specs under `src/test/java` or `src/test/kotlin`, run by `mvn test` / `verify` or
 `gradle test` / `check` / `build`.
 
+## `fuzz-testing`
+
+Jazzer fuzz tests (`@FuzzTest` methods, or `fuzzerTestOneInput` in `.java` or `.kt` files), run by the
+`jazzer` command (given `--target_class`, a classpath option or a `.jar`; Jazzer.js is the JavaScript
+profile's), or by a Maven or Gradle command that runs tests (`mvn test`, `verify` or `install`, `gradle test`, `check` or `build`) with `JAZZER_FUZZ=1` set in the step or job environment: without it Jazzer's JUnit integration runs only the
+seed inputs, which is not fuzzing. jqwik and junit-quickcheck tests alone warn: they are property-based tests, not
+fuzz targets.
+
 ## `coverage`
 
 JaCoCo (`jacoco:report`, `jacocoTestReport`, or `jacoco-maven-plugin` with its `report` goal bound when CI runs

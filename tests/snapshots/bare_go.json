@@ -241,6 +241,39 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Go",
+        "units": [
+          {
+            "answer": "no",
+            "language": "Go",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "go test -fuzz": {
+                  "can": {
+                    "runs": "go test -fuzz=Fuzz -fuzztime=30s"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Go",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Go",
@@ -687,6 +720,13 @@
         "consider running in CI: golangci-lint with funlen enabled in .golangci.yml or lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding go test -fuzz=Fuzz -fuzztime=30s"
+      ],
+      "message": "no fuzz targets found (Fuzz functions (func FuzzXxx(f *testing.F)))",
       "status": "FAIL"
     },
     "hardening": {

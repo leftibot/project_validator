@@ -250,6 +250,39 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Python",
+        "units": [
+          {
+            "answer": "no",
+            "language": "Python",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "atheris": {
+                  "can": {
+                    "runs": "python <fuzz target>.py"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Python",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Python",
@@ -774,6 +807,13 @@
         "consider running in CI: lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding python <fuzz target>.py"
+      ],
+      "message": "no fuzz targets found (atheris fuzz targets (atheris.Setup or atheris.Fuzz))",
       "status": "FAIL"
     },
     "hardening": {

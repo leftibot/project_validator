@@ -18,3 +18,12 @@ jobs:
       - run: swift test -c release ${{ matrix.sanitizer }}
       - run: osv-scanner scan --lockfile Package.resolved
       - run: muter
+  fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: swift-actions/setup-swift@682457186b71c25a884c45c06f859febbe259240 # v2
+        with:
+          swift-version: "6.1"
+      - run: swift build -Xswiftc -sanitize=fuzzer -Xswiftc -parse-as-library --product AppFuzz
+      - run: .build/debug/AppFuzz -max_total_time=30

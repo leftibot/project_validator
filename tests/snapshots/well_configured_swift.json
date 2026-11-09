@@ -335,6 +335,50 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Swift",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Swift",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "yes",
+              "defined": {
+                "libFuzzer": [
+                  "Sources/AppFuzz/main.swift"
+                ]
+              },
+              "known": {
+                "libFuzzer": {
+                  "can": {
+                    "runs": "a product built with -sanitize=fuzzer, run as .build/debug/<product> -max_total_time=30"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Swift",
+              "level": "runs",
+              "runs": {
+                "libFuzzer": {
+                  "levels": [
+                    "runs"
+                  ],
+                  "read": []
+                }
+              },
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Swift",
@@ -722,6 +766,13 @@
       "ambiguous": false,
       "kind": "SourceFile",
       "language": "Swift",
+      "origin": "Sources/AppFuzz/main.swift",
+      "role": "product"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Swift",
       "origin": "Tests/AppCoreTests/CalculatorTests.swift",
       "role": "test"
     },
@@ -741,6 +792,11 @@
       ],
       "origin": ".",
       "role": "product"
+    },
+    {
+      "kind": "libFuzzer fuzz targets (@_cdecl(\"LLVMFuzzerTestOneInput\"))",
+      "language": "Swift",
+      "origin": "Sources/AppFuzz/main.swift"
     },
     {
       "kind": "XCTestCase classes or Swift Testing @Test functions",
@@ -2588,6 +2644,71 @@
       "via": []
     },
     {
+      "builds": true,
+      "env": {},
+      "heuristic": false,
+      "id": ".github/workflows/ci.yml:fuzz",
+      "image": null,
+      "kind": "CiJob",
+      "matrix": {},
+      "name": "fuzz",
+      "origin": ".github/workflows/ci.yml:jobs.fuzz",
+      "os": "linux",
+      "provider": "GitHub Actions"
+    },
+    {
+      "condition": null,
+      "inputs": {},
+      "job": ".github/workflows/ci.yml:fuzz",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.fuzz.steps[0]",
+      "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+    },
+    {
+      "condition": null,
+      "inputs": {
+        "swift-version": "6.1"
+      },
+      "job": ".github/workflows/ci.yml:fuzz",
+      "kind": "ActionStep",
+      "origin": ".github/workflows/ci.yml:jobs.fuzz.steps[1]",
+      "uses": "swift-actions/setup-swift@682457186b71c25a884c45c06f859febbe259240"
+    },
+    {
+      "argv": [
+        "swift",
+        "build",
+        "-Xswiftc",
+        "-sanitize=fuzzer",
+        "-Xswiftc",
+        "-parse-as-library",
+        "--product",
+        "AppFuzz"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:fuzz",
+      "kind": "Command",
+      "line": "swift build -Xswiftc -sanitize=fuzzer -Xswiftc -parse-as-library --product AppFuzz",
+      "origin": ".github/workflows/ci.yml:jobs.fuzz.steps[2].run",
+      "via": []
+    },
+    {
+      "argv": [
+        ".build/debug/AppFuzz",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:fuzz",
+      "kind": "Command",
+      "line": ".build/debug/AppFuzz -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.fuzz.steps[3].run",
+      "via": []
+    },
+    {
       "kind": "StepReference",
       "origin": ".github/workflows/ci.yml",
       "reference": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
@@ -3185,6 +3306,33 @@
       "name": ".github/workflows/ci.yml: test (windows-latest, 6.1, --sanitize=address)",
       "origin": ".github/workflows/ci.yml:jobs.test",
       "os": "windows",
+      "toolchains": [
+        {
+          "language": "Swift",
+          "version": "6.1"
+        }
+      ]
+    },
+    {
+      "compilers": [
+        "gcc"
+      ],
+      "configurations": [
+        {
+          "build_type": "debug",
+          "sanitizers": true
+        }
+      ],
+      "default_compiler": true,
+      "ecosystems": [
+        "Swift"
+      ],
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:fuzz",
+      "kind": "Job",
+      "name": ".github/workflows/ci.yml: fuzz",
+      "origin": ".github/workflows/ci.yml:jobs.fuzz",
+      "os": "linux",
       "toolchains": [
         {
           "language": "Swift",
@@ -7251,6 +7399,26 @@
       "via": []
     },
     {
+      "heuristic": true,
+      "job": ".github/workflows/ci.yml:fuzz",
+      "kind": "ToolRun",
+      "languages": [
+        "Swift"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.fuzz.steps[3].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "libFuzzer",
+      "via": []
+    },
+    {
       "heuristic": false,
       "job": ".github/workflows/codeql.yml:analyze",
       "kind": "ToolRun",
@@ -7898,6 +8066,22 @@
         },
         {
           "compilers": [
+            "gcc"
+          ],
+          "configurations": [
+            "Debug + sanitizers"
+          ],
+          "ecosystems": [
+            "Swift"
+          ],
+          "name": ".github/workflows/ci.yml: fuzz",
+          "os": "linux",
+          "toolchains": [
+            "Swift 6.1"
+          ]
+        },
+        {
+          "compilers": [
             "appleclang"
           ],
           "configurations": [],
@@ -8047,6 +8231,11 @@
       "message": "function length is limited with SwiftLint's function_body_length, lizard",
       "status": "PASS"
     },
+    "fuzz-testing": {
+      "details": [],
+      "message": "fuzz targets in 1 file(s), run by libFuzzer",
+      "status": "PASS"
+    },
     "hardening": {
       "details": [],
       "message": "release builds keep Swift's runtime safety checks (no -Ounchecked)",
@@ -8084,6 +8273,7 @@
         ".github/workflows/ci.yml: test (windows-latest, 6.0, --sanitize=address): windows / 6.0",
         ".github/workflows/ci.yml: test (windows-latest, 6.1, ): windows / 6.1",
         ".github/workflows/ci.yml: test (windows-latest, 6.1, --sanitize=address): windows / 6.1",
+        ".github/workflows/ci.yml: fuzz: linux / 6.1",
         ".github/workflows/codeql.yml: analyze: macos / no Swift toolchain",
         ".github/workflows/copy-paste-detection.yml: copy-paste-detection: linux / no Swift toolchain",
         ".github/workflows/function-limits.yml: function-limits: linux / no Swift toolchain"

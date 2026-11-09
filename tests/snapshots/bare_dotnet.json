@@ -252,6 +252,39 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "no",
+            "language": "C#",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "SharpFuzz": {
+                  "can": {
+                    "runs": "libfuzzer-dotnet --target_path=<fuzz project> (or afl-fuzz -i <corpus> -o <findings> -- dotnet <fuzz>.dll)"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "C#",
+              "level": "runs",
+              "runs": {},
+              "unit": "src/App",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "src/App"
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "C#",
@@ -711,6 +744,13 @@
         "consider running in CI: lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding libfuzzer-dotnet --target_path=<fuzz project> (or afl-fuzz -i <corpus> -o <findings> -- dotnet <fuzz>.dll)"
+      ],
+      "message": "no fuzz targets found (SharpFuzz fuzz targets (Fuzzer.Run, Fuzzer.LibFuzzer.Run))",
       "status": "FAIL"
     },
     "hardening": {

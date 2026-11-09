@@ -239,12 +239,17 @@
               },
               {
                 "manager": "NuGet",
+                "manifest": "fuzz/App.Fuzz/App.Fuzz.csproj"
+              },
+              {
+                "manager": "NuGet",
                 "manifest": "tests/App.Tests/App.Tests.csproj"
               }
             ],
             "language": "C#",
             "lock_required": true,
             "locked": [
+              "fuzz/App.Fuzz/packages.lock.json",
               "src/App/packages.lock.json",
               "tests/App.Tests/packages.lock.json"
             ],
@@ -330,6 +335,50 @@
             "unit": ".",
             "unknown_definitions": [],
             "unknowns": []
+          }
+        ]
+      }
+    ],
+    "fuzz-testing": [
+      {
+        "language": "C#",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "C#",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "yes",
+              "defined": {
+                "SharpFuzz": [
+                  "fuzz/App.Fuzz/Program.cs"
+                ]
+              },
+              "known": {
+                "SharpFuzz": {
+                  "can": {
+                    "runs": "libfuzzer-dotnet --target_path=<fuzz project> (or afl-fuzz -i <corpus> -o <findings> -- dotnet <fuzz>.dll)"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "C#",
+              "level": "runs",
+              "runs": {
+                "SharpFuzz": {
+                  "levels": [
+                    "runs"
+                  ],
+                  "read": []
+                }
+              },
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
           }
         ]
       }
@@ -684,6 +733,12 @@
       "build_system": "MSBuild",
       "kind": "BuildFile",
       "languages": [],
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj"
+    },
+    {
+      "build_system": "MSBuild",
+      "kind": "BuildFile",
+      "languages": [],
       "origin": "src/App/App.csproj"
     },
     {
@@ -691,6 +746,13 @@
       "kind": "BuildFile",
       "languages": [],
       "origin": "tests/App.Tests/App.Tests.csproj"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "C#",
+      "origin": "fuzz/App.Fuzz/Program.cs",
+      "role": "test"
     },
     {
       "ambiguous": false,
@@ -716,6 +778,11 @@
       ],
       "origin": ".",
       "role": "product"
+    },
+    {
+      "kind": "SharpFuzz fuzz targets (Fuzzer.Run, Fuzzer.LibFuzzer.Run)",
+      "language": "C#",
+      "origin": "fuzz/App.Fuzz/Program.cs"
     },
     {
       "kind": "[Fact], [Test] or [TestMethod] methods in a test project (one referencing Microsoft.NET.Test.Sdk)",
@@ -972,6 +1039,21 @@
       "via": []
     },
     {
+      "argv": [
+        "libfuzzer-dotnet",
+        "--target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1111,6 +1193,21 @@
       "kind": "Command",
       "line": "dotnet stryker --since",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "libfuzzer-dotnet",
+        "--target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
       "via": []
     },
     {
@@ -1256,6 +1353,21 @@
       "via": []
     },
     {
+      "argv": [
+        "libfuzzer-dotnet",
+        "--target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1395,6 +1507,21 @@
       "kind": "Command",
       "line": "dotnet stryker --since",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "libfuzzer-dotnet",
+        "--target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
       "via": []
     },
     {
@@ -1540,6 +1667,21 @@
       "via": []
     },
     {
+      "argv": [
+        "libfuzzer-dotnet",
+        "--target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1679,6 +1821,21 @@
       "kind": "Command",
       "line": "dotnet stryker --since",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "libfuzzer-dotnet",
+        "--target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "libfuzzer-dotnet --target_path=fuzz/App.Fuzz/bin/Release/net9.0/App.Fuzz -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
       "via": []
     },
     {
@@ -2218,6 +2375,81 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj",
+      "reader": "NuGet package references"
+    },
+    {
+      "kind": "Declared",
+      "manager": "NuGet",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj",
+      "reader": "PackageLicenseExpression"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj",
+      "reader": "MSBuild warning settings"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj",
+      "reader": "MSBuild"
+    },
+    {
+      "heuristic": false,
+      "key": "OutputType",
+      "kind": "Setting",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj:OutputType",
+      "tool": "MSBuild",
+      "value": "Exe"
+    },
+    {
+      "heuristic": false,
+      "key": "TargetFramework",
+      "kind": "Setting",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj:TargetFramework",
+      "tool": "MSBuild",
+      "value": "net9.0"
+    },
+    {
+      "heuristic": false,
+      "key": "IsPackable",
+      "kind": "Setting",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj:IsPackable",
+      "tool": "MSBuild",
+      "value": "false"
+    },
+    {
+      "heuristic": false,
+      "key": "PackageReference",
+      "kind": "Setting",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj:PackageReference",
+      "tool": "MSBuild",
+      "value": "SharpFuzz"
+    },
+    {
+      "heuristic": false,
+      "key": "Sdk",
+      "kind": "Setting",
+      "origin": "fuzz/App.Fuzz/App.Fuzz.csproj:Sdk",
+      "tool": "MSBuild",
+      "value": "Microsoft.NET.Sdk"
+    },
+    {
+      "kind": "ConfigurationFile",
+      "origin": "fuzz/App.Fuzz/packages.lock.json",
+      "reader": "NuGet lockfile"
+    },
+    {
+      "kind": "Locked",
+      "manager": "NuGet",
+      "origin": "fuzz/App.Fuzz/packages.lock.json"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": "src/App/App.csproj",
       "reader": "NuGet package references"
     },
@@ -2644,6 +2876,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "SharpFuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -2928,6 +3181,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "SharpFuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -3212,6 +3486,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "SharpFuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -3496,6 +3791,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "SharpFuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -3780,6 +4096,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "SharpFuzz",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -4060,6 +4397,27 @@
         "."
       ],
       "tool": "Stryker.NET",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "C#",
+        "F#"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[9].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "SharpFuzz",
       "via": []
     },
     {
@@ -4522,7 +4880,7 @@
     },
     "dependency-management": {
       "details": [],
-      "message": "dependencies are declared in Directory.Build.props, tests/App.Tests/App.Tests.csproj (NuGet) and locked in src/App/packages.lock.json, tests/App.Tests/packages.lock.json",
+      "message": "dependencies are declared in Directory.Build.props, fuzz/App.Fuzz/App.Fuzz.csproj, tests/App.Tests/App.Tests.csproj (NuGet) and locked in fuzz/App.Fuzz/packages.lock.json, src/App/packages.lock.json, tests/App.Tests/packages.lock.json",
       "status": "PASS"
     },
     "dependency-updates": {
@@ -4535,6 +4893,11 @@
     "function-limits": {
       "details": [],
       "message": "function length is limited with lizard",
+      "status": "PASS"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "fuzz targets in 1 file(s), run by SharpFuzz",
       "status": "PASS"
     },
     "hardening": {

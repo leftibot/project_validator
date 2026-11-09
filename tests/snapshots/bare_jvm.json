@@ -258,6 +258,39 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Java",
+        "units": [
+          {
+            "answer": "no",
+            "language": "Java",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "Jazzer": {
+                  "can": {
+                    "runs": "mvn test or gradle test with JAZZER_FUZZ=1 (or the jazzer CLI)"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Java",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Java",
@@ -724,6 +757,13 @@
         "consider running in CI: Checkstyle with its MethodLength check or lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding mvn test or gradle test with JAZZER_FUZZ=1 (or the jazzer CLI)"
+      ],
+      "message": "no fuzz targets found (Jazzer fuzz tests (@FuzzTest or fuzzerTestOneInput))",
       "status": "FAIL"
     },
     "hardening": {

@@ -21,3 +21,8 @@ htmlcov/
 
 # Mutation testing
 mutants/
+# Fuzzing
+crash-*
+leak-*
+timeout-*
+oom-*

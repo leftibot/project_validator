@@ -16,6 +16,7 @@ from project_validator.facts.coverage import Granularity, coverage_tool, measure
 from project_validator.facts.dependencies import Lock, PackageManager, lockfile_reader, manifest_reader
 from project_validator.facts.expansion import Action
 from project_validator.facts.formatting import Enforcement, flagged, format_tool, formatted
+from project_validator.facts.fuzzing import LIBFUZZER_OPTION, FuzzTargets, PropertyTests, fuzzed, fuzzer
 from project_validator.facts.limits import Rule, limiter
 from project_validator.facts.mutation import mutated, mutation_tool
 from project_validator.facts.outputs import BuildOutput, directories, ignored_at_top_level
@@ -392,6 +393,37 @@ SWIFTPM_PACKAGES = PackageManager(
     lock=Lock.APPLICATIONS,
     applications_by_default=False,
     lock_hint="commit Package.resolved, so the application is built with the package versions it was tested with",
+)
+
+SWIFT_FUZZ_TARGETS = FuzzTargets(
+    name='libFuzzer fuzz targets (@_cdecl("LLVMFuzzerTestOneInput"))',
+    languages=SWIFT_ONLY,
+    path=re.compile(r"\.swift$"),
+    contains=re.compile(r"@_cdecl\(\"LLVMFuzzerTestOneInput\"\)"),
+)
+SWIFT_PROPERTY_TESTS = PropertyTests(
+    name="SwiftCheck tests",
+    languages=SWIFT_ONLY,
+    path=re.compile(r"\.swift$"),
+    contains=re.compile(r"SwiftCheck|\bproperty\(\""),
+)
+
+
+def _built_fuzzer(command: Command, _facts: Facts) -> Run | None:
+    """A product under `.build/` run with a libFuzzer option (`.build/debug/AppFuzz -max_total_time=30`): a
+    heuristic, since the product is not known to be a fuzz target; the `swift build` step alone is not a run."""
+    argv = resolved(command)
+    if not argv or not argv[0].removeprefix("./").startswith(".build/"):
+        return None
+    return fuzzed(heuristic=True) if any(LIBFUZZER_OPTION.fullmatch(word) for word in argv[1:]) else None
+
+
+SWIFT_LIBFUZZER = fuzzer(
+    name="libFuzzer",
+    languages=SWIFT_ONLY,
+    how="a product built with -sanitize=fuzzer, run as .build/debug/<product> -max_total_time=30",
+    runs=_built_fuzzer,
+    targets=(SWIFT_FUZZ_TARGETS,),
 )
 
 SWIFT_TOOLCHAINS = versions_axis("Swift toolchain", SWIFT_LANGUAGE, SWIFT_ONLY, compiled=True)

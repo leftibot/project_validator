@@ -29,6 +29,7 @@ _TEST_REGISTRATIONS = frozenset(
     {"add_test", "catch_discover_tests", "gtest_discover_tests", "gtest_add_tests", "doctest_discover_tests"}
     | {"boost_discover_tests"}
 )
+_ADD_TEST_KEYWORDS = frozenset({"CONFIGURATIONS", "WORKING_DIRECTORY", "COMMAND_EXPAND_LISTS"})
 _DEPENDENCY_MANAGERS = {
     **dict.fromkeys(("cpmaddpackage", "cpmfindpackage", "cpmdeclarepackage"), "CPM"),
     **dict.fromkeys(("fetchcontent_declare", "fetchcontent_makeavailable", "fetchcontent_populate"), "FetchContent"),
@@ -55,6 +56,17 @@ def _definition(text: str) -> str:
     return text if text.startswith(("-D", "/D")) else f"-D{text}"
 
 
+def _registered_test(words: list[str]) -> tuple[str, ...]:
+    """What `add_test` registers: the test's name and its command's words (`NAME n COMMAND c args...`, or the old
+    `add_test(n c args...)`)."""
+    if words[:1] == ["NAME"]:
+        name = words[1] if len(words) > 1 else ""
+        command = words[words.index("COMMAND") + 1 :] if "COMMAND" in words else []
+        stops = [at for at, word in enumerate(command) if word in _ADD_TEST_KEYWORDS]
+        return (name, *command[: stops[0] if stops else len(command)])
+    return tuple(words)
+
+
 @dataclass(slots=True)
 class Collector:
     """An `Observer` that records what each command sets."""
@@ -68,6 +80,8 @@ class Collector:
             handler(self, frame, invocation, words)
         elif invocation.name in _TEST_REGISTRATIONS:
             self.ctest(frame, "registers", invocation.name)
+            if invocation.name == "add_test":
+                self.ctest(frame, "test", _registered_test([word.text for word in words]))
         elif invocation.name in _DEPENDENCY_MANAGERS:
             self.facts.append(Declared(origin=Origin(path=frame.path), manager=_DEPENDENCY_MANAGERS[invocation.name]))
 

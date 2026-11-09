@@ -265,6 +265,31 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "PHP",
+        "units": [
+          {
+            "answer": "impossible",
+            "language": "PHP",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "impossible",
+              "defined": {},
+              "known": {},
+              "language": "PHP",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "PHP",
@@ -735,6 +760,11 @@
       ],
       "message": "function length is never limited",
       "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "not applicable to PHP",
+      "status": "SKIP"
     },
     "hardening": {
       "details": [],

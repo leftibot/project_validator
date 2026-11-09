@@ -311,6 +311,39 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "JavaScript",
+        "units": [
+          {
+            "answer": "no",
+            "language": "JavaScript",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "no",
+              "defined": {},
+              "known": {
+                "Jazzer.js": {
+                  "can": {
+                    "runs": "npx jazzer <target> -- -max_total_time=30 (or jest with JAZZER_FUZZ=1)"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "JavaScript",
+              "level": "runs",
+              "runs": {},
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "JavaScript",
@@ -784,6 +817,13 @@
         "consider running in CI: eslint with max-lines-per-function on or lizard --length 30"
       ],
       "message": "function length is never limited",
+      "status": "FAIL"
+    },
+    "fuzz-testing": {
+      "details": [
+        "consider adding npx jazzer <target> -- -max_total_time=30 (or jest with JAZZER_FUZZ=1)"
+      ],
+      "message": "no fuzz targets found (Jazzer.js fuzz targets (an exported fuzz function or .fuzz()))",
       "status": "FAIL"
     },
     "hardening": {

@@ -327,6 +327,50 @@
         ]
       }
     ],
+    "fuzz-testing": [
+      {
+        "language": "Python",
+        "units": [
+          {
+            "answer": "yes",
+            "language": "Python",
+            "other_runs": [],
+            "property_files": [],
+            "tools": {
+              "answer": "yes",
+              "defined": {
+                "atheris": [
+                  "tests/fuzz/fuzz_app.py"
+                ]
+              },
+              "known": {
+                "atheris": {
+                  "can": {
+                    "runs": "python <fuzz target>.py"
+                  },
+                  "needs_definition": true,
+                  "required": false
+                }
+              },
+              "language": "Python",
+              "level": "runs",
+              "runs": {
+                "atheris": {
+                  "levels": [
+                    "runs"
+                  ],
+                  "read": []
+                }
+              },
+              "unit": ".",
+              "unknown_definitions": [],
+              "unknowns": []
+            },
+            "unit": "."
+          }
+        ]
+      }
+    ],
     "hardening": [
       {
         "language": "Python",
@@ -736,6 +780,13 @@
       "ambiguous": false,
       "kind": "SourceFile",
       "language": "Python",
+      "origin": "tests/fuzz/fuzz_app.py",
+      "role": "test"
+    },
+    {
+      "ambiguous": false,
+      "kind": "SourceFile",
+      "language": "Python",
       "origin": "tests/test_app.py",
       "role": "test"
     },
@@ -749,6 +800,11 @@
       ],
       "origin": ".",
       "role": "product"
+    },
+    {
+      "kind": "atheris fuzz targets (atheris.Setup or atheris.Fuzz)",
+      "language": "Python",
+      "origin": "tests/fuzz/fuzz_app.py"
     },
     {
       "kind": "test_*.py or *_test.py files",
@@ -1095,6 +1151,21 @@
       "via": []
     },
     {
+      "argv": [
+        "python",
+        "tests/fuzz/fuzz_app.py",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "python tests/fuzz/fuzz_app.py -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1324,6 +1395,21 @@
       "kind": "Command",
       "line": "mutmut run",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "python",
+        "tests/fuzz/fuzz_app.py",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "python tests/fuzz/fuzz_app.py -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
       "via": []
     },
     {
@@ -1559,6 +1645,21 @@
       "via": []
     },
     {
+      "argv": [
+        "python",
+        "tests/fuzz/fuzz_app.py",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "python tests/fuzz/fuzz_app.py -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1788,6 +1889,21 @@
       "kind": "Command",
       "line": "mutmut run",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "python",
+        "tests/fuzz/fuzz_app.py",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "python tests/fuzz/fuzz_app.py -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
       "via": []
     },
     {
@@ -2023,6 +2139,21 @@
       "via": []
     },
     {
+      "argv": [
+        "python",
+        "tests/fuzz/fuzz_app.py",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "python tests/fuzz/fuzz_app.py -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -2252,6 +2383,21 @@
       "kind": "Command",
       "line": "mutmut run",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[10].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "python",
+        "tests/fuzz/fuzz_app.py",
+        "-max_total_time=30"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "python tests/fuzz/fuzz_app.py -max_total_time=30",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
       "via": []
     },
     {
@@ -3124,6 +3270,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "atheris",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -3529,6 +3695,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "atheris",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -3934,6 +4120,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "atheris",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -4339,6 +4545,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "atheris",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -4744,6 +4970,26 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "atheris",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -5145,6 +5391,26 @@
         "."
       ],
       "tool": "mutmut",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Python"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[11].run",
+      "provides": {
+        "fuzz": [
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "atheris",
       "via": []
     },
     {
@@ -5567,6 +5833,11 @@
     "function-limits": {
       "details": [],
       "message": "function length is limited with lizard",
+      "status": "PASS"
+    },
+    "fuzz-testing": {
+      "details": [],
+      "message": "fuzz targets in 1 file(s), run by atheris",
       "status": "PASS"
     },
     "hardening": {

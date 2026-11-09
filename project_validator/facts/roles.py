@@ -22,7 +22,9 @@ VENDOR_DIRECTORIES = (
 _ROLES = {
     **dict.fromkeys(VENDOR_DIRECTORIES, "vendored"),
     **dict.fromkeys(("test", "tests", "testing", "testdata", "spec", "specs", "__tests__", "fixtures"), "test"),
-    **dict.fromkeys(("fuzz", "fuzzing", "stress", "stress-test", "stress-tests"), "test"),
+    **dict.fromkeys(
+        ("fuzz", "fuzzing", "fuzz_test", "fuzz_tests", "fuzztest", "stress", "stress-test", "stress-tests"), "test"
+    ),
     **dict.fromkeys(("example", "examples", "sample", "samples", "demo", "demos"), "example"),
     **dict.fromkeys(("doc", "docs", "documentation", "website"), "docs"),
     **dict.fromkeys(("tools", "tooling", "scripts"), "tooling"),

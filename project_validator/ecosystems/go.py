@@ -15,6 +15,7 @@ from project_validator.facts.coverage import Granularity, coverage_tool, measure
 from project_validator.facts.dependencies import PackageManager, lockfile_reader, manifest_reader
 from project_validator.facts.expansion import Action, CommandExpander, Expansion, Launched
 from project_validator.facts.formatting import Enforcement, flagged, format_tool, formatted
+from project_validator.facts.fuzzing import FuzzTargets, PropertyTests, fuzzed, fuzzer
 from project_validator.facts.limits import Rule, limiter
 from project_validator.facts.mutation import incremental_when, mutated, mutation_tool
 from project_validator.facts.outputs import BuildOutput, directories, ignored_at_top_level
@@ -22,7 +23,7 @@ from project_validator.facts.practices import Practice, PracticeName, Wording, a
 from project_validator.facts.security import scanned, scanner
 from project_validator.facts.settings import SettingsReader, file_reader, json_settings, toml_settings, yaml_settings
 from project_validator.facts.testing import TestFiles, test_runner, tested, tests_of
-from project_validator.facts.tools import Definition, Run, defined_by, either, starts, when
+from project_validator.facts.tools import Definition, Run, all_of, defined_by, either, starts, when, with_option
 from project_validator.text import pattern
 from project_validator.tools.audits import multi_ecosystem_audits
 from project_validator.tools.limits import function_length_limiters
@@ -146,6 +147,26 @@ GO_TEST_FILES = TestFiles(
     languages=GO_LANGUAGE,
     path=re.compile(r"_test\.go$"),
     contains=re.compile(r"^func\s+(?:Test|Fuzz|Example)\w*\s*\(", re.MULTILINE),
+)
+
+GO_FUZZ_TARGETS = FuzzTargets(
+    name="Fuzz functions (func FuzzXxx(f *testing.F))",
+    languages=GO_LANGUAGE,
+    path=re.compile(r"_test\.go$"),
+    contains=re.compile(r"^func\s+Fuzz\w*\s*\(\w+\s+\*testing\.F\)", re.MULTILINE),
+)
+GO_PROPERTY_TESTS = PropertyTests(
+    name="rapid and gopter tests",
+    languages=GO_LANGUAGE,
+    path=re.compile(r"_test\.go$"),
+    contains=re.compile(r"pgregory\.net/rapid|leanovate/gopter"),
+)
+GO_FUZZ = fuzzer(
+    name="go test -fuzz",
+    languages=GO_LANGUAGE,
+    how="go test -fuzz=Fuzz -fuzztime=30s",
+    runs=when(all_of(starts(("go", "test")), with_option("-fuzz")), fuzzed),
+    targets=(GO_FUZZ_TARGETS,),
 )
 
 

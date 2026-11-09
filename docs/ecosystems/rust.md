@@ -6,6 +6,12 @@ Recognised by `.rs` sources and Cargo (`Cargo.toml`).
 
 `#[test]` functions run by `cargo test`, nextest, llvm-cov or tarpaulin.
 
+## `fuzz-testing`
+
+cargo-fuzz and AFL.rs targets (files that call `fuzz_target!` or `afl::fuzz!`), run by a CI step `cargo fuzz run
+<target>` (with or without a `+toolchain`) or `cargo afl fuzz`. proptest and quickcheck tests alone warn: they are
+property-based tests, not fuzz targets.
+
 ## `coverage`
 
 cargo-llvm-cov, cargo-tarpaulin or grcov with `--branch`. MC/DC coverage (`cargo llvm-cov --mcdc`, or
