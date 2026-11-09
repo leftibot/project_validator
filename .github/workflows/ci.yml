@@ -238,9 +238,12 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          for name in yaml cmake meson shell github_expressions json; do
-            python "tests/fuzz/fuzz_${name}.py" "tests/fuzz/corpus/${name}" -max_total_time=60 -rss_limit_mb=2048
-          done
+          python tests/fuzz/fuzz_yaml.py tests/fuzz/corpus/yaml -max_total_time=60 -rss_limit_mb=2048
+          python tests/fuzz/fuzz_cmake.py tests/fuzz/corpus/cmake -max_total_time=60 -rss_limit_mb=2048
+          python tests/fuzz/fuzz_meson.py tests/fuzz/corpus/meson -max_total_time=60 -rss_limit_mb=2048
+          python tests/fuzz/fuzz_shell.py tests/fuzz/corpus/shell -max_total_time=60 -rss_limit_mb=2048
+          python tests/fuzz/fuzz_github_expressions.py tests/fuzz/corpus/github_expressions -max_total_time=60 -rss_limit_mb=2048
+          python tests/fuzz/fuzz_json.py tests/fuzz/corpus/json -max_total_time=60 -rss_limit_mb=2048
 
       - name: Upload crashes
         if: failure()

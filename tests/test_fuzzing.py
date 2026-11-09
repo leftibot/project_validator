@@ -111,6 +111,17 @@ class PythonFuzzingTests(unittest.TestCase):
         self.assertIn(("tests/test_p.py", PYTHON_PROPERTY_TESTS.name), kinds)
         self.assertNotIn(("tests/test_p.py", PYTHON_FUZZ_TARGETS.name), kinds)
 
+    def test_only_a_call_of_atheris_setup_makes_a_fuzz_target(self) -> None:
+        facts = facts_of(
+            {
+                "a_pattern.py": 'import re\nP = re.compile(r"\\batheris\\.Setup")\n',
+                "a_string.py": 'MESSAGE = "call atheris.Setup(argv, f) first"\n',
+                "tests/fuzz/fuzz_real.py": "import atheris\n\nif __name__ == '__main__':\n    atheris.Setup(sys.argv, TestOneInput)\n",
+            }
+        )
+        targets = {t.origin.path for t in facts.of(TestFile) if t.kind == PYTHON_FUZZ_TARGETS.name}
+        self.assertEqual(targets, {"tests/fuzz/fuzz_real.py"})
+
     def test_python_running_a_fuzz_target_file_is_a_run(self) -> None:
         facts = facts_of(PYTHON_PROJECT)
         self.assertIsNotNone(ATHERIS.claims(command("python tests/fuzz/fuzz_x.py corpus -max_total_time=60"), facts))

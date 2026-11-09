@@ -14,7 +14,7 @@ PYTHON_FUZZ_TARGETS = FuzzTargets(
     name="atheris fuzz targets (atheris.Setup or atheris.Fuzz)",
     languages=PYTHON_ONLY,
     path=re.compile(r"\.py$"),
-    contains=re.compile(r"\batheris\.(?:Setup|Fuzz|instrument_imports)\b"),
+    contains=re.compile(r"^\s*atheris\.(?:Setup|Fuzz)\(", re.MULTILINE),
 )
 PYTHON_PROPERTY_TESTS = PropertyTests(
     name="Hypothesis tests",
