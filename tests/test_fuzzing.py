@@ -3,6 +3,7 @@
 import re
 import unittest
 
+from project_validator.ecosystems.python.fuzzing import ATHERIS, PYTHON_FUZZ_TARGETS, PYTHON_PROPERTY_TESTS
 from project_validator.facts import Facts, Origin
 from project_validator.facts.fuzzing import (
     FUZZ,
@@ -18,6 +19,12 @@ from project_validator.facts.fuzzing import (
 )
 from project_validator.facts.roles import role
 from project_validator.facts.testing import TestFile, TestFiles
+from tests.support import command, make_context, temp_project
+
+
+def facts_of(files: dict[str, str]) -> Facts:
+    with temp_project(files) as root:
+        return make_context(root).facts
 
 
 class FuzzAspectTests(unittest.TestCase):
@@ -63,3 +70,33 @@ class RolesTests(unittest.TestCase):
         for path in ("fuzz_test/fuzz_tester.cpp", "fuzz_tests/a.rs", "fuzztest/x.go", "fuzz/target.rs"):
             with self.subTest(path=path):
                 self.assertEqual(role(path), "test")
+
+
+PYTHON_PROJECT = {
+    "tests/fuzz/fuzz_x.py": "import atheris\natheris.Setup(sys.argv, f)\n",
+    "tests/test_p.py": "from hypothesis import given\n",
+    "pyproject.toml": "[project]\nname='a'\n",
+}
+
+
+class PythonFuzzingTests(unittest.TestCase):
+    def test_atheris_files_are_fuzz_targets_and_hypothesis_files_are_property_tests(self) -> None:
+        facts = facts_of(PYTHON_PROJECT)
+        kinds = {(t.origin.path, t.kind) for t in facts.of(TestFile)}
+        self.assertIn(("tests/fuzz/fuzz_x.py", PYTHON_FUZZ_TARGETS.name), kinds)
+        self.assertIn(("tests/test_p.py", PYTHON_PROPERTY_TESTS.name), kinds)
+        self.assertNotIn(("tests/test_p.py", PYTHON_FUZZ_TARGETS.name), kinds)
+
+    def test_python_running_a_fuzz_target_file_is_a_run(self) -> None:
+        facts = facts_of(PYTHON_PROJECT)
+        self.assertIsNotNone(ATHERIS.claims(command("python tests/fuzz/fuzz_x.py corpus -max_total_time=60"), facts))
+        self.assertIsNotNone(ATHERIS.claims(command("python3 -X dev tests/fuzz/fuzz_x.py"), facts))
+        self.assertIsNotNone(ATHERIS.claims(command("python3.13 ./tests/fuzz/fuzz_x.py"), facts))
+        self.assertIsNone(ATHERIS.claims(command("python -m pytest"), facts))
+        self.assertIsNone(ATHERIS.claims(command("python tests/test_p.py"), facts))
+        self.assertIsNone(ATHERIS.claims(command("ruby tests/fuzz/fuzz_x.py"), facts))
+
+    def test_a_path_with_an_unexpanded_expression_is_a_heuristic_run(self) -> None:
+        for line in ("python tests/fuzz/${TARGET}", "python tests/fuzz/${{ matrix.target }}"):
+            run = ATHERIS.claims(command(line), facts_of(PYTHON_PROJECT))
+            self.assertTrue(run is not None and run.heuristic)

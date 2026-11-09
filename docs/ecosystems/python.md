@@ -7,6 +7,11 @@ Recognised by `.py` sources, `pyproject.toml` or `setup.py`.
 `test_*.py` / `*_test.py` files run by pytest or unittest (directly, as `python -m` or `coverage run -m`, or in the
 tox environments CI runs), or by nox, whose sessions are not read.
 
+## `fuzz-testing`
+
+atheris fuzz targets (files that call `atheris.Setup` or `atheris.Fuzz`), run by a CI step `python <target>.py ...`.
+Hypothesis tests alone warn: they are property-based tests, not fuzz targets.
+
 ## `coverage`
 
 coverage.py (`coverage run --branch`, or `branch = true` in the configuration it reads: `.coveragerc`, else the first of
