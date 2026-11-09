@@ -236,6 +236,9 @@ class Check:
     # The languages of the components the check judges, asked when needed (plugins add components); none for a check
     # of every project.
     languages_from: Callable[[], frozenset[str]] = field(default=_no_languages, repr=False, compare=False)
+    # The tool aspect the check judges (coverage, format): how the support matrix names its tools; None for a check
+    # without tools.
+    aspect: str | None = None
 
     @property
     def languages(self) -> frozenset[str]:

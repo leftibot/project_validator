@@ -111,6 +111,8 @@ only scans heuristically, or a matrix computed by an expression), not a finding 
 `ERROR`, which fails the run and names what was not read, unless the user passes `--allow-unknown`; then the answer
 is judged by what could be read, as a no.
 
+A tool-based check records its aspect (`Check.aspect`), so the support matrix (`--support-matrix`, committed as docs/support-matrix.md and kept current by a test) can name, for each check and ecosystem, the tools the registry knows; checks themselves still name no tool.
+
 ### Worked example: branch coverage in this repository
 
 1. The GitHub Actions extractor records the job `coverage` and its command

@@ -1,11 +1,14 @@
 """Judging: how results are built, settled before a policy judges, and combined across what was judged."""
 
 import unittest
+from collections.abc import Callable
 
-from project_validator.core import Result, Status
-from project_validator.judging import combined
+from project_validator.core import Check, Result, Status
+from project_validator.facts.tools import handling
+from project_validator.judging import answered_check, combined
 from project_validator.policy import skipped_or_unknown, unknown
 from project_validator.questions import Answer
+from project_validator.questions.tooling import ToolAnswer, aspect_answers
 
 
 class ResultTests(unittest.TestCase):
@@ -82,3 +85,34 @@ class CombinedTests(unittest.TestCase):
 
     def test_nothing_judged(self) -> None:
         self.assertEqual(self._combined({}), Result.skipped("nothing judged"))
+
+
+def _passes(answer: ToolAnswer, /, *, allow_unknown: bool = False) -> Result:
+    return Result.passed("ok")
+
+
+class AnsweredCheckTests(unittest.TestCase):
+    def _check(self, *, aspect: str | None = None, languages: Callable[[], frozenset[str]] | None = None) -> Check:
+        return answered_check(
+            name="x",
+            description="x",
+            answers=aspect_answers("format", "check"),
+            judge=_passes,
+            aspect=aspect,
+            languages=languages,
+        )
+
+    def test_an_aspect_names_the_languages_its_tools_handle(self) -> None:
+        check = self._check(aspect="format")
+        self.assertEqual(check.aspect, "format")
+        self.assertEqual(check.languages, handling("format")())
+        self.assertIn("Python", check.languages)
+
+    def test_languages_may_be_given_without_an_aspect(self) -> None:
+        check = self._check(languages=lambda: frozenset({"Zig"}))
+        self.assertIsNone(check.aspect)
+        self.assertEqual(check.languages, frozenset({"Zig"}))
+
+    def test_an_aspect_or_languages_is_required(self) -> None:
+        with self.assertRaisesRegex(TypeError, "aspect or languages"):
+            self._check()

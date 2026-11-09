@@ -220,3 +220,33 @@ def ci_running(provider: str, *commands: str) -> dict[str, str]:
     if provider == "GitLab CI":
         return {CI_FILES[provider]: json.dumps({"test": {"script": list(commands)}})}
     return {CI_FILES[provider]: "".join(f"script: {command}\n" for command in commands)}
+
+
+# A whole ecosystem that is not built in, from a plugin: detected by its build file and source suffix, judged
+# by the practices it has rules for, and seen by --list.
+ECOSYSTEM_PLUGIN = """
+import re
+
+from project_validator.ecosystems.model import BuildSystem, Ecosystem, ToolchainPatterns
+from project_validator.facts.axes import versions_axis
+from project_validator.facts.formatting import Enforcement, flagged, format_tool
+from project_validator.facts.tools import defined_by
+
+ZIG = Ecosystem(
+    label="Zig",
+    languages=frozenset({"Zig"}),
+    build_systems=(BuildSystem(name="Zig build", files=("build.zig",), languages=frozenset({"Zig"})),),
+    source_suffixes={".zig": "Zig"},
+    toolchain=ToolchainPatterns(
+        language="Zig", versions=(re.compile(r"\\bzig-version\\W+([\\d.x]+)"),), usage=re.compile(r"\\bzig\\s+build\\b")
+    ),
+)
+ZIG_VERSIONS = versions_axis("Zig version", "Zig", frozenset({"Zig"}))
+ZIG_FMT = format_tool(
+    name="zig fmt",
+    languages=frozenset({"Zig"}),
+    can={Enforcement.CHECK: "zig fmt --check .", Enforcement.APPLY: "zig fmt ."},
+    formats=flagged(("zig", "fmt"), checks=("--check",)),
+    style=defined_by(),
+)
+"""

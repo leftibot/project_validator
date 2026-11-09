@@ -10,6 +10,7 @@ from collections.abc import Callable, Mapping
 from project_validator.core import Check, Context, Result, Status
 from project_validator.ecosystems import Ecosystem, ecosystems_for, registered
 from project_validator.facts import Facts
+from project_validator.facts.tools import handling
 from project_validator.policy import Judge
 from project_validator.questions import LanguageAnswers, UnitAnswer
 
@@ -86,24 +87,29 @@ def answered_check[A: UnitAnswer](
     *,
     name: str,
     description: str,
-    languages: Callable[[], frozenset[str]],
     answers: Callable[[str, Facts], LanguageAnswers[A]],
     judge: Judge[A],
+    aspect: str | None = None,
+    languages: Callable[[], frozenset[str]] | None = None,
     aliases: tuple[str, ...] = (),
 ) -> Check:
     """A check that judges a question's answers by a policy, for each ecosystem the project uses (its findings
-    labelled by ecosystem as other checks' are). It applies to the `languages` its known tools handle."""
+    labelled by ecosystem as other checks' are). It applies to the languages its known tools handle (`aspect`), or to
+    `languages`."""
+    if languages is None:
+        if aspect is None:
+            raise TypeError("answered_check needs an aspect or languages")
+        languages = handling(aspect)
+    handled = languages
 
     def run(context: Context) -> Result:
-        handled = languages()
-        by_ecosystem_ = {
-            ecosystem: ecosystem.languages & handled for ecosystem in registered() if ecosystem.languages & handled
-        }
+        now = handled()
+        by_ecosystem_ = {e: e.languages & now for e in registered() if e.languages & now}
         return check_each_ecosystem(
             context, by_ecosystem_, lambda judged_languages, found: judged(judged_languages, found, answers, judge)
         )
 
-    return Check(name=name, description=description, run=run, languages_from=languages, aliases=aliases)
+    return Check(name=name, description=description, run=run, languages_from=handled, aspect=aspect, aliases=aliases)
 
 
 __all__ = ["answered_check", "by_ecosystem", "check_each_ecosystem", "combined", "judged", "labelled"]

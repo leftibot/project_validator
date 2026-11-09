@@ -42,6 +42,7 @@ python3 -m project_validator --only coverage,platform-matrix --format json path/
 | Option | Meaning |
 |---|---|
 | `--list` | list the available checks; with `--format json`, also the ecosystems each one applies to |
+| `--support-matrix` | print what each check recognises for each ecosystem, as the committed [docs/support-matrix.md](docs/support-matrix.md) (markdown; JSON with `--format json`) |
 | `--map` | print the detected project structure as JSON: languages, build systems, the signals that recognised each ecosystem, the file suffixes no ecosystem recognises, vendored files (other projects' code and minified bundles, which add no language), the units the project is judged in (one for most projects; each package of a monorepo and each build root of a mixed-language project), and the CI providers, jobs and toolchains |
 | `--facts` | print the facts found about the project as JSON, each with where it was found: the source and build files with their languages, the settings the configuration files hold (per tool), the CI jobs (one per matrix combination), the commands and actions each runs, the commands those run in turn (package scripts, Deno tasks, Composer scripts, Make targets, pre-commit hooks), what the coverage tools CI runs measure, and what could not be read (see [docs/architecture.md](docs/architecture.md)) |
 | `--answers` | print the answers to the questions about the project as JSON, per language in each unit of the project: for now, what coverage CI reports at each granularity (line, statement, region, branch, path), each `yes`, `no`, `unknown` (something that could report it was not read) or `impossible` (no known tool measures it for the language), with the tools that report it and how the known tools would |
@@ -61,7 +62,7 @@ Exit codes: `0` everything passed, `1` a check failed or raised an error, `2` us
 
 ## Checks
 
-What each check accepts for a language is on that ecosystem's page in [docs/ecosystems](docs/ecosystems).
+What each check accepts for a language is on that ecosystem's page in [docs/ecosystems](docs/ecosystems); [docs/support-matrix.md](docs/support-matrix.md) is the generated grid of every check against every ecosystem, with the tools each recognises (regenerated with `UPDATE_SNAPSHOTS=1 python -m unittest tests.test_documentation`).
 
 | Check | Passes when |
 |---|---|

@@ -8,7 +8,7 @@ from project_validator.core import Check, Result, Status
 from project_validator.ecosystems import BUILT_IN, applies_to, isolated_registry, registered
 from project_validator.plugins import PluginError, Plugins, discover
 from project_validator.runner import run_check
-from tests.support import make_context, temp_project
+from tests.support import ECOSYSTEM_PLUGIN, make_context, temp_project
 
 CHECK_MODULES = tuple(sorted(info.name for info in pkgutil.iter_modules(checks.__path__)))
 CHECK_TESTS = Path(__file__).parent / "checks"
@@ -75,35 +75,6 @@ class DiscoverTests(unittest.TestCase):
         with temp_project({}) as directory, self.assertRaisesRegex(PluginError, "does not exist"):
             discover([directory / "missing"])
 
-
-# A whole ecosystem that is not built in, from a plugin: detected by its build file and source suffix, judged
-# by the practices it has rules for, and seen by --list.
-ECOSYSTEM_PLUGIN = """
-import re
-
-from project_validator.ecosystems.model import BuildSystem, Ecosystem, ToolchainPatterns
-from project_validator.facts.axes import versions_axis
-from project_validator.facts.formatting import Enforcement, flagged, format_tool
-from project_validator.facts.tools import defined_by
-
-ZIG = Ecosystem(
-    label="Zig",
-    languages=frozenset({"Zig"}),
-    build_systems=(BuildSystem(name="Zig build", files=("build.zig",), languages=frozenset({"Zig"})),),
-    source_suffixes={".zig": "Zig"},
-    toolchain=ToolchainPatterns(
-        language="Zig", versions=(re.compile(r"\\bzig-version\\W+([\\d.x]+)"),), usage=re.compile(r"\\bzig\\s+build\\b")
-    ),
-)
-ZIG_VERSIONS = versions_axis("Zig version", "Zig", frozenset({"Zig"}))
-ZIG_FMT = format_tool(
-    name="zig fmt",
-    languages=frozenset({"Zig"}),
-    can={Enforcement.CHECK: "zig fmt --check .", Enforcement.APPLY: "zig fmt ."},
-    formats=flagged(("zig", "fmt"), checks=("--check",)),
-    style=defined_by(),
-)
-"""
 
 ZIG_PROJECT = {
     "build.zig": "",

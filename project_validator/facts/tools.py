@@ -166,7 +166,12 @@ def when(matches: Condition, run: Callable[[], Run]) -> Claim:
 
 def handling(aspect: str) -> Callable[[], frozenset[str]]:
     """The languages the tools now known handle for `aspect` (plugins add tools, so it is asked when needed)."""
-    return lambda: frozenset().union(*(tool.languages for tool in known_tools() if aspect in tool.can))
+    return lambda: frozenset().union(*(tool.languages for tool in tools_for(aspect)))
+
+
+def tools_for(aspect: str) -> tuple[Tool, ...]:
+    """The tools now known that can provide `aspect`."""
+    return tuple(tool for tool in known_tools() if aspect in tool.can)
 
 
 def combined(*tools: Tool) -> Tool:
@@ -298,6 +303,7 @@ __all__ = [
     "provided",
     "starts",
     "tool_runs",
+    "tools_for",
     "when",
     "with_option",
     "within",

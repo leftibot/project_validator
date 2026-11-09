@@ -11,6 +11,7 @@ from project_validator import pretty, yaml_support
 from project_validator.cli import EXIT_FAILURE, EXIT_SUCCESS, EXIT_USAGE, main
 from project_validator.ecosystems import C_FAMILY, applies_to
 from project_validator.plugins import discover
+from project_validator.support_matrix import render, support_matrix
 from tests.layouts.model import ProjectLayout
 from tests.support import (
     BARE_PROJECT,
@@ -240,7 +241,7 @@ class ListTests(unittest.TestCase):
         self.assertIn("CiJob", {fact["kind"] for fact in facts})
         self.assertTrue(all("origin" in fact for fact in facts))
 
-    def test_list_as_json_is_the_support_matrix(self) -> None:
+    def test_list_as_json_is_the_check_list(self) -> None:
         code, output, _ = run_cli("--list", "--format", "json")
         self.assertEqual(code, EXIT_SUCCESS)
         matrix = {row["check"]: row["applies_to"] for row in json.loads(output)}
@@ -248,3 +249,21 @@ class ListTests(unittest.TestCase):
         self.assertEqual(matrix["ci-present"], [])
         self.assertIn("C/C++", matrix["ci-build-types"])
         self.assertNotIn("Python", matrix["ci-build-types"])
+
+    def test_support_matrix_is_printed_as_markdown(self) -> None:
+        code, output, _ = run_cli("--support-matrix")
+        self.assertEqual(code, EXIT_SUCCESS)
+        self.assertEqual(
+            output, render(support_matrix(discover().checks))
+        )  # printed with end="", so `>` writes the page as is
+        self.assertTrue(output.startswith("# Support matrix\n"))
+
+    def test_support_matrix_as_json(self) -> None:
+        code, output, _ = run_cli("--support-matrix", "--format", "json")
+        self.assertEqual(code, EXIT_SUCCESS)
+        self.assertEqual(json.loads(output)["ecosystems"][0], "C/C++")
+
+    def test_support_matrix_needs_no_yaml(self) -> None:
+        with mock.patch.object(yaml_support, "available", return_value=False):
+            code, _, _ = run_cli("--support-matrix")
+        self.assertEqual(code, EXIT_SUCCESS)
