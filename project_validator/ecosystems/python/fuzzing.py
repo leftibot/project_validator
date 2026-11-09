@@ -1,7 +1,6 @@
 """Python's fuzzing: atheris fuzz targets, run as scripts, and Hypothesis property tests."""
 
 import re
-from collections.abc import Iterator
 from pathlib import PurePosixPath
 
 from project_validator.ecosystems.python import _INTERPRETER_VALUES, _PYTHON, PYTHON_ONLY
@@ -35,19 +34,8 @@ def _script(argv: tuple[str, ...]) -> str | None:
         elif word.startswith(("-m", "-c")):
             return None
         elif not word.startswith("-"):
-            return _whole_expression(word, words)
+            return word
     return None
-
-
-def _whole_expression(word: str, rest: Iterator[str]) -> str:
-    """`word`, with the words after it that the shell split an expression (`${{ matrix.target }}`) into."""
-    found = [word]
-    while "${{" in " ".join(found) and "}}" not in found[-1]:
-        following = next(rest, None)
-        if following is None:
-            break
-        found.append(following)
-    return " ".join(found)
 
 
 def _normalised(command: Command, path: str) -> str:

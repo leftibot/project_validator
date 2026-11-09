@@ -19,7 +19,8 @@ from project_validator.facts.fuzzing import (
 )
 from project_validator.facts.roles import role
 from project_validator.facts.testing import TestFile, TestFiles
-from tests.support import command, make_context, temp_project
+from project_validator.facts.tools import ToolRun
+from tests.support import command, github_job, make_context, temp_project
 
 
 def facts_of(files: dict[str, str]) -> Facts:
@@ -96,11 +97,21 @@ class PythonFuzzingTests(unittest.TestCase):
         self.assertIsNone(ATHERIS.claims(command("python tests/test_p.py"), facts))
         self.assertIsNone(ATHERIS.claims(command("ruby tests/fuzz/fuzz_x.py"), facts))
 
-    def test_a_path_with_an_unexpanded_expression_is_a_heuristic_run(self) -> None:
-        for line in ("python tests/fuzz/${TARGET}", "python ${{ matrix.fuzz_target }}", "python tests/FUZZ/${TARGET}"):
-            run = ATHERIS.claims(command(line), facts_of(PYTHON_PROJECT))
+    def test_a_path_with_an_unexpanded_shell_variable_is_a_heuristic_run_only_when_it_names_fuzzing(self) -> None:
+        facts = facts_of(PYTHON_PROJECT)
+        for line in ("python tests/fuzz/${TARGET}", "python tests/FUZZ/${TARGET}"):
+            run = ATHERIS.claims(command(line), facts)
             self.assertTrue(run is not None and run.heuristic)
+        for line in ("python scripts/${NAME}.py", "python ${SCRIPT}"):
+            self.assertIsNone(ATHERIS.claims(command(line), facts))
 
-    def test_an_unexpanded_path_that_does_not_name_fuzzing_is_not_a_run(self) -> None:
-        for line in ("python ${{ matrix.script }}", "python scripts/${NAME}.py"):
-            self.assertIsNone(ATHERIS.claims(command(line), facts_of(PYTHON_PROJECT)))
+    def test_a_ci_expression_path_is_a_heuristic_run_only_when_it_names_fuzzing(self) -> None:
+        for script, heuristic in (
+            ("tests/fuzz/${{ github.event.inputs.target }}", True),
+            ("${{ github.event.inputs.fuzz_target }}", True),
+            ("${{ github.event.inputs.script }}", False),
+        ):
+            with self.subTest(script=script):
+                files = {**PYTHON_PROJECT, **github_job("ubuntu-latest", f"python {script}")}
+                runs = [run for run in facts_of(files).of(ToolRun) if run.tool == ATHERIS.name]
+                self.assertEqual([run.heuristic for run in runs], [True] if heuristic else [])
