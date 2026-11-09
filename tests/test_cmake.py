@@ -117,6 +117,21 @@ class BranchTests(unittest.TestCase):
         )
         self.assertEqual(_options(found), [("-g", None, _requiring("KEEP_GOING")), ("-fPIC", None, ANY)])
 
+    def test_deep_nesting_is_unknown_not_a_crash(self) -> None:
+        for text in (
+            "if(A)\n" * 5000 + "endif()\n" * 5000,
+            "foreach(i 1)\n" * 5000 + "endforeach()\n" * 5000,
+            "if(" + "(" * 5000 + "A" + ")" * 5000 + ")\nendif()\n",
+        ):
+            with self.subTest(text=text[:20]):
+                found = _facts({"CMakeLists.txt": "project(x)\n" + text})
+                self.assertTrue(any(isinstance(fact, Unknown) for fact in found))
+
+    def test_a_deeply_nested_generator_expression_is_kept_as_written(self) -> None:
+        expression = "$<$<BOOL:1>:" * 2000 + "-W" + ">" * 2000
+        found = _listed("add_executable(a a.c)", f"target_compile_options(a PRIVATE {expression})")
+        self.assertEqual([option for option, _, _ in _options(found)], [expression])
+
 
 class VariableTests(unittest.TestCase):
     def test_a_variable_holds_each_value_in_the_builds_it_is_set_in(self) -> None:

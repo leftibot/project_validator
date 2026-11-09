@@ -116,7 +116,7 @@ _CHARACTERS = {"SEMICOLON": ";", "COMMA": ",", "ANGLE-R": ">", "INSTALL_INTERFAC
 
 def _in(when: Condition, value: str) -> list[Value]:
     """The values `value` takes in the builds `when` names."""
-    return [Value(part.text, held) for part in generated(value) if (held := both(when, part.when))]
+    return [Value(part.text, held) for part in _generated(value) if (held := both(when, part.when))]
 
 
 def _conditional(when: Condition, value: str) -> list[Value]:
@@ -134,7 +134,7 @@ def _expression(content: str) -> list[Value]:
         when = test(arguments[0])
         return [*_in(when, arguments[1]), *_in(negated(when), arguments[2])]
     if name in _PASSED:
-        return generated(rest)
+        return _generated(rest)
     if name in _CHARACTERS:
         return [Value(_CHARACTERS[name])]
     if (separator and name in _TESTS) or name in ("NOT", "AND", "OR") or _COMPILER_ID.fullmatch(name):
@@ -143,8 +143,7 @@ def _expression(content: str) -> list[Value]:
     return [Value(f"$<{content}>")]
 
 
-def generated(text: str) -> list[Value]:
-    """The values `text` takes, with the builds it takes each in; expressions that are not understood are kept."""
+def _generated(text: str) -> list[Value]:
     values = [Value("")]
     for part, expression in _parts(text):
         found = _expression(part) if expression else [Value(part)]
@@ -155,6 +154,15 @@ def generated(text: str) -> list[Value]:
             if (when := both(value.when, more.when))
         ][:MOST_VALUES]
     return [value for value in values if value.when]
+
+
+def generated(text: str) -> list[Value]:
+    """The values `text` takes, with the builds it takes each in; expressions that are not understood (or are nested
+    too deeply) are kept."""
+    try:
+        return _generated(text)
+    except RecursionError:
+        return [Value(text)]
 
 
 __all__ = ["generated", "test"]

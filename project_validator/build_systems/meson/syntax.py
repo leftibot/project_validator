@@ -366,7 +366,11 @@ def _string(text: str) -> Literal:
 
 def parse(text: str) -> list[Node]:
     """The statements of a meson.build (or meson.options) file."""
-    return _Parser(text.removeprefix("\ufeff")).block()
+    parser = _Parser(text.removeprefix("\ufeff"))
+    try:
+        return parser.block()
+    except RecursionError as error:
+        raise MesonSyntaxError(parser.token.line, "nested too deeply to read") from error
 
 
 __all__ = [

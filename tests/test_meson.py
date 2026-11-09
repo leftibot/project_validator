@@ -164,6 +164,21 @@ class SyntaxTests(unittest.TestCase):
                 syntax.parse(text)
             self.assertEqual(str(raised.exception), problem)
 
+    def test_deep_nesting_is_a_syntax_error(self) -> None:
+        for text in ("x = " + "(" * 5000 + "1" + ")" * 5000, "if true\n" * 5000 + "endif\n" * 5000, "{" * 5000):
+            with self.subTest(text=text[:12]), self.assertRaisesRegex(syntax.MesonSyntaxError, "nested too deeply"):
+                syntax.parse(text)
+
+
+class DepthTests(unittest.TestCase):
+    def test_a_long_chain_is_unknown_not_a_crash(self) -> None:
+        for chain in ("'a'" + " + 'a'" * 3000, "'a'" + ".strip()" * 3000):
+            with self.subTest(chain=chain[:20]):
+                found = _facts(f"x = {chain}")
+                self.assertTrue(
+                    any(isinstance(fact, UnknownFact) and "nested too deeply" in fact.reason for fact in found)
+                )
+
 
 class ValueTests(unittest.TestCase):
     def test_truth(self) -> None:

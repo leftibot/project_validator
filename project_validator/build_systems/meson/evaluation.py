@@ -122,12 +122,15 @@ class Evaluation:
     def evaluate(self) -> None:
         """Every top-level meson.build: those no `subdir()` reaches."""
         builds = sorted((path for path in self.files if PurePosixPath(path).name == BUILD_FILE), key=_depth)
+        path = ""
         try:
             for path in builds:
                 if path not in self.reached:
                     self.evaluate_alone(path)
         except _TooMuch:
             self.problems[builds[0]] = f"evaluation stopped after {MOST_STATEMENTS} statements"
+        except RecursionError:
+            self.problems[path] = "nested too deeply to read"
 
     def evaluate_alone(self, path: str) -> None:
         """A file evaluated on its own (a top-level meson.build, or meson.options), with no variables."""

@@ -65,6 +65,12 @@ class EvaluateTests(unittest.TestCase):
         self.assertTrue(evaluate("runner.os == 'Linux'", known))
 
 
+class DepthTests(unittest.TestCase):
+    def test_deep_nesting_is_unknown(self) -> None:
+        self.assertIsNone(evaluate("(" * 5000 + "true" + ")" * 5000, KNOWN))
+        self.assertIsNone(rendered("${{ " + "(" * 5000 + "'a'" + ")" * 5000 + " }}", KNOWN))
+
+
 class RenderedTests(unittest.TestCase):
     def test_values_are_rendered_as_github_renders_them(self) -> None:
         for expression, expected in (

@@ -45,9 +45,9 @@ class JsonSyntaxError(ValueError):
 
 
 _JSON_TOKEN = re.compile(
-    r"""\s*(?:(?P<open>[\[{])|(?P<close>[\]}])|(?P<colon>:)|(?P<comma>,)"""
+    r"""[ \t\n\r]*(?:(?P<open>[\[{])|(?P<close>[\]}])|(?P<colon>:)|(?P<comma>,)"""
     r"""|(?P<value>"(?:[^"\\\x00-\x1f]|\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4}))*"|true|false|null"""
-    r"""|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?))"""
+    r"""|-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?))"""
 )
 
 
@@ -103,6 +103,6 @@ def check_json(text: str) -> None:
         if not _READ[kind](stack, match):
             break
         position, done = match.end(), not stack and kind != "colon" and kind != "comma"
-    if not done or text[position:].strip():
+    if not done or text[position:].strip(" \t\n\r"):
         line = text.count("\n", 0, position) + 1
         raise JsonSyntaxError("malformed JSON", line, position - text.rfind("\n", 0, position))

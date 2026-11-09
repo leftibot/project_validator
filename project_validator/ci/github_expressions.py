@@ -191,7 +191,7 @@ def _parsed(expression: str, known: Known) -> Maybe:
     parser = _Parser(tokens, known)
     try:
         value = parser.expression()
-    except IndexError:
+    except IndexError, RecursionError:
         return _UNKNOWN
     return _UNKNOWN if parser.peek() is not None else value
 

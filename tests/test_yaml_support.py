@@ -24,6 +24,19 @@ class YamlSupportTests(unittest.TestCase):
             yaml_support.load("a: [unclosed\n")
         self.assertNotIn("\n", str(raised.exception))
 
+    def test_deep_nesting_is_a_yaml_error_not_a_crash(self) -> None:
+        deep = (
+            "[" * 5000 + "]" * 5000,
+            "{a: " * 5000 + "1" + "}" * 5000,
+            "".join("  " * i + "- \n" for i in range(5000)),
+        )
+        for text in deep:
+            with self.subTest(text=text[:12]):
+                with self.assertRaisesRegex(yaml_support.YamlError, "nested too deeply to read"):
+                    yaml_support.load(text)
+                with self.assertRaisesRegex(yaml_support.YamlError, "nested too deeply to read"):
+                    yaml_support.check_documents(text)
+
 
 class TaggedTests(unittest.TestCase):
     def test_local_tags_are_kept_as_tagged_values(self) -> None:

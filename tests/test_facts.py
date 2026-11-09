@@ -105,6 +105,24 @@ class ShellTests(unittest.TestCase):
         )
 
 
+class ShellDepthTests(unittest.TestCase):
+    def test_deeply_nested_substitutions_are_unsplittable(self) -> None:
+        found = list(split_script("echo " + "$(" * 5000 + "x" + ")" * 5000))
+        self.assertEqual([type(item) for item in found], [Unsplittable])
+        assert isinstance(found[0], Unsplittable)  # noqa: S101
+        self.assertEqual(found[0].reason, "nested too deeply to split")
+
+
+class ShellLineDepthTests(unittest.TestCase):
+    def test_only_the_line_nested_too_deeply_is_lost(self) -> None:
+        deep = "echo " + "$(" * 2000 + "x" + ")" * 2000
+        found = list(split_script(f"cmake --build build\nctest\n{deep}\n"))
+        self.assertEqual(
+            [item.argv if isinstance(item, ShellCommand) else item.line for item in found],
+            [("cmake", "--build", "build"), ("ctest",), deep],
+        )
+
+
 class GitHubActionsFactTests(unittest.TestCase):
     WORKFLOW = """\
         env:

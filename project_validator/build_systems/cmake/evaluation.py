@@ -155,6 +155,9 @@ class Evaluation:
             except CMakeSyntaxError as error:
                 self.problems[path] = str(error)
                 self._parsed[path] = None
+            except RecursionError:
+                self.problems[path] = "nested too deeply to read"
+                self._parsed[path] = None
         return self._parsed[path]
 
     def evaluate(self) -> None:
@@ -163,6 +166,8 @@ class Evaluation:
             self._evaluate_all()
         except _TooMuch:
             self.problems["CMakeLists.txt"] = f"evaluation stopped after {MOST_COMMANDS} commands"
+        except RecursionError:
+            self.problems["CMakeLists.txt"] = "nested too deeply to read"
 
     def _evaluate_all(self) -> None:
         lists = sorted((path for path in self.files if PurePosixPath(path).name == LISTS_FILE), key=_depth)

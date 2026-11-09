@@ -7,6 +7,7 @@ from types import ModuleType
 from typing import Any
 
 MISSING_MESSAGE = "PyYAML >= 6.0 is required (python3 -m pip install PyYAML, or the distro's python3-yaml package)"
+NESTED_MESSAGE = "nested too deeply to read"
 
 
 class YamlError(Exception):
@@ -66,6 +67,8 @@ def load(text: str) -> object:
         return _yaml.load(text, Loader=_loader())
     except _yaml.YAMLError as error:
         raise YamlError(str(error).replace("\n", " ")) from error
+    except RecursionError as error:
+        raise YamlError(NESTED_MESSAGE) from error
 
 
 def check_documents(text: str) -> None:
@@ -82,3 +85,5 @@ def check_documents(text: str) -> None:
         raise YamlError(problem, mark.line + 1, mark.column + 1) if mark else YamlError(problem) from error
     except _yaml.YAMLError as error:
         raise YamlError(str(error).replace("\n", " ")) from error
+    except RecursionError as error:
+        raise YamlError(NESTED_MESSAGE) from error

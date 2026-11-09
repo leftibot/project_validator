@@ -154,6 +154,22 @@ def split_script(
     Text matching `opaque` (such as a CI expression the CI service evaluates before the shell runs) is kept as
     written, quotes and all, inside the word it is part of.
     """
+    try:
+        found = list(_split_script(script, opaque, powershell=powershell))
+    except RecursionError:
+        # Line by line, so only the lines nested too deeply are lost.
+        found = []
+        for line in script.splitlines():
+            try:
+                found.extend(_split_script(line, opaque, powershell=powershell))
+            except RecursionError:
+                found.append(Unsplittable(line=line, reason="nested too deeply to split"))
+    yield from found
+
+
+def _split_script(
+    script: str, opaque: re.Pattern[str] | None, *, powershell: bool
+) -> Iterator[ShellCommand | Unsplittable]:
     hidden = _Hidden()
     # Opaque text first: a Make variable `$(CC)` is not a command substitution.
     if opaque is not None:
@@ -163,7 +179,7 @@ def split_script(
     continuation = _POWERSHELL_CONTINUATION if powershell else _CONTINUATION
     for line, words in _lines(continuation.sub(" ", script).splitlines(), escape):
         for commands in hidden.substituted(line):
-            yield from split_script(commands, opaque, powershell=powershell)
+            yield from _split_script(commands, opaque, powershell=powershell)
         if isinstance(words, ValueError):
             yield Unsplittable(line=hidden.shown(line), reason=str(words))
             continue
