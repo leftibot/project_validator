@@ -78,6 +78,7 @@ What each check accepts for a language is on that ecosystem's page in [docs/ecos
 | `function-limits` | function length is limited: lizard runs with a length limit (`lizard --length 30`), or one of the ecosystem's own tools limits it |
 | `static-analysis` | CI runs a static analyzer on each language in each unit (and every analyzer a language requires: clang-tidy and cppcheck for C/C++), with its checks defined where it has no defaults worth running. Warns when an analyzer is configured but does not run, or runs short; fails when none runs |
 | `type-checking` | CI (or a pre-commit hook CI runs) runs a static type checker on each dynamically typed language in each unit. Strict mode is a bonus; without it the result suggests it. Warns when a type checker is configured but does not run; fails when none runs. Compiled languages, whose compilers check types, are not judged |
+| `mutation-testing` | CI runs a mutation testing tool on each language in each unit (mutmut, cosmic-ray, Mull, cargo-mutants, gremlins, StrykerJS, PIT, Stryker.NET, Infection, mutant, Muter); running it on a pull request's changes only is a bonus (heuristic: the mutant names are taken as the pull request's changes). Warns when a tool is configured but does not run, or when none is found |
 | `action-pinning` | every action and reusable workflow CI uses from another repository is pinned to a full commit SHA (`actions/checkout@<SHA> # v4.2.2`), and every `docker://` image to a digest. Fails when one is pinned to a branch or not at all; warns when one is pinned to a tag or an abbreviated commit (`--allow-official-tags` accepts tags for `actions/` and `github/`). Skipped without GitHub Actions |
 | `ci-lint` | CI (or a pre-commit hook) lints the configuration of each CI provider it uses: GitHub Actions with actionlint or zizmor, GitLab CI with `glab ci lint` or `gitlab-ci-local --preview`, CircleCI with `circleci config validate`. Warns otherwise; skipped without CI, or when no linter is known for the providers used |
 | `copy-paste-detection` | CI runs a duplicate code detector (PMD CPD, jscpd, Duplo, Simian, CCFinderX or SonarQube); warns otherwise |
@@ -224,6 +225,7 @@ To run them locally:
 | `typing` | `mypy` |
 | `copy-paste-detection` | `npx --yes jscpd@4.3.0` (settings in `.jscpd.json`) |
 | `function-limits` | `lizard --length 30 --warnings_only project_validator tests` |
+| `mutation testing` | `mutmut run <module>.*` for the modules a pull request changes (settings in `[tool.mutmut]`); `mutmut results` lists survivors |
 
 Branch coverage is measured with [coverage.py](https://coverage.readthedocs.io/)
 (configured in `pyproject.toml`, which fails the report below 95%):
@@ -264,7 +266,7 @@ with as little setup as possible. To keep it that way:
 | [PyYAML](https://pyyaml.org/) `>=6.0` | required | The standard library has no YAML parser, and CI configuration is YAML. PyYAML is mature, MIT licensed, has no dependencies, and is packaged by every major distro (`python3-yaml` on Ubuntu). It is required rather than optional because scanning CI files as text cannot tell which compiler runs on which OS, nor apply a matrix's `include`/`exclude`, so it over-counts platform combinations and can pass `platform-matrix` for a project that should fail. Without PyYAML the validator exits with an error that says how to install it. |
 | [rich](https://github.com/Textualize/rich) `>=13.0` | optional (`pretty` extra) | Colored, aligned text output with a per-status summary. MIT licensed and widely used. Without it the validator prints plain text and says so. |
 | [coverage.py](https://coverage.readthedocs.io/) `>=7.10` | development only (`coverage` extra) | Measures the branch coverage of the test suite; the standard library's `trace` module does not measure branches. coverage.py is the de facto Python coverage tool, Apache 2.0 licensed and has no required dependencies. The validator itself never imports it. |
-| [ruff](https://docs.astral.sh/ruff/), [mypy](https://mypy-lang.org/), [lizard](https://github.com/terryyin/lizard), [jscpd](https://github.com/kucherenko/jscpd) | CI only | The lint, typing, function-limits and copy-paste-detection quality gates. They are installed by their CI jobs and are never imported by the validator. |
+| [ruff](https://docs.astral.sh/ruff/), [mypy](https://mypy-lang.org/), [lizard](https://github.com/terryyin/lizard), [jscpd](https://github.com/kucherenko/jscpd), [mutmut](https://mutmut.readthedocs.io/), [pytest](https://docs.pytest.org/) | CI only | The lint, typing, function-limits and copy-paste-detection quality gates, and the mutation-testing gate (mutmut needs pytest to run the suite). They are installed by their CI jobs and are never imported by the validator. |
 
 PyYAML is the only required dependency.
 

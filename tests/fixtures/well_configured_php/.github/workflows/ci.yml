@@ -14,3 +14,4 @@ jobs:
       - run: composer install --no-interaction
       - run: composer check
       - run: composer audit
+      - run: vendor/bin/infection --git-diff-lines

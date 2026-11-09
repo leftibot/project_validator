@@ -288,6 +288,33 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Rust",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "cargo-mutants": {
+                "can": {
+                  "incremental": "cargo mutants --in-diff <changes.diff>",
+                  "runs": "cargo mutants"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Rust",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Rust",
@@ -717,6 +744,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running cargo mutants in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

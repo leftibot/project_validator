@@ -1,0 +1,73 @@
+name: mutation testing
+
+# Pull requests only: it mutates the modules the pull request changes and reports the survivors without failing.
+on: pull_request
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  mutmut:
+    name: mutmut
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.14"
+
+      - name: Install mutmut and the tests' dependencies
+        run: python -m pip install --require-hashes -r .github/requirements/mutation.txt
+
+      - name: Mutate the modules this pull request changes
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          # Its own command, so that a failing diff fails the step instead of reading as "no modules changed".
+          git diff --name-only "origin/$BASE...HEAD" -- 'project_validator/*.py' 'project_validator/**/*.py' > changed.txt
+          mapfile -t files < changed.txt
+          patterns=()
+          for file in "${files[@]}"; do
+            [ -f "$file" ] || continue
+            # mutmut asserts when a filter matches no mutant, which is the case of a module with no function.
+            grep -qE '^\s*(async )?def ' "$file" || continue
+            module=${file%.py}; module=${module//\//.}; module=${module%.__init__}
+            # mutmut 3 names a mutant <module>.x_<function>__mutmut_N (or <module>.xǁClassǁmethod__mutmut_N), so
+            # ".x*" selects this module's own mutants; ".*" would also match every submodule, as * crosses dots.
+            patterns+=("$module.x*")
+          done
+          if [ ${#patterns[@]} -eq 0 ]; then
+            echo "No mutable modules changed: nothing to mutate." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          # mutmut copies the tree into mutants/, which is not a git repository, so the tests that call
+          # "git ls-files" fail there. The first run only creates the copy (its stats pass stops at the
+          # first failures); make the copy a repository, then run for real. The priming run is expected to fail
+          # fast in its stats pass, because the copy is not a git repository yet; if that pass ever succeeds, the
+          # job runs the named mutants twice.
+          mutmut run "${patterns[@]}" || true
+          git -C mutants init -q
+          git -C mutants add -A
+          mutmut run "${patterns[@]}"
+          # The results also list every mutant not run (the other modules'), which would fill the summary.
+          survivors=$(mktemp)
+          mutmut results | grep -v ': not checked$' > "$survivors" || true
+          {
+            echo '## Mutation testing of the changed modules'
+            if [ -s "$survivors" ]; then
+              echo '```'
+              cat "$survivors"
+              echo '```'
+            else
+              echo 'no survivors'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

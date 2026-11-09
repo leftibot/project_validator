@@ -16,3 +16,4 @@ jobs:
       - run: dotnet fsharplint lint .
       - run: dotnet build --no-restore
       - run: dotnet test --no-build --collect:"XPlat Code Coverage"
+      - run: dotnet stryker --since

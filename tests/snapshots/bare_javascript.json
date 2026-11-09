@@ -331,6 +331,33 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "JavaScript",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "StrykerJS": {
+                "can": {
+                  "incremental": "stryker run --incremental",
+                  "runs": "stryker run"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "JavaScript",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "JavaScript",
@@ -775,6 +802,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running stryker run in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],

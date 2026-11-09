@@ -27,6 +27,12 @@ mypy (or dmypy), pyright or basedpyright, pyrefly, or ty, in CI or a pre-commit 
 bonus: `strict = true` in `[tool.mypy]` or a `[mypy]` section, `mypy --strict`, or pyright's `typeCheckingMode`
 `strict` (basedpyright's `all`).
 
+## `mutation-testing`
+
+mutmut (`mutmut run`; settings in `[tool.mutmut]` of pyproject.toml or `[mutmut]` of setup.cfg), cosmic-ray
+(`cosmic-ray exec`) or mutatest. `mutmut run` given mutant names (`mutmut run 'pkg.module.*'`) counts as running on the
+changes only.
+
 ## `code-formatting`
 
 ruff format (`ruff format --check`, `--diff` or `--exit-non-zero-on-format`; settings in `[tool.ruff]` of

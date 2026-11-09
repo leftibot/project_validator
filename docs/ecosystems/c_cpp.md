@@ -48,6 +48,12 @@ standard such as `c++20` rather than `gnu++20`, so `-std=c++NN` is used rather t
 `_GLIBCXX_ASSERTIONS` or `_LIBCPP_HARDENING_MODE` (or GCC's `-fhardened`), plus `/sdl /guard:cf /DYNAMICBASE
 /CETCOMPAT` when MSVC is in CI. Warns listing what is missing.
 
+## `mutation-testing`
+
+Mull (`mull-runner` or `mull-cxx`, settings in `mull.yml`; a build with its compiler plugin only embeds the mutants,
+so it is not a run) or dextool (`dextool mutate`, settings in `.dextool_mutate.toml`). No changes-only mode is
+recognised for either.
+
 ## `code-formatting`
 
 The style is defined in a `.clang-format` (or `_clang-format`), at or above the code, and CI checks it:

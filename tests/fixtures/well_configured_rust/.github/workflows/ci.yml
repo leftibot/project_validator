@@ -19,3 +19,5 @@ jobs:
       - run: cargo audit
       - run: cargo test --release
       - run: cargo llvm-cov --branch --mcdc
+      - run: git diff origin/main...HEAD > changes.diff
+      - run: cargo mutants --in-diff changes.diff

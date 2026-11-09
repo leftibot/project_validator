@@ -145,6 +145,12 @@ def well_configured(layout: ProjectLayout) -> dict[str, str]:
 WELL_CONFIGURED_PYTHON = fixture_files("well_configured_python")
 WELL_CONFIGURED_RUST = fixture_files("well_configured_rust")
 WELL_CONFIGURED_GO = fixture_files("well_configured_go")
+WELL_CONFIGURED_JAVASCRIPT = fixture_files("well_configured_javascript")
+WELL_CONFIGURED_JVM = fixture_files("well_configured_jvm")
+WELL_CONFIGURED_DOTNET = fixture_files("well_configured_dotnet")
+WELL_CONFIGURED_PHP = fixture_files("well_configured_php")
+WELL_CONFIGURED_RUBY = fixture_files("well_configured_ruby")
+WELL_CONFIGURED_SWIFT = fixture_files("well_configured_swift")
 
 UNSTRUCTURED_CI_FILES = {
     provider: path for provider, path in CI_FILES.items() if provider not in {"GitHub Actions", "GitLab CI"}

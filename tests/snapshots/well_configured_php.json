@@ -358,6 +358,45 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "PHP",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "Infection": [
+                "infection.json5"
+              ]
+            },
+            "known": {
+              "Infection": {
+                "can": {
+                  "incremental": "vendor/bin/infection --git-diff-lines",
+                  "runs": "vendor/bin/infection"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "PHP",
+            "level": "runs",
+            "runs": {
+              "Infection": {
+                "levels": [
+                  "incremental",
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "PHP",
@@ -707,6 +746,12 @@
       "suffix": ".dist"
     },
     {
+      "files": 1,
+      "kind": "UnrecognisedSuffix",
+      "origin": ".",
+      "suffix": ".json5"
+    },
+    {
       "build_systems": [
         "Composer"
       ],
@@ -1029,6 +1074,20 @@
       "via": []
     },
     {
+      "argv": [
+        "vendor/bin/infection",
+        "--git-diff-lines"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "vendor/bin/infection --git-diff-lines",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1225,6 +1284,20 @@
       "kind": "Command",
       "line": "composer audit",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "vendor/bin/infection",
+        "--git-diff-lines"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "vendor/bin/infection --git-diff-lines",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
       "via": []
     },
     {
@@ -1427,6 +1500,20 @@
       "via": []
     },
     {
+      "argv": [
+        "vendor/bin/infection",
+        "--git-diff-lines"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "vendor/bin/infection --git-diff-lines",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1623,6 +1710,20 @@
       "kind": "Command",
       "line": "composer audit",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "vendor/bin/infection",
+        "--git-diff-lines"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "vendor/bin/infection --git-diff-lines",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
       "via": []
     },
     {
@@ -1825,6 +1926,20 @@
       "via": []
     },
     {
+      "argv": [
+        "vendor/bin/infection",
+        "--git-diff-lines"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "vendor/bin/infection --git-diff-lines",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -2021,6 +2136,20 @@
       "kind": "Command",
       "line": "composer audit",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "vendor/bin/infection",
+        "--git-diff-lines"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "vendor/bin/infection --git-diff-lines",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
       "via": []
     },
     {
@@ -2475,6 +2604,11 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": "infection.json5",
+      "reader": "Infection"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": "phpstan.neon.dist",
       "reader": "PHPStan"
     },
@@ -2683,6 +2817,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "PHP"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Infection",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -2848,6 +3003,27 @@
         "."
       ],
       "tool": "composer audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "PHP"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Infection",
       "via": []
     },
     {
@@ -3021,6 +3197,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "PHP"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Infection",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -3186,6 +3383,27 @@
         "."
       ],
       "tool": "composer audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "PHP"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Infection",
       "via": []
     },
     {
@@ -3359,6 +3577,27 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "PHP"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Infection",
+      "via": []
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -3524,6 +3763,27 @@
         "."
       ],
       "tool": "composer audit",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "PHP"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "Infection",
       "via": []
     },
     {
@@ -3921,6 +4181,10 @@
       {
         "files": 2,
         "suffix": ".dist"
+      },
+      {
+        "files": 1,
+        "suffix": ".json5"
       }
     ]
   },
@@ -4022,6 +4286,11 @@
         "LICENSE"
       ],
       "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "mutation-testing": {
+      "details": [],
+      "message": "Infection (infection.json5) runs; on the pull request's changes only (bonus)",
       "status": "PASS"
     },
     "platform-matrix": {

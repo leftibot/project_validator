@@ -24,6 +24,11 @@ The toolchains are Go versions.
 Programs are built as position-independent executables (`-buildmode=pie`, not the default on Linux); a module with no
 `package main` is skipped.
 
+## `mutation-testing`
+
+gremlins (`gremlins unleash`, also as `go run github.com/go-gremlins/gremlins/cmd/gremlins@v0.5.0 unleash`; settings in
+`.gremlins.yaml`) or go-mutesting. `gremlins unleash --diff <branch>` counts as running on the changes only.
+
 ## `code-formatting`
 
 gofmt, gofumpt or goimports listing what they would change (`-l` or `-d`, which CI fails on:

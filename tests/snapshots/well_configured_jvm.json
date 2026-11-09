@@ -357,6 +357,46 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Java",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "PIT": [
+                "pom.xml"
+              ]
+            },
+            "known": {
+              "PIT": {
+                "can": {
+                  "incremental": "pitest:scmMutationCoverage",
+                  "runs": "pitest:mutationCoverage or the pitest Gradle task"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Java",
+            "level": "runs",
+            "runs": {
+              "PIT": {
+                "levels": [
+                  "runs"
+                ],
+                "read": [
+                  "pom.xml"
+                ]
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Java",
@@ -1600,6 +1640,16 @@
     },
     {
       "heuristic": false,
+      "key": "plugin.pitest-maven",
+      "kind": "Setting",
+      "origin": "pom.xml:plugin.pitest-maven",
+      "tool": "Maven",
+      "value": [
+        "mutationCoverage"
+      ]
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[0]",
       "kind": "ToolRun",
       "languages": [
@@ -1642,6 +1692,29 @@
         "."
       ],
       "tool": "Find Security Bugs",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [
+        "pom.xml"
+      ],
+      "scope": [
+        "."
+      ],
+      "tool": "PIT",
       "via": []
     },
     {
@@ -1791,6 +1864,29 @@
       ],
       "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
       "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [
+        "pom.xml"
+      ],
+      "scope": [
+        "."
+      ],
+      "tool": "PIT",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
         "test": [
           "runs"
         ]
@@ -1916,6 +2012,29 @@
         "."
       ],
       "tool": "Find Security Bugs",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [
+        "pom.xml"
+      ],
+      "scope": [
+        "."
+      ],
+      "tool": "PIT",
       "via": []
     },
     {
@@ -2053,6 +2172,29 @@
         "."
       ],
       "tool": "Find Security Bugs",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [
+        "pom.xml"
+      ],
+      "scope": [
+        "."
+      ],
+      "tool": "PIT",
       "via": []
     },
     {
@@ -2190,6 +2332,29 @@
         "."
       ],
       "tool": "Find Security Bugs",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [
+        "pom.xml"
+      ],
+      "scope": [
+        "."
+      ],
+      "tool": "PIT",
       "via": []
     },
     {
@@ -2327,6 +2492,29 @@
         "."
       ],
       "tool": "Find Security Bugs",
+      "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Java",
+        "Kotlin"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[2].run",
+      "provides": {
+        "mutation": [
+          "runs"
+        ]
+      },
+      "read": [
+        "pom.xml"
+      ],
+      "scope": [
+        "."
+      ],
+      "tool": "PIT",
       "via": []
     },
     {
@@ -2910,6 +3098,13 @@
         "LICENSE"
       ],
       "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running it on the pull request's changes only: pitest:scmMutationCoverage"
+      ],
+      "message": "PIT (pom.xml) runs",
       "status": "PASS"
     },
     "platform-matrix": {

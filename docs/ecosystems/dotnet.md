@@ -28,6 +28,11 @@ C# projects set `AnalysisMode` (or `AnalysisLevel`) to Recommended or All, `Enfo
 
 `TreatWarningsAsErrors` or `-warnaserror`.
 
+## `mutation-testing`
+
+Stryker.NET (`dotnet stryker`; settings in `stryker-config.json`). `dotnet stryker --since` (or `--since:<branch>`)
+counts as running on the changes only.
+
 ## `code-formatting`
 
 `dotnet format --verify-no-changes` (style in `.editorconfig`) and `csharpier check` (or `--check`) for C#;

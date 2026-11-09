@@ -794,6 +794,82 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "JavaScript",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "StrykerJS": [
+                "stryker.config.json"
+              ]
+            },
+            "known": {
+              "StrykerJS": {
+                "can": {
+                  "incremental": "stryker run --incremental",
+                  "runs": "stryker run"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "JavaScript",
+            "level": "runs",
+            "runs": {
+              "StrykerJS": {
+                "levels": [
+                  "incremental",
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      },
+      {
+        "language": "TypeScript",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "StrykerJS": [
+                "stryker.config.json"
+              ]
+            },
+            "known": {
+              "StrykerJS": {
+                "can": {
+                  "incremental": "stryker run --incremental",
+                  "runs": "stryker run"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "TypeScript",
+            "level": "runs",
+            "runs": {
+              "StrykerJS": {
+                "levels": [
+                  "incremental",
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "JavaScript",
@@ -1740,6 +1816,39 @@
       "via": []
     },
     {
+      "argv": [
+        "npx",
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1928,6 +2037,39 @@
       "line": "npm audit --audit-level=moderate",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
       "via": []
+    },
+    {
+      "argv": [
+        "npx",
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
     },
     {
       "builds": true,
@@ -2120,6 +2262,39 @@
       "via": []
     },
     {
+      "argv": [
+        "npx",
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -2308,6 +2483,39 @@
       "line": "npm audit --audit-level=moderate",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
       "via": []
+    },
+    {
+      "argv": [
+        "npx",
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
     },
     {
       "builds": true,
@@ -2500,6 +2708,39 @@
       "via": []
     },
     {
+      "argv": [
+        "npx",
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -2688,6 +2929,39 @@
       "line": "npm audit --audit-level=moderate",
       "origin": ".github/workflows/ci.yml:jobs.test.steps[7].run",
       "via": []
+    },
+    {
+      "argv": [
+        "npx",
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "stryker",
+        "run",
+        "--incremental"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "npx stryker run --incremental",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
     },
     {
       "kind": "StepReference",
@@ -3137,6 +3411,11 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": "stryker.config.json",
+      "reader": "StrykerJS"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": "tsconfig.json",
       "reader": "TypeScript"
     },
@@ -3373,6 +3652,30 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "StrykerJS",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
       "languages": [
@@ -3562,6 +3865,30 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "StrykerJS",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
       "languages": [
@@ -3751,6 +4078,30 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "StrykerJS",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
       "languages": [
@@ -3940,6 +4291,30 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "StrykerJS",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
       "languages": [
@@ -4129,6 +4504,30 @@
     },
     {
       "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "StrykerJS",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
+    },
+    {
+      "heuristic": false,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
       "languages": [
@@ -4315,6 +4714,30 @@
       ],
       "tool": "npm audit",
       "via": []
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[8].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "StrykerJS",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[8].run"
+      ]
     },
     {
       "heuristic": false,
@@ -4770,7 +5193,7 @@
     },
     "data-wellformed": {
       "details": [],
-      "message": "8 data files parse (JSON: 3, YAML: 5)",
+      "message": "9 data files parse (JSON: 4, YAML: 5)",
       "status": "PASS"
     },
     "dependency-audit": {
@@ -4810,6 +5233,11 @@
         "LICENSE"
       ],
       "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "mutation-testing": {
+      "details": [],
+      "message": "StrykerJS (stryker.config.json) runs; on the pull request's changes only (bonus)",
       "status": "PASS"
     },
     "platform-matrix": {

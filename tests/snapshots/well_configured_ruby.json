@@ -363,6 +363,45 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Ruby",
+        "units": [
+          {
+            "answer": "yes",
+            "defined": {
+              "mutant": [
+                ".mutant.yml"
+              ]
+            },
+            "known": {
+              "mutant": {
+                "can": {
+                  "incremental": "mutant run --since <branch>",
+                  "runs": "mutant run"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Ruby",
+            "level": "runs",
+            "runs": {
+              "mutant": {
+                "levels": [
+                  "incremental",
+                  "runs"
+                ],
+                "read": []
+              }
+            },
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Ruby",
@@ -952,6 +991,42 @@
       ]
     },
     {
+      "argv": [
+        "bundle",
+        "exec",
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1080,6 +1155,42 @@
       "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[4].run"
+      ]
+    },
+    {
+      "argv": [
+        "bundle",
+        "exec",
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
       ]
     },
     {
@@ -1214,6 +1325,42 @@
       ]
     },
     {
+      "argv": [
+        "bundle",
+        "exec",
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1342,6 +1489,42 @@
       "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[4].run"
+      ]
+    },
+    {
+      "argv": [
+        "bundle",
+        "exec",
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
       ]
     },
     {
@@ -1476,6 +1659,42 @@
       ]
     },
     {
+      "argv": [
+        "bundle",
+        "exec",
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "builds": true,
       "env": {},
       "heuristic": false,
@@ -1604,6 +1823,42 @@
       "origin": ".github/workflows/ci.yml:jobs.test.steps[4].run",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[4].run"
+      ]
+    },
+    {
+      "argv": [
+        "bundle",
+        "exec",
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": []
+    },
+    {
+      "argv": [
+        "mutant",
+        "run",
+        "--since",
+        "origin/main"
+      ],
+      "condition": null,
+      "directory": null,
+      "env": {},
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "Command",
+      "line": "bundle exec mutant run --since origin/main",
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
       ]
     },
     {
@@ -1981,6 +2236,11 @@
     },
     {
       "kind": "ConfigurationFile",
+      "origin": ".mutant.yml",
+      "reader": "mutant"
+    },
+    {
+      "kind": "ConfigurationFile",
       "origin": ".rspec",
       "reader": "Ruby warning settings"
     },
@@ -2310,6 +2570,29 @@
       ]
     },
     {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[0]",
+      "kind": "ToolRun",
+      "languages": [
+        "Ruby"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutant",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "heuristic": true,
       "job": ".github/workflows/ci.yml:test[1]",
       "kind": "ToolRun",
@@ -2482,6 +2765,29 @@
       ]
     },
     {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[1]",
+      "kind": "ToolRun",
+      "languages": [
+        "Ruby"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutant",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "heuristic": true,
       "job": ".github/workflows/ci.yml:test[2]",
       "kind": "ToolRun",
@@ -2654,6 +2960,29 @@
       ]
     },
     {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[2]",
+      "kind": "ToolRun",
+      "languages": [
+        "Ruby"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutant",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "heuristic": true,
       "job": ".github/workflows/ci.yml:test[3]",
       "kind": "ToolRun",
@@ -2826,6 +3155,29 @@
       ]
     },
     {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[3]",
+      "kind": "ToolRun",
+      "languages": [
+        "Ruby"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutant",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "heuristic": true,
       "job": ".github/workflows/ci.yml:test[4]",
       "kind": "ToolRun",
@@ -2998,6 +3350,29 @@
       ]
     },
     {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[4]",
+      "kind": "ToolRun",
+      "languages": [
+        "Ruby"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutant",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
+      ]
+    },
+    {
       "heuristic": true,
       "job": ".github/workflows/ci.yml:test[5]",
       "kind": "ToolRun",
@@ -3167,6 +3542,29 @@
       "tool": "bundler-audit",
       "via": [
         ".github/workflows/ci.yml:jobs.test.steps[4].run"
+      ]
+    },
+    {
+      "heuristic": false,
+      "job": ".github/workflows/ci.yml:test[5]",
+      "kind": "ToolRun",
+      "languages": [
+        "Ruby"
+      ],
+      "origin": ".github/workflows/ci.yml:jobs.test.steps[5].run",
+      "provides": {
+        "mutation": [
+          "incremental",
+          "runs"
+        ]
+      },
+      "read": [],
+      "scope": [
+        "."
+      ],
+      "tool": "mutant",
+      "via": [
+        ".github/workflows/ci.yml:jobs.test.steps[5].run"
       ]
     },
     {
@@ -3626,7 +4024,7 @@
     },
     "data-wellformed": {
       "details": [],
-      "message": "6 data files parse (YAML: 6)",
+      "message": "7 data files parse (YAML: 7)",
       "status": "PASS"
     },
     "dependency-audit": {
@@ -3666,6 +4064,11 @@
         "LICENSE"
       ],
       "message": "the project is licensed under MIT",
+      "status": "PASS"
+    },
+    "mutation-testing": {
+      "details": [],
+      "message": "mutant (.mutant.yml) runs; on the pull request's changes only (bonus)",
       "status": "PASS"
     },
     "platform-matrix": {

@@ -277,6 +277,33 @@
         ]
       }
     ],
+    "mutation-testing": [
+      {
+        "language": "Ruby",
+        "units": [
+          {
+            "answer": "no",
+            "defined": {},
+            "known": {
+              "mutant": {
+                "can": {
+                  "incremental": "mutant run --since <branch>",
+                  "runs": "mutant run"
+                },
+                "needs_definition": false,
+                "required": false
+              }
+            },
+            "language": "Ruby",
+            "level": "runs",
+            "runs": {},
+            "unit": ".",
+            "unknown_definitions": [],
+            "unknowns": []
+          }
+        ]
+      }
+    ],
     "platforms": [
       {
         "language": "Ruby",
@@ -686,6 +713,13 @@
       ],
       "message": "no license file",
       "status": "FAIL"
+    },
+    "mutation-testing": {
+      "details": [
+        "consider running mutant run in CI"
+      ],
+      "message": "no mutation testing runs",
+      "status": "WARN"
     },
     "platform-matrix": {
       "details": [],
