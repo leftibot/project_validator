@@ -69,6 +69,14 @@ class FuzzTestingTests(unittest.TestCase):
             Result.passed(f"fuzz targets in 1 file(s), run by CI ({GITHUB_WORKFLOW}): {CLUSTERFUZZLITE}"),
         )
 
+    def test_both_kinds_of_run_are_named(self) -> None:
+        workflow = WELL_CONFIGURED_PYTHON[GITHUB_WORKFLOW]
+        files = {**WELL_CONFIGURED_PYTHON, GITHUB_WORKFLOW: f"{workflow}      - uses: {CLUSTERFUZZLITE}\n"}
+        self.assertEqual(
+            run_as(self, fuzz_testing, files, PYTHON),
+            Result.passed(f"fuzz targets in 1 file(s), run by atheris and CI ({GITHUB_WORKFLOW}): {CLUSTERFUZZLITE}"),
+        )
+
     def test_a_fuzzer_running_without_recognised_targets_warns(self) -> None:
         files = {**fixture_files("bare_python"), **github_steps("uses: google/clusterfuzzlite/actions/run_fuzzers@v1")}
         result = run_as(self, fuzz_testing, files, PYTHON)

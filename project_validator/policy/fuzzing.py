@@ -33,7 +33,7 @@ def judge_fuzzing(answer: FuzzAnswer, *, allow_unknown: bool = False) -> Result:
         return _no_targets(answer)
     found = f"fuzz targets in {len(targets)} file(s)"
     if answer.answer is Answer.YES:
-        return Result.passed(f"{found}, run by {both(tools.providing() or answer.other_runs)}")
+        return Result.passed(f"{found}, run by {both((*tools.providing(), *answer.other_runs))}")
     if answer.answer is Answer.UNKNOWN and not allow_unknown:
         return unknown("whether CI runs the fuzz targets", tools.unknowns)
     return Result.warned(f"{found}, but no CI configuration runs {either(tools.how(RUNS))}")

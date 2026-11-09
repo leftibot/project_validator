@@ -1,6 +1,7 @@
 """Python's fuzzing: atheris fuzz targets, run as scripts, and Hypothesis property tests."""
 
 import re
+from collections.abc import Iterator
 from pathlib import PurePosixPath
 
 from project_validator.ecosystems.python import _INTERPRETER_VALUES, _PYTHON, PYTHON_ONLY
@@ -34,8 +35,19 @@ def _script(argv: tuple[str, ...]) -> str | None:
         elif word.startswith(("-m", "-c")):
             return None
         elif not word.startswith("-"):
-            return word
+            return _whole_expression(word, words)
     return None
+
+
+def _whole_expression(word: str, rest: Iterator[str]) -> str:
+    """`word`, with the words after it that the shell split an expression (`${{ matrix.target }}`) into."""
+    found = [word]
+    while "${{" in " ".join(found) and "}}" not in found[-1]:
+        following = next(rest, None)
+        if following is None:
+            break
+        found.append(following)
+    return " ".join(found)
 
 
 def _normalised(command: Command, path: str) -> str:
@@ -44,8 +56,8 @@ def _normalised(command: Command, path: str) -> str:
 
 
 def _runs_target(command: Command, facts: Facts) -> Run | None:
-    """`python <fuzz target>.py ...`: the script is a fuzz target's file (a path holding an expression the validator
-    cannot evaluate is taken to be one, as a heuristic)."""
+    """`python <fuzz target>.py ...`: the script is a fuzz target's file. A path holding an expression the validator
+    cannot evaluate is taken to be one, as a heuristic, only when it names fuzzing (`fuzz` in the path)."""
     argv = resolved(command)
     if not argv or not _PYTHON.fullmatch(program(argv)):
         return None
@@ -53,7 +65,7 @@ def _runs_target(command: Command, facts: Facts) -> Run | None:
     if script is None:
         return None
     if "${" in script or "$(" in script:
-        return fuzzed(heuristic=True)
+        return fuzzed(heuristic=True) if "fuzz" in script.lower() else None
     path = _normalised(command, script.replace("\\", "/"))
     targets = {test.origin.path for test in facts.of(TestFile) if test.kind in fuzz_kinds()}
     return fuzzed() if path in targets else None

@@ -97,6 +97,10 @@ class PythonFuzzingTests(unittest.TestCase):
         self.assertIsNone(ATHERIS.claims(command("ruby tests/fuzz/fuzz_x.py"), facts))
 
     def test_a_path_with_an_unexpanded_expression_is_a_heuristic_run(self) -> None:
-        for line in ("python tests/fuzz/${TARGET}", "python tests/fuzz/${{ matrix.target }}"):
+        for line in ("python tests/fuzz/${TARGET}", "python ${{ matrix.fuzz_target }}", "python tests/FUZZ/${TARGET}"):
             run = ATHERIS.claims(command(line), facts_of(PYTHON_PROJECT))
             self.assertTrue(run is not None and run.heuristic)
+
+    def test_an_unexpanded_path_that_does_not_name_fuzzing_is_not_a_run(self) -> None:
+        for line in ("python ${{ matrix.script }}", "python scripts/${NAME}.py"):
+            self.assertIsNone(ATHERIS.claims(command(line), facts_of(PYTHON_PROJECT)))

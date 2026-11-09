@@ -48,7 +48,8 @@ class FuzzAnswer:
 
 
 def _other_runs(facts: Facts, unit: str) -> tuple[str, ...]:
-    """The runs of fuzzers that are not tools: each ClusterFuzzLite step CI has."""
+    """The runs of fuzzers that are not tools: each ClusterFuzzLite step CI has. `unit` filters nothing: a step is
+    credited to every unit and language (Task 3 may refine this)."""
     steps = (step for step in facts.of(ActionStep) if step.uses.startswith(_CLUSTERFUZZLITE))
     return tuple(dict.fromkeys(f"CI ({step.origin.path}): {step.uses}" for step in steps))
 
