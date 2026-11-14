@@ -41,7 +41,7 @@ required-imports = ["from __future__ import annotations"]
 [tool.mypy]
 strict = true
 python_version = "3.12"
-files = ["project_validator", "tests"]
+files = ["project_validator", "tests", "corpus"]
 
 [[tool.mypy.overrides]]
 module = "atheris"

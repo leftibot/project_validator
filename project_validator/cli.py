@@ -161,32 +161,34 @@ def _format_text(reports: list[Report]) -> str:
     return "\n".join(lines)
 
 
+def report_dicts(reports: list[Report]) -> list[dict[str, object]]:
+    """The reports as `--format json` prints them: each check's result, and one result per ecosystem in each unit
+    (the places), as the markdown grid lays them out."""
+    return [
+        {
+            "check": report.check.name,
+            "status": str(report.result.status),
+            "message": report.result.message,
+            "details": list(report.result.details),
+            "places": [
+                {
+                    "ecosystem": place.ecosystem,
+                    "unit": place.unit,
+                    "status": str(place.result.status),
+                    "message": place.result.message,
+                    "details": list(place.result.details),
+                    "tools": list(place.tools),
+                    "auxiliary": list(place.auxiliary),
+                }
+                for place in report.result.places
+            ],
+        }
+        for report in reports
+    ]
+
+
 def _format_json(reports: list[Report]) -> str:
-    return json.dumps(
-        [
-            {
-                "check": report.check.name,
-                "status": str(report.result.status),
-                "message": report.result.message,
-                "details": list(report.result.details),
-                # One result per ecosystem in each unit, as the markdown grid lays them out.
-                "places": [
-                    {
-                        "ecosystem": place.ecosystem,
-                        "unit": place.unit,
-                        "status": str(place.result.status),
-                        "message": place.result.message,
-                        "details": list(place.result.details),
-                        "tools": list(place.tools),
-                        "auxiliary": list(place.auxiliary),
-                    }
-                    for place in report.result.places
-                ],
-            }
-            for report in reports
-        ],
-        indent=2,
-    )
+    return json.dumps(report_dicts(reports), indent=2)
 
 
 def _use_color(choice: str) -> bool:
