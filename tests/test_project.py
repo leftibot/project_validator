@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
 import unittest
@@ -99,6 +100,19 @@ class TrackedFilesTests(unittest.TestCase):
             self.assertEqual(Project(root).tracked_files(), ["src/main.c"])
             with mock.patch("shutil.which", return_value=None):
                 self.assertEqual(Project(root).tracked_files(), ["src/main.c"])
+
+    @unittest.expectedFailure  # upstream #180: a dangling symlink crashes the extraction
+    def test_a_dangling_symlink_is_skipped_not_read(self) -> None:
+        """A symlink to nothing (jekyll's test/source/_includes/tmp, argo-cd's testdata/link-to-nowhere) is listed as
+        a file and crashes the extraction with FileNotFoundError; it has no content to read and must be skipped."""
+        with temp_project({"src/main.c": "int main() {}\n"}) as root:
+            try:
+                os.symlink("../nowhere", root / "src" / "dangling")
+            except OSError as error:  # pragma: no cover - Windows without the privilege
+                self.skipTest(f"symlinks cannot be created here: {error}")
+            context = make_context(root)
+            self.assertIsNone(context.extraction_error)
+            self.assertIn("C", context.structure.languages)
 
     def _read(self, path: str, text: str) -> tuple[Status, bool]:
         """The data-wellformed status of a project of one deeply nested file, and whether its facts say it was nested

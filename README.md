@@ -261,6 +261,7 @@ To run them locally:
 | `function-limits` | `lizard --length 30 --warnings_only project_validator tests` |
 | `mutation testing` | `mapfile -t p < <(python tests/changed_mutants.py origin/main...HEAD) && mutmut run "${p[@]}"`: the mutants of the functions a pull request changes (settings in `[tool.mutmut]`; with no patterns, `mutmut run` would mutate everything); `mutmut results` lists survivors. mutmut copies the tree into `mutants/`, which the self-referential tests need to be a git repository: `git -C mutants init && git -C mutants add -A` after a first run |
 | `pages` | `python tests/build_site.py _site` (needs `Markdown`): the documentation site, written to `_site/`; CI publishes it to GitHub Pages from `main` and only builds it on a pull request that changes the builder or its workflow |
+| `corpus` | `python -m corpus record out/head` then `python -m corpus diff out/base out/head`: the [project corpus](corpus/README.md), real repositories pinned to a commit, validated and compared between two versions of the validator (CI compares a pull request with its base branch); about 5 GB of shallow checkouts, cached in `~/.cache/project_validator/corpus` |
 | `fuzzing` | `python tests/fuzz/fuzz_<parser>.py tests/fuzz/corpus/<parser> -max_total_time=60` for each of the six parsers (atheris); locally, write new corpus entries to a temp directory first: `python tests/fuzz/fuzz_<parser>.py "$(mktemp -d)" tests/fuzz/corpus/<parser> -max_total_time=60` |
 
 Branch coverage is measured with [coverage.py](https://coverage.readthedocs.io/)

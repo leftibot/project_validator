@@ -1,0 +1,1399 @@
+# The project corpus: real repositories, pinned to a commit, with what the validator says about each recorded in
+# expected/<owner>--<repo>.json and compared by `python -m corpus` (see corpus/__init__.py). `ecosystems` names the
+# profiles a project stands for (the labels of the support matrix); `issues` lists the upstream issues about what the
+# recorded expectation gets wrong, to be removed as they are fixed and the expectation changes.
+#
+# Not listed, until #PERF is fixed: haskell/cabal and rust-lang/cargo take more than ten minutes each.
+
+[[project]]
+name = "geerlingguy/ansible-role-docker"
+commit = "38be616950679548ae0ba8a81ffcceca1b3090bd"
+ecosystems = ["Ansible"]
+issues = [261]
+
+[[project]]
+name = "ansible-collections/community.general"
+commit = "cd164d52daca91105f6b787405f86551cb383553"
+ecosystems = ["Ansible"]
+issues = [182, 223, 231, 261]
+
+[[project]]
+name = "geerlingguy/ansible-for-devops"
+commit = "86e1bf80098239cd995d54217585e8d61117d2e7"
+ecosystems = ["Ansible"]
+issues = [188, 195, 261]
+
+[[project]]
+name = "kubernetes-sigs/kubespray"
+commit = "a0a78f28d1f3dc99d3e9dec94d27dd78e67236bd"
+ecosystems = ["Ansible", "Kubernetes"]
+issues = [182, 229, 231, 242, 246, 261, 262]
+
+[[project]]
+name = "elixir-ecto/ecto"
+commit = "0e31befcada8660dc622884199f4418494d73bac"
+ecosystems = ["BEAM"]
+issues = [195, 218, 241, 264]
+
+[[project]]
+name = "ninenines/cowboy"
+commit = "29c1f222f5a22749fd0f47a0efba40e115c02577"
+ecosystems = ["BEAM"]
+issues = [198, 218, 228, 240, 241, 264]
+
+[[project]]
+name = "gleam-lang/stdlib"
+commit = "9816c72d28ac1fad9433e1ae851d1a3d4a17c64d"
+ecosystems = ["BEAM"]
+issues = [264]
+
+[[project]]
+name = "phoenixframework/phoenix"
+commit = "789f851c3cda02f56702a16700ebba48d270cbd3"
+ecosystems = ["BEAM"]
+issues = [182, 188, 241, 254]
+
+[[project]]
+name = "fmtlib/fmt"
+commit = "4229eb5820af49bf797641168624c8a754a1a4eb"
+ecosystems = ["C/C++"]
+issues = [182, 194, 203, 214, 225, 247, 282]
+
+[[project]]
+name = "cpp-best-practices/cmake_template"
+commit = "b86318abbf55a657a11a0cf2acce69f221841b22"
+ecosystems = ["C/C++"]
+issues = [182, 191, 194, 203, 206, 235, 282]
+
+[[project]]
+name = "simdjson/simdjson"
+commit = "449f38e6377992798220c513f58740632355de52"
+ecosystems = ["C/C++"]
+issues = [182, 183, 194, 203]
+
+[[project]]
+name = "bus1/dbus-broker"
+commit = "2956b5d381deeea709c53d02f10e799e50e44f4b"
+ecosystems = ["C/C++"]
+issues = [182, 186, 196, 225, 250, 282]
+
+[[project]]
+name = "nlohmann/json"
+commit = "81888ff9f005c022e60f2de572327b2e50222222"
+ecosystems = ["C/C++"]
+issues = [182, 183, 207, 218, 225, 247, 282]
+
+[[project]]
+name = "catchorg/Catch2"
+commit = "5cf5dec9f5a119a08d3ee061d260ccc525093a75"
+ecosystems = ["C/C++"]
+issues = [203, 207, 242, 282]
+
+[[project]]
+name = "google/googletest"
+commit = "e882c36410197464e3429546e6a7d5e217bde51e"
+ecosystems = ["C/C++"]
+issues = [182, 204, 207, 211, 229]
+
+[[project]]
+name = "uber/h3"
+commit = "15920096d4a165729c01f749e2bd97334b009519"
+ecosystems = ["C/C++"]
+issues = [182, 198, 203, 225, 226, 228, 234]
+
+[[project]]
+name = "GNOME/glib"
+commit = "a6457d849e45b9a1a9473c61364ee6e56894774b"
+ecosystems = ["C/C++"]
+issues = [182, 205, 215, 228, 235, 247, 282]
+
+[[project]]
+name = "neovim/neovim"
+commit = "49b853fb327f5f6b5c1bdb38d2e3b8026a4124eb"
+ecosystems = ["C/C++", "Lua"]
+issues = [182, 204, 282]
+
+[[project]]
+name = "ggml-org/llama.cpp"
+commit = "9d25e0014c4b4b316873c01f4938c0e3c687287d"
+ecosystems = ["C/C++", "Python"]
+issues = [181, 191, 203, 224, 230, 232, 235, 241]
+
+[[project]]
+name = "glfw/glfw"
+commit = "92dcf4ce74f2e2554a98fea09be7c705c17daa5a"
+ecosystems = ["C/C++"]
+issues = [203, 204, 223, 241, 282]
+
+[[project]]
+name = "clj-kondo/clj-kondo"
+commit = "a38978c2fe24b3790b2b7a6d3007594c087dd863"
+ecosystems = ["Clojure"]
+issues = [182, 223, 235, 238]
+
+[[project]]
+name = "metosin/malli"
+commit = "cbd057b321c6901e1b1d9f0e013d1dec2b0298d6"
+ecosystems = ["Clojure"]
+issues = [182]
+
+[[project]]
+name = "weavejester/compojure"
+commit = "8a4758d28e8fcd28fa7610dca6e2908d039e6a4f"
+ecosystems = ["Clojure"]
+issues = [238, 265]
+
+[[project]]
+name = "fukamachi/dexador"
+commit = "6289b8a3a6da19d7a45481dd1f51364ce5190864"
+ecosystems = ["Common Lisp"]
+issues = [182, 223]
+
+[[project]]
+name = "edicl/cl-ppcre"
+commit = "a2ea581c23fdc184168423adbd4b4c1f48d42743"
+ecosystems = ["Common Lisp"]
+
+[[project]]
+name = "sharplispers/ironclad"
+commit = "f6519450b47a7648f837126e9f269857033e352a"
+ecosystems = ["Common Lisp"]
+issues = [182, 265]
+
+[[project]]
+name = "dart-lang/http"
+commit = "2bac218a1115a58addd140d7a7eaabf803d57631"
+ecosystems = ["Dart"]
+issues = [185, 188, 227, 243, 258]
+
+[[project]]
+name = "felangel/bloc"
+commit = "b9be1e252ee24ffbe9f2fb629edc7624b2cfbf05"
+ecosystems = ["Dart"]
+issues = [185, 213, 226, 230, 237, 243, 258]
+
+[[project]]
+name = "simolus3/drift"
+commit = "46e857b622686b785515eb7be087dbcfa65b3002"
+ecosystems = ["Dart"]
+issues = [182, 185, 188, 230, 233, 235]
+
+[[project]]
+name = "mledoze/countries"
+commit = "fa4f62182d19ff4f8b325cde6387c9cd9d80955a"
+ecosystems = ["Data"]
+issues = [238]
+
+[[project]]
+name = "jshttp/mime-db"
+commit = "ba120a7f71bc8ab7d5299e88c0049063239029a7"
+ecosystems = ["Data"]
+issues = [240, 254]
+
+[[project]]
+name = "toml-lang/toml-test"
+commit = "96fd088448ec0f4d9f061c730ed7854399c46faf"
+ecosystems = ["Data"]
+issues = [182, 231, 248]
+
+[[project]]
+name = "docker-library/postgres"
+commit = "667894e7b8639a02c4baeb72fb231016b21c67f1"
+ecosystems = ["Docker"]
+issues = [195]
+
+[[project]]
+name = "nginx/docker-nginx"
+commit = "d99174e2cecfc7e5db51c05aff54c2c9dee45803"
+ecosystems = ["Docker"]
+issues = [195]
+
+[[project]]
+name = "jupyter/docker-stacks"
+commit = "660dc22b671e02e765273c9f8931588b4a00f263"
+ecosystems = ["Docker", "Python"]
+issues = [198, 260]
+
+[[project]]
+name = "linuxserver/docker-code-server"
+commit = "d68168d15c7b60f9057cdf78dfa2f4557c58c376"
+ecosystems = ["Docker"]
+
+[[project]]
+name = "rust-lang/book"
+commit = "2771df165f092a4fbb9f46b5b2e7450f19010adb"
+ecosystems = ["Documentation site"]
+issues = [182, 188, 229, 280]
+
+[[project]]
+name = "mkdocs/mkdocs"
+commit = "2862536793b3c67d9d83c33e0dd6d50a791928f8"
+ecosystems = ["Documentation site", "Python"]
+issues = [199, 214, 229, 236, 255, 280]
+
+[[project]]
+name = "python/devguide"
+commit = "8c852bdd3f06b8447185fe2945af5de52a96a0ac"
+ecosystems = ["Documentation site"]
+issues = [182, 198, 215, 222, 240, 280]
+
+[[project]]
+name = "cpp-best-practices/cppbestpractices"
+commit = "d57b14ec6d7f13f0af65f9bde62aa3ebd5fb588a"
+ecosystems = ["Documentation site"]
+issues = [238, 280]
+
+[[project]]
+name = "serilog/serilog"
+commit = "43105b35095337d77f022561a8f2d3db2f9a7937"
+ecosystems = [".NET"]
+issues = [195, 229]
+
+[[project]]
+name = "FluentValidation/FluentValidation"
+commit = "5903fa65863ec66dabf10646b9c09b33130a03e8"
+ecosystems = [".NET"]
+issues = [195, 216, 236]
+
+[[project]]
+name = "JamesNK/Newtonsoft.Json"
+commit = "52fa3aef1f2cadcd3a3f874251eddc98d3efbbaa"
+ecosystems = [".NET"]
+issues = [182, 223]
+
+[[project]]
+name = "dotnet/command-line-api"
+commit = "1b0c04a4ac1651129c72533ceae51e791430429e"
+ecosystems = [".NET"]
+issues = [223, 253]
+
+[[project]]
+name = "Humanizr/Humanizer"
+commit = "4574b93883bf48e3f0f3bca73297054537317ab2"
+ecosystems = [".NET"]
+issues = [190, 223, 224, 232, 235, 253]
+
+[[project]]
+name = "magit/magit"
+commit = "4402e972bb2b6df2dad25118d8a638fa5a9b3e5b"
+ecosystems = ["Emacs Lisp"]
+issues = [220, 236]
+
+[[project]]
+name = "emacs-evil/evil"
+commit = "6a3e1ddd04ac504a016590940d0af2a3361b9efd"
+ecosystems = ["Emacs Lisp"]
+issues = [228, 236, 279]
+
+[[project]]
+name = "purcell/package-lint"
+commit = "1865be780a16098f972fef50a52b21ca6ee04df9"
+ecosystems = ["Emacs Lisp"]
+issues = [191, 197, 228]
+
+[[project]]
+name = "abo-abo/swiper"
+commit = "7b267e29cd47b2036eafbc212683a721bd2b7dd0"
+ecosystems = ["Emacs Lisp"]
+issues = [197, 228]
+
+[[project]]
+name = "fortran-lang/stdlib"
+commit = "2d9c377865727a8771e30dac1745d413744a3384"
+ecosystems = ["Fortran"]
+issues = [204, 229, 236]
+
+[[project]]
+name = "fortran-lang/fpm"
+commit = "85fb805f7bb20f881a95202aa67ece17a0bee9e6"
+ecosystems = ["Fortran"]
+issues = [188, 195]
+
+[[project]]
+name = "jacobwilliams/json-fortran"
+commit = "b7d03d0c800d24cfed81594bb6bc5bc0e9bad882"
+ecosystems = ["Fortran"]
+issues = [184, 186, 188, 229]
+
+[[project]]
+name = "actions/checkout"
+commit = "f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a"
+ecosystems = ["GitHub Action"]
+issues = [210, 219, 227, 234, 254]
+
+[[project]]
+name = "peter-evans/create-pull-request"
+commit = "3ffccacd46053766916f087ce41d627c0b8cf2d1"
+ecosystems = ["GitHub Action"]
+issues = [210, 234]
+
+[[project]]
+name = "lycheeverse/lychee-action"
+commit = "649b0e4890508ea3e11ea6b3ee35ce899a25afd5"
+ecosystems = ["GitHub Action"]
+issues = [210, 219]
+
+[[project]]
+name = "pre-commit/action"
+commit = "1b06ec171f2f6faa71ed760c4042bd969e4f8b43"
+ecosystems = ["GitHub Action"]
+issues = [210]
+
+[[project]]
+name = "softprops/action-gh-release"
+commit = "8a0cd651e5b2365bd640854a3fa5dfc70e4875f3"
+ecosystems = ["GitHub Action"]
+issues = [216, 226]
+
+[[project]]
+name = "docker/build-push-action"
+commit = "562e51947939164e4fe808a6eab5101977e509e0"
+ecosystems = ["GitHub Action"]
+issues = [182, 195, 210, 217, 219]
+
+[[project]]
+name = "cli/cli"
+commit = "3d5a9e355a837f2f5ee78d7484c118cc1342ad1a"
+ecosystems = ["Go"]
+issues = [182, 234, 249]
+
+[[project]]
+name = "spf13/cobra"
+commit = "adbc8813901bba65827259daa8e22ff94ec1f30e"
+ecosystems = ["Go"]
+issues = [222, 234, 259]
+
+[[project]]
+name = "gin-gonic/gin"
+commit = "0f09c3a9b4626d9fe9979cf4d0521d6ae32ab646"
+ecosystems = ["Go"]
+issues = [197, 234]
+
+[[project]]
+name = "junegunn/fzf"
+commit = "4499615fe9c06c0651aa5650e5d0d0a5face99a8"
+ecosystems = ["Go"]
+issues = [234, 235, 257]
+
+[[project]]
+name = "golangci/golangci-lint"
+commit = "1bdd8edc35917b370a0855d877255b4e53c29b9f"
+ecosystems = ["Go"]
+issues = [184, 198, 222, 229, 237, 246]
+
+[[project]]
+name = "caddyserver/caddy"
+commit = "7591cff1fb03202ce022982af020197f3f387220"
+ecosystems = ["Go"]
+issues = [182, 222, 226, 234]
+
+[[project]]
+name = "graphql-hive/graphql-inspector"
+commit = "502aa589fa70fefbd3ff3ff0f09489cad3e4fee5"
+ecosystems = ["GraphQL"]
+issues = [188, 234]
+
+[[project]]
+name = "octokit/graphql-schema"
+commit = "82ff2d4780080e6929ebb95608cefa22dfa05ac7"
+ecosystems = ["GraphQL"]
+issues = [254]
+
+[[project]]
+name = "dimaMachina/graphql-eslint"
+commit = "4a876a66689e4bb9aa67a9d17ae90a1643658261"
+ecosystems = ["GraphQL"]
+issues = [188, 232, 248]
+
+[[project]]
+name = "jgm/pandoc"
+commit = "300d24fdb143cff23080120c13acbe7df21cd5a3"
+ecosystems = ["Haskell"]
+issues = [182, 219, 223, 231, 236, 238]
+
+[[project]]
+name = "PostgREST/postgrest"
+commit = "e5b4fac1c7a192af50a82dd3639ac47316ba60d3"
+ecosystems = ["Haskell"]
+issues = [182, 226, 237, 241, 266]
+
+[[project]]
+name = "koalaman/shellcheck"
+commit = "1046c00b61516a64f85a45e5fbdc69c6c1654eb5"
+ecosystems = ["Haskell", "Shell"]
+issues = [182, 241]
+
+[[project]]
+name = "simonmichael/hledger"
+commit = "01a4b48662ed526402ef22b0a62eb8ba144c022d"
+ecosystems = ["Haskell"]
+issues = [182, 191, 218, 223, 230, 266, 283]
+
+[[project]]
+name = "fastify/fastify"
+commit = "7e0c8febb2a1ba4d55309cdc2ccd51694eca46d3"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [182, 254, 280]
+
+[[project]]
+name = "sindresorhus/got"
+commit = "6b5aafc1cd538998728be6f45c65b0f80bae01b2"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [240, 254]
+
+[[project]]
+name = "axios/axios"
+commit = "4ee8d46fc463770b8f5da718d5449a5b027b2c08"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [219]
+
+[[project]]
+name = "prettier/prettier"
+commit = "f391bf3e7ee219bcfeb61b06555ee1ac8e9c0680"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [182, 184, 220, 231, 235, 237, 245]
+
+[[project]]
+name = "vitejs/vite"
+commit = "f898888222297aa56d6fc281c585d4d4e4d51f58"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [182, 184, 209, 216, 219, 235, 239, 245, 248, 280]
+
+[[project]]
+name = "expressjs/express"
+commit = "43fca52d28a422c8be48fd489cbd4f2d6152bab6"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [254]
+
+[[project]]
+name = "colinhacks/zod"
+commit = "fef16cba0cf6668eb25ecc32fdfe2ce0a46f6f80"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [182, 188, 219, 254]
+
+[[project]]
+name = "denoland/std"
+commit = "f834d0223364361169314833e3c7a8f62ce11d58"
+ecosystems = ["JavaScript/TypeScript"]
+issues = [182, 201, 219, 226, 231, 236, 290]
+
+[[project]]
+name = "SchemaStore/schemastore"
+commit = "e2606e03284e60792672dc9e7e930f3c496c5c3d"
+ecosystems = ["JSON Schema"]
+issues = [184, 229, 234, 272, 273]
+
+[[project]]
+name = "json-schema-org/JSON-Schema-Test-Suite"
+commit = "38dea932b02986f496345bf007108277777630bf"
+ecosystems = ["JSON Schema"]
+
+[[project]]
+name = "compose-spec/compose-spec"
+commit = "3a4a6995e4a971f6173dff9130cb3e38e6738651"
+ecosystems = ["JSON Schema"]
+issues = [182, 228, 229]
+
+[[project]]
+name = "CycloneDX/specification"
+commit = "6470e34ef83f915868ece48934cff52e10c9eb49"
+ecosystems = ["JSON Schema"]
+issues = [195, 213, 252]
+
+[[project]]
+name = "asyncapi/spec-json-schemas"
+commit = "eee8d2217d23b22c475090c0e12f20801f531f11"
+ecosystems = ["JSON Schema"]
+issues = [234, 272]
+
+[[project]]
+name = "oasis-tcs/sarif-spec"
+commit = "1742a253eb654bf8a4ed7c60eaef7412b2c23553"
+ecosystems = ["JSON Schema"]
+issues = [229]
+
+[[project]]
+name = "JuliaData/DataFrames.jl"
+commit = "62b1c93dd2f45edac469c7f71756debae4108435"
+ecosystems = ["Julia"]
+issues = [182, 226, 238]
+
+[[project]]
+name = "fonsp/Pluto.jl"
+commit = "db2a5cdf1df2c39acec058f09d7e87aaab9ed728"
+ecosystems = ["Julia"]
+issues = [182, 230]
+
+[[project]]
+name = "jump-dev/JuMP.jl"
+commit = "6333923172279e3e8a6c8ed091b0cebcf6d45ce2"
+ecosystems = ["Julia"]
+issues = [226, 267]
+
+[[project]]
+name = "JuliaDocs/Documenter.jl"
+commit = "785d219105849224911315767d9a0e91550e73d1"
+ecosystems = ["Julia"]
+issues = [182, 226, 235, 246, 267]
+
+[[project]]
+name = "ageron/handson-ml3"
+commit = "ef1c9f5ab11083584635b9b3a7846f49c58a6084"
+ecosystems = ["Jupyter"]
+issues = [182, 281]
+
+[[project]]
+name = "jakevdp/PythonDataScienceHandbook"
+commit = "d66231454ef753818dc9213c9b5942e067266966"
+ecosystems = ["Jupyter"]
+issues = [238, 281]
+
+[[project]]
+name = "google/guava"
+commit = "fce80fd984c8227262a63972ccc68ae6f2ad0519"
+ecosystems = ["JVM"]
+issues = [182, 216, 237, 251, 252]
+
+[[project]]
+name = "square/okhttp"
+commit = "58ca23340fc974ad0a5d411e167f1dc9f6f0886a"
+ecosystems = ["JVM"]
+issues = [182, 216, 234, 245, 252]
+
+[[project]]
+name = "apache/commons-lang"
+commit = "9368465e7575810c45acd9d2e6f805cd002f4ff8"
+ecosystems = ["JVM"]
+issues = [202, 235]
+
+[[project]]
+name = "mockito/mockito"
+commit = "10b31ba2a8252cf340bc154c9e05224802a84691"
+ecosystems = ["JVM"]
+issues = [182, 226, 277]
+
+[[project]]
+name = "junit-team/junit5"
+commit = "16ac3a3d1d712a0797108ec5be0be911e98d13c6"
+ecosystems = ["JVM"]
+issues = [182, 188, 202, 209, 233, 245]
+
+[[project]]
+name = "spring-projects/spring-petclinic"
+commit = "500158f732419217507c7656904b8e6aa1bcc0d6"
+ecosystems = ["JVM"]
+issues = [182, 234, 249, 277]
+
+[[project]]
+name = "Kotlin/kotlinx.coroutines"
+commit = "ead082131ceb45b8e4fda027c74471103c1cd09f"
+ecosystems = ["JVM"]
+issues = [182, 252]
+
+[[project]]
+name = "prometheus-community/helm-charts"
+commit = "f7c2da805a5bf25a51ed10e6d9b73d6d83d3ce0f"
+ecosystems = ["Kubernetes"]
+issues = [182, 231, 261]
+
+[[project]]
+name = "kubernetes/examples"
+commit = "22934a040acbb0c0aa103023ccbd871507bf17f6"
+ecosystems = ["Kubernetes"]
+issues = [182]
+
+[[project]]
+name = "argoproj/argo-cd"
+commit = "ae2e784222a61b03f1d7f80f7698002a2ee0d038"
+ecosystems = ["Kubernetes", "Go"]
+issues = [180]
+
+[[project]]
+name = "grafana/helm-charts"
+commit = "89a1e8bb7dcd6307d1cc927008c1cafb10aecceb"
+ecosystems = ["Kubernetes"]
+issues = [211, 224, 231]
+
+[[project]]
+name = "posquit0/Awesome-CV"
+commit = "dfe863541ccc6ea624c48338a7ce550494530b31"
+ecosystems = ["LaTeX"]
+issues = [182, 195, 227, 238]
+
+[[project]]
+name = "matze/mtheme"
+commit = "2fa6084b9d34fec9d2d5470eb9a17d0bf712b6c8"
+ecosystems = ["LaTeX"]
+issues = [182]
+
+[[project]]
+name = "latex3/l3build"
+commit = "f5224147f530aa66dc40ba6c4c1a27a45e21cfb6"
+ecosystems = ["LaTeX"]
+issues = [227, 236, 238, 268]
+
+[[project]]
+name = "folke/lazy.nvim"
+commit = "306a05526ada86a7b30af95c5cc81ffba93fef97"
+ecosystems = ["Lua"]
+issues = [182, 227]
+
+[[project]]
+name = "lunarmodules/Penlight"
+commit = "99b7542a047123bb484510d34ee567bca40b119e"
+ecosystems = ["Lua"]
+issues = [222]
+
+[[project]]
+name = "luarocks/luarocks"
+commit = "85bfe36c812465b2f377877939d884a4db829a25"
+ecosystems = ["Lua"]
+issues = [182, 222, 268]
+
+[[project]]
+name = "nvim-telescope/telescope.nvim"
+commit = "1e1bab730218eaf97fce743be3f56e51075928ac"
+ecosystems = ["Lua"]
+issues = [222, 227, 228, 268]
+
+[[project]]
+name = "lunarmodules/busted"
+commit = "22f8089f461a563fb9553ab56f926c6805850833"
+ecosystems = ["Lua"]
+issues = [182, 222]
+
+[[project]]
+name = "koreader/koreader"
+commit = "4184b73a737b5dcc77b29e2eaf69c31a06501ab9"
+ecosystems = ["Lua"]
+issues = [182, 198, 209, 227, 228, 232, 240]
+
+[[project]]
+name = "nix-community/disko"
+commit = "1dd30c29c88d99ce295f15e27f93c49bc5fbae07"
+ecosystems = ["Nix"]
+issues = [285]
+
+[[project]]
+name = "numtide/treefmt-nix"
+commit = "0d6d739a833ba9a9c93034862e4a7b061a062a1c"
+ecosystems = ["Nix"]
+issues = [182]
+
+[[project]]
+name = "Mic92/sops-nix"
+commit = "11e5885d241743ff0193465d533b20e754bc3ce0"
+ecosystems = ["Nix"]
+issues = [195]
+
+[[project]]
+name = "nix-community/home-manager"
+commit = "82ce401aa350502897c3f2e85f384d61cd3b0b6d"
+ecosystems = ["Nix"]
+issues = [182, 285]
+
+[[project]]
+name = "ryantm/agenix"
+commit = "5e5b88a0c8e56f291a108c2fe9934054d9745b2e"
+ecosystems = ["Nix"]
+issues = [229, 285]
+
+[[project]]
+name = "cachix/devenv"
+commit = "6c954cc1c04f1d0b2f6ad689c9dffd835fa4d928"
+ecosystems = ["Nix"]
+issues = [182, 211, 213, 228, 285]
+
+[[project]]
+name = "ocaml/dune"
+commit = "9c38baf8d74391e6acbe743304f35e449dabb16e"
+ecosystems = ["OCaml"]
+issues = [182, 186, 197, 212, 235, 286]
+
+[[project]]
+name = "ocsigen/lwt"
+commit = "e604e6cf9faf64de8f03520dbb2fcde94d92326c"
+ecosystems = ["OCaml"]
+issues = [186, 224, 286]
+
+[[project]]
+name = "ocaml-ppx/ocamlformat"
+commit = "290bed65f01e14e4c67e7abe169d5c4e8a87a600"
+ecosystems = ["OCaml"]
+issues = [182, 240]
+
+[[project]]
+name = "ocaml-community/yojson"
+commit = "df9e87cdef7c0fcddf7fa7d4e8e6d8a45c95bcab"
+ecosystems = ["OCaml"]
+issues = [290]
+
+[[project]]
+name = "ocaml/opam"
+commit = "ff431a5e0af812bd4e59887769648194856780b0"
+ecosystems = ["OCaml"]
+issues = [186, 192, 197, 286]
+
+[[project]]
+name = "digitalocean/openapi"
+commit = "998192821fe95ee79e41f577933601d009179dcf"
+ecosystems = ["OpenAPI/AsyncAPI"]
+issues = [198, 228]
+
+[[project]]
+name = "asyncapi/spec"
+commit = "41662743fe64189858f4076f27d2b1d9da6b3093"
+ecosystems = ["OpenAPI/AsyncAPI"]
+issues = [273, 280]
+
+[[project]]
+name = "OAI/OpenAPI-Specification"
+commit = "4f86429f134f7e48b6351563549b4502fc69de52"
+ecosystems = ["OpenAPI/AsyncAPI"]
+issues = [272, 273, 280]
+
+[[project]]
+name = "Redocly/openapi-starter"
+commit = "9cf62a576cac37ac90c875337fdebb3f09a072c6"
+ecosystems = ["OpenAPI/AsyncAPI"]
+issues = [182, 272]
+
+[[project]]
+name = "mojolicious/mojo"
+commit = "33648dc25bad1594461180d0793cd1b21753b0bd"
+ecosystems = ["Perl"]
+issues = [182, 184, 219, 238, 248]
+
+[[project]]
+name = "Perl-Critic/Perl-Critic"
+commit = "368a20326ab47ec7c4b800a2c943feea87cd183e"
+ecosystems = ["Perl"]
+issues = [182, 188, 238, 248, 269]
+
+[[project]]
+name = "houseabsolute/perl-code-tidyall"
+commit = "9318a932cfe054125ab3f3098c98ea1532df0b9e"
+ecosystems = ["Perl"]
+issues = [182, 219, 227, 236, 238, 248, 269]
+
+[[project]]
+name = "rjbs/Dist-Zilla"
+commit = "ca73e612fe4b53fd77ca37c961df8706e0317055"
+ecosystems = ["Perl"]
+issues = [182, 219, 227, 236, 238, 248]
+
+[[project]]
+name = "Seldaek/monolog"
+commit = "3bed304b1905fed5c30d172872f4d890cbb03c6a"
+ecosystems = ["PHP"]
+issues = [200, 229]
+
+[[project]]
+name = "guzzle/guzzle"
+commit = "f8aca40edffeae0ec508b92f4594766083c6e203"
+ecosystems = ["PHP"]
+issues = [246, 270]
+
+[[project]]
+name = "composer/composer"
+commit = "5147ea1a01c124f461090a72bee6ea6de02a67a6"
+ecosystems = ["PHP"]
+issues = [188, 200]
+
+[[project]]
+name = "laravel/framework"
+commit = "c980cb5827c6512c12ac44493d172a593b41299a"
+ecosystems = ["PHP"]
+issues = [237, 246, 270]
+
+[[project]]
+name = "PHPCSStandards/PHP_CodeSniffer"
+commit = "c17bea2b241d09596accb728e097de010a002c8a"
+ecosystems = ["PHP"]
+issues = [182, 188, 200]
+
+[[project]]
+name = "open-telemetry/opentelemetry-proto"
+commit = "94f2f2d5f39c5139141dc7e564daa84aa2826531"
+ecosystems = ["Protobuf"]
+issues = [197, 217, 245, 249, 271, 280]
+
+[[project]]
+name = "grpc/grpc-proto"
+commit = "a0515b76877ff1298b0f430198043705a216541d"
+ecosystems = ["Protobuf"]
+issues = [207]
+
+[[project]]
+name = "bufbuild/protovalidate"
+commit = "804b6087217194c7827e0d63bf2f6ae70d01f41b"
+ecosystems = ["Protobuf"]
+issues = [197, 234, 249, 271]
+
+[[project]]
+name = "envoyproxy/data-plane-api"
+commit = "9e1dea4c03c200eec7c5121310465f59dbb405d5"
+ecosystems = ["Protobuf"]
+issues = [223]
+
+[[project]]
+name = "pydantic/pydantic"
+commit = "560f0f96a37d6913afdfddb2de22030ef08e68c3"
+ecosystems = ["Python"]
+issues = [182, 218]
+
+[[project]]
+name = "encode/httpx"
+commit = "b5addb64f0161ff6bfe94c124ef76f6a1fba5254"
+ecosystems = ["Python"]
+issues = [195]
+
+[[project]]
+name = "pallets/flask"
+commit = "49943b5a94413a530761350f04e896f76e8d620e"
+ecosystems = ["Python"]
+issues = [188, 199, 214, 237]
+
+[[project]]
+name = "psf/black"
+commit = "b10cbe43b8169e688ab86989ddcc8ad2a53ff2cd"
+ecosystems = ["Python"]
+issues = [182, 183, 199]
+
+[[project]]
+name = "pytest-dev/pytest"
+commit = "fc9a7ef678f64d17f1c03b619f3842ea1d127e74"
+ecosystems = ["Python"]
+issues = [182, 209, 221, 237]
+
+[[project]]
+name = "psf/requests"
+commit = "3c7baaa05ab4aa49cc819ce3a819d260de19c157"
+ecosystems = ["Python"]
+issues = [237]
+
+[[project]]
+name = "Textualize/rich"
+commit = "3a109ccdffe5b2d0e30684a304fbd388e99ce57b"
+ecosystems = ["Python"]
+issues = [237]
+
+[[project]]
+name = "python-poetry/poetry"
+commit = "4acc75e19f128c8340c6f977a35e53b5f7f39071"
+ecosystems = ["Python"]
+issues = [182, 188, 209, 211, 235, 239]
+
+[[project]]
+name = "fastapi/fastapi"
+commit = "5758a9c8347d911444dca97a55b708cc4a8de4f8"
+ecosystems = ["Python"]
+issues = [182, 221]
+
+[[project]]
+name = "pre-commit/pre-commit"
+commit = "ba5c4209a6d561b0dff5db24620778d2133d068e"
+ecosystems = ["Python"]
+issues = [182, 221]
+
+[[project]]
+name = "scikit-learn/scikit-learn"
+commit = "ee56c8b5d809dc7b970a140ed501269b63c69cf8"
+ecosystems = ["Python"]
+issues = [182, 190, 232, 236, 237]
+
+[[project]]
+name = "tidyverse/dplyr"
+commit = "819c99f7284b3a413b391c60bea49ae7bfb8bafc"
+ecosystems = ["R"]
+issues = [186, 228, 238, 241, 246]
+
+[[project]]
+name = "r-lib/testthat"
+commit = "54c0edc932018079a8925845f7e278097d19c786"
+ecosystems = ["R"]
+issues = [186, 228, 238, 241, 246, 256]
+
+[[project]]
+name = "Rdatatable/data.table"
+commit = "63a95fa1097bd58359cc19a2ad4392bd92025c52"
+ecosystems = ["R"]
+issues = [182, 186, 234, 240, 241, 246, 256]
+
+[[project]]
+name = "tidyverse/ggplot2"
+commit = "b638d654c8189db82a62307fefa84b1da1819da5"
+ecosystems = ["R"]
+issues = [238]
+
+[[project]]
+name = "rstudio/shiny"
+commit = "1f85217932665592b9715be794eee87c53f6bb3f"
+ecosystems = ["R"]
+issues = [238]
+
+[[project]]
+name = "ropensci/targets"
+commit = "0d4c9ba1478c53bfdd098de2a9f8e3b3c529bb3f"
+ecosystems = ["R"]
+issues = [182, 238]
+
+[[project]]
+name = "racket/typed-racket"
+commit = "7fe7e11fae2b04e04525d63b01b33efe5ffad075"
+ecosystems = ["Racket"]
+issues = [188, 189, 222, 240, 278]
+
+[[project]]
+name = "Bogdanp/koyo"
+commit = "e7072bfd5208b3327a2c36e322d6f6001e437e8b"
+ecosystems = ["Racket"]
+issues = [188, 189, 237]
+
+[[project]]
+name = "greghendershott/frog"
+commit = "9009517a349c9353991c930cc256324041782584"
+ecosystems = ["Racket"]
+issues = [182, 189]
+
+[[project]]
+name = "racket/scribble"
+commit = "9c9c1d587351e53c885d6f05cba9031656fbd833"
+ecosystems = ["Racket"]
+issues = [182, 189, 222, 278]
+
+[[project]]
+name = "jackfirth/rebellion"
+commit = "8f3fc46740918205c0a293ad58dd9a8094ef3f51"
+ecosystems = ["Racket"]
+issues = [224]
+
+[[project]]
+name = "rubocop/rubocop"
+commit = "a896276d16f066d3ed70eb2e3d848b7d4aec2d6d"
+ecosystems = ["Ruby"]
+issues = [182]
+
+[[project]]
+name = "sinatra/sinatra"
+commit = "cb22afd7902b566b6eaba6c4ea89739494a65d12"
+ecosystems = ["Ruby"]
+issues = [220]
+
+[[project]]
+name = "jekyll/jekyll"
+commit = "97c3bdc822df9d5bea4c269b29a28de5a5e29d70"
+ecosystems = ["Ruby"]
+issues = [180]
+
+[[project]]
+name = "rspec/rspec"
+commit = "23a4b50bd4203674ce87d517399c07dd70984fcb"
+ecosystems = ["Ruby"]
+issues = [209, 257]
+
+[[project]]
+name = "puma/puma"
+commit = "30ef0143045d66e0166eb94efdec9df3afac868c"
+ecosystems = ["Ruby"]
+issues = [182, 186, 235, 257]
+
+[[project]]
+name = "Homebrew/brew"
+commit = "cbd3ae64a5efc9990017506ed2fec2e7c007d8c4"
+ecosystems = ["Ruby"]
+issues = [182, 190, 211, 235, 257]
+
+[[project]]
+name = "fluent/fluentd"
+commit = "d2c7287afb3a00a9c6d3fec1578fece3335bea10"
+ecosystems = ["Ruby"]
+issues = [182, 257]
+
+[[project]]
+name = "BurntSushi/ripgrep"
+commit = "178cc027e283fd965cb72d0a7395b219eada170c"
+ecosystems = ["Rust"]
+issues = [182, 218, 219, 238, 287]
+
+[[project]]
+name = "tokio-rs/tokio"
+commit = "ab0814fc8c62b3d8be40aad068e2fed6562cfeb0"
+ecosystems = ["Rust"]
+issues = [188, 224, 230, 287]
+
+[[project]]
+name = "clap-rs/clap"
+commit = "ec93e71255c0b833a34f50662a3fdb22f53f6ded"
+ecosystems = ["Rust"]
+issues = [182, 188, 198, 245, 287]
+
+[[project]]
+name = "sharkdp/bat"
+commit = "8cf33bdde9a6e4c11d0f866415b1fc867df0cd40"
+ecosystems = ["Rust"]
+issues = [182, 218]
+
+[[project]]
+name = "serde-rs/serde"
+commit = "aa7913ad0211fef960df68e7812a6211145a888c"
+ecosystems = ["Rust"]
+issues = [188, 220, 230, 287]
+
+[[project]]
+name = "starship/starship"
+commit = "e3b64da0b660552377de8f7101a73a36b145791c"
+ecosystems = ["Rust"]
+issues = [245]
+
+[[project]]
+name = "astral-sh/ruff"
+commit = "b140af2f48bddf33a1ae984174af3180236aaaaf"
+ecosystems = ["Rust", "Python"]
+issues = [188, 212, 239, 245, 287]
+
+[[project]]
+name = "uutils/coreutils"
+commit = "18ddc48d1cc5edc9ba66f6eb332bc6673c27ef24"
+ecosystems = ["Rust"]
+issues = [182, 190, 195, 218, 230]
+
+[[project]]
+name = "nushell/nushell"
+commit = "a3dd8e6c08b0a1fc9fac67de4d87938b17459c2b"
+ecosystems = ["Rust"]
+issues = [182, 287]
+
+[[project]]
+name = "typelevel/cats"
+commit = "e28985fe2a0d7123a8fb84cbb70c72b5e3d935ca"
+ecosystems = ["Scala"]
+issues = [187, 245, 274]
+
+[[project]]
+name = "com-lihaoyi/os-lib"
+commit = "8871ab0bda9bbcc4edbef9b1a402eb4c47ef9398"
+ecosystems = ["Scala"]
+issues = [180]
+
+[[project]]
+name = "scalameta/metals"
+commit = "8640c9198960fa3f00578af0750f687ed030af56"
+ecosystems = ["Scala"]
+issues = [192, 222, 274]
+
+[[project]]
+name = "http4s/http4s"
+commit = "35c5c3d9162bfe0cecaaeaadfc47d758f10edabb"
+ecosystems = ["Scala"]
+issues = [187, 245, 274]
+
+[[project]]
+name = "scalameta/scalafmt"
+commit = "e1f0c2dcdcc5649c424264ca5b88b6b0322ae30a"
+ecosystems = ["Scala"]
+issues = [192, 222, 274]
+
+[[project]]
+name = "bats-core/bats-core"
+commit = "9c153ec126fa6c005dfc6d2a39c04bb81a329e9b"
+ecosystems = ["Shell"]
+issues = [194, 275]
+
+[[project]]
+name = "nvm-sh/nvm"
+commit = "09e620c401382f4b3d3147333dd64c1e09188fdb"
+ecosystems = ["Shell"]
+issues = [222, 235, 275]
+
+[[project]]
+name = "rbenv/rbenv"
+commit = "07e9b1e297a5977298c6aadc9971ae0e9eb7f0dc"
+ecosystems = ["Shell"]
+issues = [193, 224]
+
+[[project]]
+name = "ohmyzsh/ohmyzsh"
+commit = "6010fb6260f359e71d99ba25f05f9215809b3ed2"
+ecosystems = ["Shell"]
+issues = [241, 275]
+
+[[project]]
+name = "acmesh-official/acme.sh"
+commit = "7e87a310fda61afe92e3db6ac29f81efdf53b8c0"
+ecosystems = ["Shell"]
+
+[[project]]
+name = "pyenv/pyenv"
+commit = "debb76275738080d671a58a587df48f7c0907b38"
+ecosystems = ["Shell"]
+issues = [198]
+
+[[project]]
+name = "Bash-it/bash-it"
+commit = "72ea9e285fe1828977d1cd2bc596b901bcc57440"
+ecosystems = ["Shell"]
+issues = [193, 221, 224]
+
+[[project]]
+name = "dbt-labs/dbt-utils"
+commit = "2a8f07bcbd02fb7a8c011298a1bdaf3e92759c14"
+ecosystems = ["SQL"]
+issues = [182, 188, 223, 228, 276]
+
+[[project]]
+name = "dbt-labs/jaffle-shop"
+commit = "5beb145b00f5465ec759cfcdd9745e858818cf95"
+ecosystems = ["SQL"]
+issues = [228]
+
+[[project]]
+name = "pgvector/pgvector"
+commit = "28dbea6e645f576461eb2343541a7e1fa712dabf"
+ecosystems = ["SQL", "C/C++"]
+issues = [238, 276]
+
+[[project]]
+name = "sqlfluff/sqlfluff"
+commit = "30c281373b61a77cb5d9d10a04d8abe6d43b1a87"
+ecosystems = ["SQL", "Python"]
+issues = [182, 188, 199]
+
+[[project]]
+name = "pgaudit/pgaudit"
+commit = "2a7322004a90ebb8cf51d929e3dcf79e791b557e"
+ecosystems = ["SQL"]
+issues = [182, 231, 276]
+
+[[project]]
+name = "golang-migrate/migrate"
+commit = "031eeb6ff17b27555cb57b1502c7da96fdce4253"
+ecosystems = ["SQL", "Go"]
+issues = [182, 197, 223, 234]
+
+[[project]]
+name = "flyway/flyway"
+commit = "15b6298cc9a19d489bf9d45b87de4ddb68c90e9a"
+ecosystems = ["SQL", "JVM"]
+issues = [182, 229, 241]
+
+[[project]]
+name = "liquibase/liquibase"
+commit = "d1818f8621c3c1f23c14ae0f196a5211f41d8f25"
+ecosystems = ["JVM"]
+notes = "a migration tool; its .sql files are test fixtures, so it stands for the JVM, not SQL"
+issues = [182, 184, 228, 252]
+
+[[project]]
+name = "apple/swift-argument-parser"
+commit = "d7b6cebecb27311771a3249275259edaccf61972"
+ecosystems = ["Swift"]
+issues = [186, 243]
+
+[[project]]
+name = "Alamofire/Alamofire"
+commit = "dea4bab91767a971d6e112bc955c6a82295589b7"
+ecosystems = ["Swift"]
+issues = [229, 241, 244]
+
+[[project]]
+name = "vapor/vapor"
+commit = "e4a5b7050f5e9e5793be3ebdeb687eac92fd9965"
+ecosystems = ["Swift"]
+issues = [188, 214, 229, 243, 244]
+
+[[project]]
+name = "realm/SwiftLint"
+commit = "d9c55cdd401f57bdc1de965e620852ddb87fd175"
+ecosystems = ["Swift"]
+issues = [186, 207, 229, 241, 243, 244]
+
+[[project]]
+name = "apple/swift-nio"
+commit = "b440f7bae8894b5ec42e0f1842fcd77483ab3984"
+ecosystems = ["Swift"]
+issues = [186, 188, 212, 229, 243]
+
+[[project]]
+name = "pointfreeco/swift-composable-architecture"
+commit = "bf66bd83f3165fe4f5fdb9a6c99249276505723e"
+ecosystems = ["Swift"]
+issues = [188, 195, 197, 228, 241]
+
+[[project]]
+name = "nicklockwood/SwiftFormat"
+commit = "1bd6e843cfeb89b42088f663d9ae4c7ebcb3c143"
+ecosystems = ["Swift"]
+issues = [188, 195, 226, 229]
+
+[[project]]
+name = "datasets/country-codes"
+commit = "2d84034a0cae19ea5444b78c2131304a5c7f4bb9"
+ecosystems = ["Tabular data"]
+issues = [228, 238, 240]
+
+[[project]]
+name = "datasets/gdp"
+commit = "36d761dc5617982d3e50b213e02b9a1b47c4e958"
+ecosystems = ["Tabular data"]
+issues = [238, 240]
+
+[[project]]
+name = "datasets/population"
+commit = "d4b1a4a9a17e2123baf0ef119de05bceced1ab1b"
+ecosystems = ["Tabular data"]
+issues = [238, 240]
+
+[[project]]
+name = "datasets/s-and-p-500-companies"
+commit = "05c998c3e714b8dc9b621239bbdef92bccefc376"
+ecosystems = ["Tabular data"]
+issues = [228, 238, 240]
+
+[[project]]
+name = "fivethirtyeight/data"
+commit = "4c1ff5e3aef1816ae04af63218015066e186c147"
+ecosystems = ["Jupyter", "R", "Python"]
+notes = "CSV data without a Data Package descriptor; tabular data is detected from datapackage.json by design"
+issues = [229, 238]
+
+[[project]]
+name = "terraform-aws-modules/terraform-aws-vpc"
+commit = "b3abd6df2ecf052451a361ed55b8f06f8742a795"
+ecosystems = ["Terraform"]
+issues = [195, 224, 246, 262]
+
+[[project]]
+name = "terraform-google-modules/terraform-google-kubernetes-engine"
+commit = "945d9aacad1bdd8ed6b5a239d4e13f3f224b0648"
+ecosystems = ["Terraform"]
+issues = [195, 223, 235, 241, 262]
+
+[[project]]
+name = "terraform-aws-modules/terraform-aws-eks"
+commit = "91b8a8d944e3cf169483108acd12d5b1e47856f7"
+ecosystems = ["Terraform"]
+issues = [229, 241, 262]
+
+[[project]]
+name = "terraform-aws-modules/terraform-aws-lambda"
+commit = "e73238631a030105fc8d09789033cc0bfed83310"
+ecosystems = ["Terraform"]
+issues = [182]
+
+[[project]]
+name = "cloudposse/terraform-null-label"
+commit = "38364d79c1082de13373666252e1276975919543"
+ecosystems = ["Terraform"]
+issues = [250]
+
+[[project]]
+name = "touying-typ/touying"
+commit = "086466cb1031f2a760719a0e5309b03ae3d32145"
+ecosystems = ["Typst"]
+issues = [224, 263]
+
+[[project]]
+name = "andreasKroepelin/polylux"
+commit = "9a5650618d75b855d0b23211406ed2472132b905"
+ecosystems = ["Typst"]
+issues = [229, 235]
+
+[[project]]
+name = "typst/templates"
+commit = "71b01c6b0a828649c7a0a38e8167cd82aab76efc"
+ecosystems = ["Typst"]
+
+[[project]]
+name = "cetz-package/cetz"
+commit = "83c00153a11b331ed21848a5b8508148c36c26f3"
+ecosystems = ["Typst"]
+issues = [208, 246, 263]
+
+[[project]]
+name = "Pablo-Gonzalez-Calderon/showybox-package"
+commit = "fd8d68e72f8489995a13c93154219d8eb496d9b1"
+ecosystems = ["Typst"]
+
+[[project]]
+name = "Jollywatt/typst-fletcher"
+commit = "25532955f0ce01e61fdf017ba6c7746a73b34ce6"
+ecosystems = ["Typst"]
+issues = [208, 263]
+
+[[project]]
+name = "Myriad-Dreamin/tinymist"
+commit = "c754ffe8ec9540074dacfd36ba5e8a38b4fc758a"
+ecosystems = ["Typst", "Rust"]
+issues = [218, 224]
+
+[[project]]
+name = "NIEM/NIEM-Releases"
+commit = "56c0c8e7ccd42e407e2587e553f83297d56730fd"
+ecosystems = ["XML schemas"]
+
+[[project]]
+name = "docbook/docbook"
+commit = "0f5c6e72120a540c898025707b3d6c829785790b"
+ecosystems = ["XML schemas"]
+issues = [237, 283, 289]
+
+[[project]]
+name = "windyroad/JUnit-Schema"
+commit = "cfa434d4b8e102a8f55b8727b552a0063ee9044e"
+ecosystems = ["XML schemas"]
+
+[[project]]
+name = "dotnet/Open-XML-SDK"
+commit = "431ab05cf160248cc3885a4a766026d4f8243792"
+ecosystems = ["XML schemas"]
+issues = [182, 216, 231, 240]
+
+[[project]]
+name = "ISO-TC211/XML"
+commit = "a3a8440162c4ea48ae36f02df6cde47fbc523687"
+ecosystems = ["XML schemas"]
+issues = [182, 241]
+
+[[project]]
+name = "xmlunit/xmlunit"
+commit = "b04c6ea08c4a0b8dff9a35765650efb9cca4406a"
+ecosystems = ["JVM"]
+notes = "its .xsd files are test fixtures, so it stands for the JVM, not XML schemas"
+issues = [182, 223, 236, 246]
+
+[[project]]
+name = "zigtools/zls"
+commit = "9d9c9d2c41b15ed00e2b1004780e069fef495109"
+ecosystems = ["Zig"]
+issues = [226, 284]
+
+[[project]]
+name = "karlseguin/http.zig"
+commit = "1bb71ff128a044b1645df91046473c38abbf965c"
+ecosystems = ["Zig"]
+issues = [288]
+
+[[project]]
+name = "mitchellh/libxev"
+commit = "451a2bc03644c2b70fb28a808313d12989bfa8e3"
+ecosystems = ["Zig"]
+issues = [182]
+
+[[project]]
+name = "Hejsil/zig-clap"
+commit = "d7b9b5727f2ad156144a889141b14bbfc45de687"
+ecosystems = ["Zig"]
+issues = [288]
+
+[[project]]
+name = "tigerbeetle/tigerbeetle"
+commit = "a2a3c7064519e08233abe26c54a43fca2f9ad9bc"
+ecosystems = ["Zig"]
+issues = [182, 235, 288]
+
+[[project]]
+name = "ghostty-org/ghostty"
+commit = "6d9577708a211b0e6c5e6c6886f3cfb7efc47555"
+ecosystems = ["Zig"]
+issues = [227, 235, 288]

@@ -351,3 +351,9 @@ Tests keep these:
 - The snapshots (`tests/snapshots`: for each fixture, its behaviour in `<fixture>.json`, the results and the
   answers, and what was learned in `<fixture>.facts.json`, the facts and the project map) are reproduced exactly,
   except where a change deliberately moves results and says so.
+- The project corpus (`corpus/`: real repositories pinned to a commit) is recorded by `python -m corpus record` and
+  two recordings compared by `python -m corpus diff`; CI records a pull request's head and its base over the same
+  checkouts and shows what changed, so every parser runs over real inputs on every change. Nothing is recorded in the
+  repository. Every ecosystem profile has a corpus project that stands for it, and a recording must detect it there
+  (`tests/test_corpus.py`, `corpus record`). What the validator gets wrong on a corpus project is an upstream issue
+  the manifest names; its fix shows in the corpus diff.

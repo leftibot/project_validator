@@ -454,5 +454,19 @@ except where a step deliberately changes results and says so.
     versions a cross-build runs) and leave the OS out (the database engine versions a SQL project is tested against,
     from the service containers CI runs, now facts); a build system's outputs add to the language's own; the support
     matrix lists a shared tool once and the grid says when no ecosystem was recognised.
+15. **The project corpus** (`corpus/`, one change). The fixtures are small and written to be judged; the corpus is the
+    other half of the regression suite: 233 real repositories, one or more for every ecosystem profile, pinned to a
+    commit. Nothing is recorded in the repository: `python -m corpus record` writes what the validator says about each
+    (the project map, the results judged with `--allow-unknown`, and what strict judging adds: each check's status
+    and the distinct reasons something could not be read) and `python -m corpus diff` compares two recordings; CI
+    records a pull request's head and its base over the same checkouts and shows what changed, which also runs every
+    parser over real inputs each time. An audit of every project's results against its repository found 556
+    discrepancies, filed as upstream issues #180 to #290 and recorded, where a small project reproduces them, as
+    expected-failure tests in `tests/regressions/`; the manifest names the issues open against each project, and a
+    fix shows in the corpus diff of its pull request. The largest classes: a language present only in auxiliary files
+    (fixtures, tooling, docs assets) becoming a product ecosystem whose failures decide the project; commands the
+    readers cannot resolve (Make variables, `[[ ]]` tests, heredocs, custom shells, unknown composite actions) dropped
+    silently instead of recorded as unknown; and per-ecosystem gaps in what counts as a test, a license or a coverage
+    report. Two performance problems kept haskell/cabal and rust-lang/cargo out of the manifest until fixed.
 
 `--facts` and `--answers` expose the database and the answers.

@@ -167,6 +167,55 @@ jobs:
           version: 3.99.8@sha256:674b2f187620a19df77f44cf9a7d77efcc581a5662accef2f2739cbb46ba4a3a
           extra_args: --results=verified,unknown
 
+  corpus:
+    name: corpus
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.14"
+
+      - name: Install PyYAML
+        run: python -m pip install --require-hashes -r .github/requirements/test.txt
+
+      # The corpus projects are fetched at their pinned commits (once; both recordings share the checkouts) and what
+      # this version says about each is recorded. A crash, or a project not detected as the ecosystem it stands for,
+      # fails the job; what changed against the base branch is for the review (the next step).
+      - name: Record what this version says about the corpus projects
+        run: python -m corpus record "${RUNNER_TEMP}/head" --cache "${RUNNER_TEMP}/corpus" --jobs 4
+
+      # The base branch's validator, over the pull request's project list and the same checkouts, then the diff into
+      # the job summary. A base without the corpus (the pull request that adds it) has nothing to compare with.
+      - name: Compare with what the base branch says
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --depth=1 origin "${GITHUB_BASE_REF}"
+          git worktree add --detach "${RUNNER_TEMP}/base-tree" FETCH_HEAD
+          if [ -f "${RUNNER_TEMP}/base-tree/corpus/__main__.py" ]; then
+            (cd "${RUNNER_TEMP}/base-tree" && python -m corpus --manifest "${GITHUB_WORKSPACE}/corpus/projects.toml" \
+              record "${RUNNER_TEMP}/base" --cache "${RUNNER_TEMP}/corpus" --jobs 4) || true
+            {
+              echo "## Corpus: what changed against ${GITHUB_BASE_REF}"
+              echo
+              echo '```'
+              python -m corpus diff "${RUNNER_TEMP}/base" "${RUNNER_TEMP}/head" | head -c 900000
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## Corpus: ${GITHUB_BASE_REF} has no corpus to compare with" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload the recording
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: corpus-recording
+          path: ${{ runner.temp }}/head
+
   self-validation:
     name: self-validation
     runs-on: ubuntu-latest

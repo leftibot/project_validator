@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import time
 import unittest
 from typing import cast
 from unittest import mock
@@ -240,6 +241,18 @@ class UnitTests(unittest.TestCase):
         inside = _measured("cov", BRANCH, scope=("packages/a/src",))
         self.assertEqual([inside.covers(unit, units) for unit in units], [False, True, False, False, False])
         self.assertTrue(_measured("cov", BRANCH, scope=("src",)).covers(".", units))
+
+    @unittest.expectedFailure  # upstream #181: covers() is quadratic in the units, cubic over a project's runs
+    def test_many_units_and_runs_are_covered_quickly(self) -> None:
+        """A monorepo of forty members with forty tool runs is judged in a fraction of a second; `owner()` walking
+        every unit for every (run, unit) pair takes seconds here and minutes on the real ones (uutils/coreutils has
+        116 units, ocaml/dune more)."""
+        units = tuple(f"crates/member{number}" for number in range(40))
+        runs = [_measured("cov", BRANCH, scope=(unit,)) for unit in units]
+        started = time.perf_counter()
+        covered = sum(run.covers(unit, units) for run in runs for unit in units)
+        self.assertEqual(covered, len(units))
+        self.assertLess(time.perf_counter() - started, 0.2)
 
     def test_a_format_is_answered_in_the_units_whose_files_are_in_it(self) -> None:
         facts = Facts(
